@@ -1,0 +1,30 @@
+spring:
+  profiles: dev
+
+server:
+  port: 5555
+
+eureka:
+  instance:
+    preferIpAddress: true
+    appname: ${spring.application.name}  # ==> This is a instance of ABC-SERVICE
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8087/eureka
+    fetchRegistry: true
+    registerWithEureka: true
+
+zuul:
+  routes:
+    config-server:
+      path: /config-server/**
+      sensitive-headers: Set-Cookie,Authorization
+    eureka-server:
+      path: /eureka-server/**
+      sensitive-headers: Set-Cookie,Authorization
+    user-service:
+      path: /user-service/**
+      sensitive-headers: Set-Cookie,Authorization
+    order-service:
+      path: /order-service/**
+      sensitive-headers: Set-Cookie,Authorization

@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: eureka-server
+  profiles:
+    active: dev
+  cloud:
+    ### Config to pull config from cloud service
+    config:
+      uri: http://localhost:8085
+      profile: ${spring.profiles.active}

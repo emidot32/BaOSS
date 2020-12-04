@@ -1,0 +1,31 @@
+spring:
+  profiles: dev
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/baoss-db
+    username: postgres
+    password: password
+    testWhileIdle: true
+    validationQuery: SELECT 1
+server:
+  port: 9043
+
+eureka:
+  instance:
+    preferIpAddress: true
+    appname: ${spring.application.name}  # ==> This is a instance of ABC-SERVICE
+  client:
+    serviceUrl:
+      defaultZone:  http://localhost:5555/eureka-server/eureka
+    fetchRegistry: true
+    registerWithEureka: true
+security:
+  oauth2:
+    resource:
+      userInfoUri: http://localhost:5555/user-service/auth/user

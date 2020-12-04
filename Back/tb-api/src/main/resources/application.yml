@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: tb-api
+  profiles:
+    active: dev
+  cloud:
+    config:
+      uri: http://localhost:8085
+      profile: ${spring.profiles.active}
