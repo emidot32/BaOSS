@@ -1,10 +1,15 @@
 spring:
   application:
     name: eureka-server
-  profiles:
-    active: dev
-  cloud:
-    ### Config to pull config from cloud service
-    config:
-      uri: http://localhost:8085
-      profile: ${spring.profiles.active}
+
+server:
+  port: 8080
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: false     # Don’t register with Eureka service.
+    fetchRegistry: false          # Don’t cache registry information locally.
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
