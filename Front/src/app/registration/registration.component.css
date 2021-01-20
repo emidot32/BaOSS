@@ -1,0 +1,121 @@
+
+.back {
+  background-color: lightsteelblue;
+  background-position: center;
+  position: relative;
+  align-content: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  alignment: center;
+
+}
+
+
+.register-form textarea {
+  border: none;
+  padding: 15px 20px;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  font-style: italic;
+  outline: none;
+  transition: background-color .25s ease;
+}
+
+.register-form input {
+  width: 380px;
+}
+.register-form select {
+  width: 380px;
+}
+
+
+
+/*}*/
+
+/*.register-form input:focus {*/
+/*  background-color: #EDEDED;*/
+/*  color: #000;*/
+/*}*/
+
+/*.register-form select {*/
+/*  background-color: #3e4d55;*/
+/*  border: none;*/
+/*  padding: 15px 20px;*/
+/*  width: 100%;*/
+/*  font-family: Arial, sans-serif;*/
+/*  font-style: italic;*/
+/*  outline: none;*/
+/*  transition: background-color .25s ease;*/
+
+/*}*/
+
+/*.register-form select:focus {*/
+/*  background-color: #EDEDED;*/
+/*  color: #000;*/
+/*}*/
+
+.register-form textarea:focus {
+  background-color: #EDEDED;
+  color: #000;
+}
+
+.register-form {
+  z-index: 1;
+  alignment: center;
+  align-content: center;
+  position: absolute;
+  left: 18%;
+  top: 5%;
+}
+
+.register-form h2 {
+  text-align: center;
+  font-size: 40px;
+}
+
+.form-control {
+  margin: 0 auto;
+  border-radius: 0px 3px 3px 0px;
+  -moz-border-radius: 0px 3px 3px 0px;
+  -webkit-border-radius: 0px 3px 3px 0px;
+  padding: 0 16px;
+  height: 50px;
+  border: none;
+}
+
+
+.btn-blue {
+  color: #fff;
+  background-color: #5578CF;
+}
+
+.btn-blue:hover {
+  background-color: #5578CF;
+}
+
+.btn-gray {
+  background-color: #4B5A65;
+  text-decoration: none;
+  color: #fff;
+}
+
+.btn-gray:hover {
+  background-color: #3e4d55;
+}
+
+
+.help-block {
+  color: #f49355;
+}
+
+
+input.ng-touched.ng-invalid {
+  border: solid #f49355 2px;
+}
+
+input.ng-touched.ng-valid {
+  border: solid #548007 2px;
+}

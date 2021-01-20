@@ -1,0 +1,172 @@
+.img-logo {
+  width: 100%;
+  /*width: 400px;
+  height: 100px;*/
+}
+
+.btn-blue {
+  color: #fff;
+  background-color: #5578CF;
+}
+.app-name {
+  font-size: 30px;
+  text-align: left;
+  margin-top: 15px;
+}
+p {
+  color: #EBF1FF;
+  font-size: 30px
+}
+.btns {
+  position: absolute;
+  alignment: center;
+  left: 75%;
+  top: 2.5%
+}
+.btn-blue:hover {
+  background-color: #5578CF;
+  text-decoration: none;
+  color: #fff;
+}
+
+.btn-gray {
+  background-color: #4B5A65;
+  text-decoration: none;
+  color: #fff;
+}
+
+.btn-gray:hover {
+  background-color: #3e4d55;
+}
+
+.cont-color {
+  background-color: #1a252b;
+}
+
+/*
+.logo-grid{
+  grid-column: 1 / 2;
+}
+
+.img-logo {
+  width: 50%;
+  margin: 1.5%;
+}
+
+.buttons-grid{
+  grid-column: 3 / 4;
+}
+
+.header-buttons{
+  float: right;
+  margin: 1.5%;
+}
+
+label {
+  position: relative;
+  width: 400px;
+  margin: 0 auto;
+}
+
+.button{
+  display: inline-block;
+  border: none;
+  color: #fff;
+  text-decoration: none;
+  background-color: #ff5f00;
+  padding: 10px 50px;
+  margin-top: 5px;
+  font-size: 20px;
+  font-weight: 800;
+  border-radius: 2px;
+  text-align: center;
+  position: relative;
+  outline: none;
+  transition: background-color .1s ease;
+  cursor: pointer;
+}
+
+.button-gray{
+  background-color: #3c4851;
+  margin-right: 20px;
+}
+
+
+.button-gray a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.button a {
+  text-decoration: none;
+  color: #fff;
+}
+
+
+.d1{
+  margin: 10px auto;
+}
+
+!*.d1 input {
+  width: 80%;
+  height: 50px;
+  padding-left: 10px;
+  border: 2px solid #7BA7AB;
+  border-radius: 5px;
+  outline: none;
+  background: #F9F0DA;
+  color: #9E9C9C;
+}*!
+.d1 button {
+  margin-left: -5px;
+  position: absolute;
+  width: 48px;
+  height: 52px;
+  border: none;
+  background: #ff5f00;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
+.d1 button:before {
+  content: "\f002";
+  font-family: FontAwesome;
+  font-size: 16px;
+  color: #F9F0DA;
+}
+
+
+.d1 textarea {
+  border: none;
+  padding: 15px 20px;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  font-style: italic;
+  outline: none;
+  transition: background-color .25s ease;
+}
+
+.d1 input {
+  background-color: #3e4d55;border: none;
+  padding: 14px 20px;
+  width: 80%;
+  font-family: Arial, sans-serif;
+  font-style: italic;
+  outline: none;
+  transition: background-color .25s ease;
+
+}
+
+.d1 input:focus{
+  background-color: #EDEDED;
+  color: #000;
+}
+
+.d1  textarea:focus{
+  background-color: #EDEDED;
+  color: #000;
+}
+
+.password-rec-button {
+  margin-left:36px;
+}
+*/

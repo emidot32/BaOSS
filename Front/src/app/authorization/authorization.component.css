@@ -1,0 +1,116 @@
+.picture {
+  background-image: url("../../files/0-header.jpg");
+  display: grid;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  align-content: center;
+}
+
+.back {
+  background-color: lightsteelblue;
+  background-position: center;
+  position: relative;
+  align-content: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  alignment: center;
+
+}
+
+
+.login-form textarea {
+  border: none;
+  padding: 15px 20px;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  font-style: italic;
+  outline: none;
+  transition: background-color .25s ease;
+}
+
+.login-form input {
+  background-color: #3e4d55;
+  border: none;
+  padding: 15px 20px;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  font-style: italic;
+  outline: none;
+  transition: background-color .25s ease;
+
+}
+
+.login-form input:focus {
+  background-color: #EDEDED;
+  color: #000;
+}
+
+.login-form textarea:focus {
+  background-color: #EDEDED;
+  color: #000;
+  alignment: center;
+}
+
+.login-form {
+  z-index: 1;
+  color: #fff;
+  alignment: center;
+  align-content: center;
+  position: absolute;
+  left: 18%;
+  top: 30%;
+}
+
+.login-form h2 {
+  text-align: center;
+  font-size: 40px;
+}
+
+.form-control {
+  margin: 0 auto;
+  border-radius: 0px 3px 3px 0px;
+  -moz-border-radius: 0px 3px 3px 0px;
+  -webkit-border-radius: 0px 3px 3px 0px;
+  color: #fff;
+  padding: 0 16px;
+  width: 280px;
+  height: 50px;
+  border: none;
+}
+
+.btn-blue {
+  color: #fff;
+  background-color: #5578CF;
+}
+
+.btn-blue:hover {
+  background-color: #5578CF;
+}
+
+.btn-gray {
+  background-color: #4B5A65;
+  text-decoration: none;
+  color: #fff;
+}
+
+.btn-gray:hover {
+  background-color: #3e4d55;
+}
+
+.help-block {
+  color: #f49355;
+}
+
+
+input.ng-touched.ng-invalid {
+  border: solid #f49355 2px;
+}
+
+input.ng-touched.ng-valid {
+  border: solid #548007 2px;
+}

@@ -1,0 +1,24 @@
+.link {
+  text-decoration: none;
+  display: block;
+  font-size: 18px;
+  color: #000;
+  padding: 20px 30px;
+  position: relative;
+  transition: .3s linear;
+}
+
+.link:after {
+  position: absolute;
+  color: black;
+  transition: .2s linear;
+}
+
+.link:hover {
+  background: #E6E9EF  ;
+  color: black;
+}
+
+.menu-color {
+  background-color: #E6E9EF  ;
+}

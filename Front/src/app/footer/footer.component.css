@@ -1,0 +1,21 @@
+i {
+    color: #293A43;
+    font-size: 11px;
+}
+.back {
+    background-color: slategrey;
+}
+.footer {
+    /*position: absolute;*/
+    /*bottom: 0;*/
+    /*margin-bottom: -170px;*/
+    background-color: slategrey;
+    /*width: 100%;*/
+    /* Set the fixed height of the footer here */
+    height: 50px;
+    /*line-height: 50px;*/
+}
+
+.part {
+    text-align: center;
+}

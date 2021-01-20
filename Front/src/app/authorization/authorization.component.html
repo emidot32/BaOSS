@@ -1,0 +1,42 @@
+<div class="back align-content-center">
+  <div class="login-form align-content-center container">
+    <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
+      <div class="row">
+        <div class="col-sm-8 col-md-6 col-lg-4 mx-auto">
+          <h2>Authorization</h2>
+
+          <div class="form-group">
+            <input type="text" class="form-control" [ngClass]="{'is-invalid':  loginForm.get('userLogin').invalid && loginForm.controls['userLogin'].touched,
+                   'is-valid': loginForm.get('userLogin').valid}" name="userName" placeholder="Login"
+                   formControlName="userLogin"
+                   required/>
+            <div class="invalid-feedback"
+                 *ngIf="loginForm.get('userLogin').invalid && loginForm.controls['userLogin'].touched">
+              {{getValidationMessage('userLogin').message}}
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <input type="password" class="form-control" [ngClass]="{'is-invalid':  loginForm.get('userPassword').invalid && loginForm.controls['userPassword'].touched,
+                   'is-valid': loginForm.get('userPassword').valid}" name="userPassword" placeholder="Password"
+                   formControlName="userPassword" required/>
+            <div class="invalid-feedback"
+                 *ngIf="loginForm.get('userPassword').invalid && loginForm.controls['userPassword'].touched">
+              {{getValidationMessage('userPassword').message}}
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group mb-3 col-sm-6">
+              <button [disabled]="loginForm.invalid" class="btn btn-block btn-blue">Login</button>
+            </div>
+            <div class="form-group col-sm-6">
+              <a class="btn btn-block btn-gray" [routerLink]="['/offers']">Back</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

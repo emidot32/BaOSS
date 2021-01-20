@@ -1,0 +1,57 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~@fullcalendar/core/main.css';
+@import '~@fullcalendar/daygrid/main.css';
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+html, body {
+  height: 100%;
+}
+
+/*
+app-content-chat {
+  grid-column: 2 / 5;
+}
+
+app-content-main {
+  grid-column: 2 / 5;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+  border-left: solid;
+  border-color: #1a252b;
+}
+
+app-content-book {
+  grid-column: 2 / 5;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-left: solid;
+  border-color: #1a252b;
+}
+
+app-content-approve {
+  display: grid;
+  grid-column: 2 / 5;
+}
+
+
+app-home{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+}
+
+app-home-auth{
+  display: grid;
+  grid-template-columns: 0.2fr 1fr 1fr 1fr;
+}
+
+
+router-outlet {
+  grid-row: 3;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+*/

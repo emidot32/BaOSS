@@ -1,0 +1,123 @@
+<div class="back align-content-center">
+  <div class="register-form container">
+    <form [formGroup]="registerForm" name="form" (ngSubmit)="register()" novalidate>
+      <div class="row">
+        <div class="col-sm-8 col-md-6 col-lg-4 mx-auto">
+          <h2>Registration</h2>
+
+
+          <div class="form-group">
+            <input type="text" class="form-control" [ngClass]="{'is-invalid':  registerForm.get('userName').invalid && registerForm.controls['userName'].touched,
+                   'is-valid': registerForm.get('userName').valid}" name="userName" placeholder="Enter your name"
+                   formControlName="userName" required/>
+            <div class="invalid-feedback"
+                 *ngIf="registerForm.get('userName').invalid && registerForm.controls['userName'].touched">
+              {{getValidationMessage('userName').message}}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <input type="text" class="form-control" [ngClass]="{'is-invalid':  registerForm.get('userSurname').invalid && registerForm.controls['userSurname'].touched,
+                   'is-valid': registerForm.get('userSurname').valid}" name="userSurname" placeholder="Enter your surname"
+                   formControlName="userSurname" required/>
+            <div class="invalid-feedback"
+                 *ngIf="registerForm.get('userSurname').invalid && registerForm.controls['userSurname'].touched">
+              {{getValidationMessage('userSurname').message}}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <input type="text" class="form-control" [ngClass]="{'is-invalid':  registerForm.get('userEmail').invalid && registerForm.controls['userEmail'].touched,
+                   'is-valid': registerForm.get('userEmail').valid}" name="userEmail" placeholder="Enter Email"
+                   formControlName="userEmail"
+                   required/>
+            <div class="invalid-feedback"
+                 *ngIf="registerForm.get('userEmail').invalid && registerForm.controls['userEmail'].touched">
+              {{getValidationMessage('userEmail').message}}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <input type="text" class="form-control"
+                   [ngClass]="{'is-invalid':  registerForm.get('userLogin').invalid && registerForm.controls['userLogin'].touched,
+                   'is-valid': registerForm.get('userLogin').valid}"
+                   name="userLogin" placeholder="Enter login" formControlName="userLogin"
+                   required/>
+            <div class="invalid-feedback"
+                 *ngIf="registerForm.get('userLogin').invalid && registerForm.controls['userLogin'].touched">
+              {{getValidationMessage('userLogin').message}}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <input type="password" class="form-control" [ngClass]="{'is-invalid':  registerForm.get('userPassword').invalid && registerForm.controls['userPassword'].touched,
+                   'is-valid': registerForm.get('userPassword').valid}" name="userPassword" placeholder="Password"
+                   formControlName="userPassword" required/>
+            <div class="invalid-feedback"
+                 *ngIf="registerForm.get('userPassword').invalid && registerForm.controls['userPassword'].touched">
+              {{getValidationMessage('userPassword').message}}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <input  class="form-control" [ngClass]="{'is-invalid':  registerForm.get('phoneNumber').invalid && registerForm.controls['phoneNumber'].touched,
+                   'is-valid': registerForm.get('phoneNumber').valid}" name="phoneNumber" placeholder="+38 XXX XXX-XX-XX"
+                   formControlName="phoneNumber"/>
+            <div class="invalid-feedback"
+                 *ngIf="registerForm.get('phoneNumber').invalid && registerForm.controls['phoneNumber'].touched">
+              {{getValidationMessage('phoneNumber').message}}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <select class="form-control" formControlName="gender">
+              <option value="" disabled selected>Gender</option>
+              <option value="MALE">MALE</option>
+              <option value="FEMALE">FEMALE</option>
+              <option value="NONE">NONE</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <input type="number" class="form-control" [ngClass]="{'is-invalid':  registerForm.get('idCardNumber').invalid && registerForm.controls['idCardNumber'].touched,
+                   'is-valid': registerForm.get('idCardNumber').valid}" name="idCardNumber" placeholder="Id Card Number"
+                   formControlName="idCardNumber" required/>
+            <div class="invalid-feedback"
+                 *ngIf="registerForm.get('idCardNumber').invalid && registerForm.controls['idCardNumber'].touched">
+              {{getValidationMessage('idCardNumber').message}}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <input type="text" class="form-control"
+                   [ngClass]="{'is-invalid':  registerForm.get('address').invalid && registerForm.controls['address'].touched,
+                   'is-valid': registerForm.get('address').valid}"
+                   name="address" placeholder="Country, City, Street, BuildNum, RoomNum, Index" formControlName="address"
+                   required/>
+            <div class="invalid-feedback"
+                 *ngIf="registerForm.get('address').invalid && registerForm.controls['address'].touched">
+              {{getValidationMessage('address').message}}
+            </div>
+          </div>
+
+          <mat-form-field appearance="fill">
+            <mat-label></mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="birthday">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+
+          <div class="form-row">
+            <div class="form-group mb-3 col-sm-6">
+              <button [disabled]="registerForm.invalid" class="btn btn-block btn-blue">Register</button>
+            </div>
+            <div class="form-group col-sm-6">
+              <a class="btn btn-block btn-gray" [routerLink]="['/offers']">Back</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

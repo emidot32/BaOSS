@@ -1,0 +1,19 @@
+
+<nav class="navbar align-items-start menu-color p-0">
+  <div class="container p-0">
+    <ul class="navbar-nav mx-auto col-12 p-0">
+      <li *ngFor="let i of menu" class="nav-item">
+        <a class="nav-link link" [routerLink]="[i.url]">{{i.name}}</a>
+      </li>
+<!--      <li *ngFor="let i of menu" class="nav-item">-->
+<!--        <a class="nav-link link" href="#" [routerLink]="[i.url]">{{i.name}}</a>-->
+<!--      </li>-->
+      <!-- Notifiication button with count badge  -->
+<!--      <li class="nav-item">-->
+<!--        <a class="nav-link link" [routerLink]="['notifications']">Notifications-->
+<!--          <span class="badge badge-primary ">{{count}}</span>-->
+<!--        </a>-->
+<!--      </li>-->
+    </ul>
+  </div>
+</nav>

@@ -1,0 +1,22 @@
+<app-header></app-header>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-lg-2 p-0 menu-color">
+      <nav class="navbar align-items-start menu-color p-0">
+        <div class="container p-0">
+          <ul class="navbar-nav mx-auto col-12 p-0">
+            <li class="nav-item">
+              <a class="nav-link link" href="#" [routerLink]="['offers']">Offers</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div class="col-sm-9 col-lg-10 p-0">
+      <router-outlet class="router"></router-outlet>
+    </div>
+  </div>
+</div>
+<!--<app-footer></app-footer>-->
+
