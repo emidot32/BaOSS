@@ -62,14 +62,16 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     private void attemptAuthentication(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+        if ("OPTIONS".equals(httpServletRequest.getMethod()))
             httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-            //httpServletResponse.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
-            //httpServletResponse.setHeader("Access-Control-Allow-Origin", "https://netbooksfront.herokuapp.com");
-            httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
-            httpServletResponse.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
-            httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
-            httpServletResponse.setHeader("Access-Control-Allow-Headers", "X-Requested-With, " +
-                    "Content-Type, Authorization, Origin, Accept, Access-Control-Request-Method, " +
-                    "Access-Control-Request-Headers");
+        httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+        //httpServletResponse.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+        //httpServletResponse.setHeader("Access-Control-Allow-Origin", "https://netbooksfront.herokuapp.com");
+        httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
+        httpServletResponse.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
+        httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
+        httpServletResponse.setHeader("Access-Control-Allow-Headers", "X-Requested-With, " +
+                "Content-Type, Authorization, Origin, Accept, Access-Control-Request-Method, " +
+                "Access-Control-Request-Headers");
     }
 }

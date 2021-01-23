@@ -11,8 +11,7 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/user-service/user-info/**");
-        registry.addResourceHandler("/billing-service/**");
+        registry.addResourceHandler("/**");
     }
 
 }
