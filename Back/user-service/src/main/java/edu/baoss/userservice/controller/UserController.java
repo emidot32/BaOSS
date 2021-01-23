@@ -1,9 +1,9 @@
 package edu.baoss.userservice.controller;
 
+import edu.baoss.userservice.dto.UserAddressDto;
 import edu.baoss.userservice.model.User;
-import edu.baoss.userservice.repository.UserRepository;
+import edu.baoss.userservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,15 +13,25 @@ import java.util.List;
 @RequestMapping("/user-info")
 public class UserController {
     @Autowired
-    UserRepository userRepository;
-
-    @GetMapping("/user/{id}")
-    public User getUserById(@PathVariable long id){
-        return userRepository.findById(id).get();
-    }
+    UserService userService;
 
     @GetMapping("/users")
     public List<User> getAllUsers(){
-        return userRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
+        return userService.getAllUsers();
+    }
+
+    @GetMapping("/{login}")
+    public User getUserByLogin(@PathVariable("login") String login){
+        return userService.getUserByLogin(login);
+    }
+
+    @PostMapping("/user-address")
+    public User addOrDeleteAddressForUser(@RequestBody UserAddressDto userAddressDto){
+        return userService.addOrDeleteAddressForUser(userAddressDto.getUser(), userAddressDto.getAddress());
+    }
+
+    @PutMapping("/update-user")
+    public User updateUser(@RequestBody User user){
+        return userService.updateUser(user);
     }
 }

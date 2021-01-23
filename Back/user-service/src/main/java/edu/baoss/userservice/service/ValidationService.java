@@ -9,7 +9,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
-@Slf4j
 public class ValidationService {
 
     private static final String EMAIL_PATTERN =
@@ -30,7 +29,7 @@ public class ValidationService {
     public boolean emailValidation(String email) {
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(email);
-        if (matcher.matches()) return stringValidation(email, 7, 30);
+        if (matcher.matches()) return stringValidation(email, 6, 30);
         else throw new ValidationException("Incorrect email");
     }
 
@@ -40,7 +39,6 @@ public class ValidationService {
         Matcher matcher = pattern.matcher(text);
         if (matcher.matches()) return stringValidation(text, minSize, maxSize);
         else {
-            log.info("test {}", text);
             throw new ValidationException("Incorrect data");
         }
     }
@@ -56,9 +54,12 @@ public class ValidationService {
         return stringValidation(pass, 3, 50);
     }
 
-    public boolean userValidation(User user) {
-        return loginValidation(user.getLogin()) &&
+    public boolean userValidation(User user, boolean validatePassword) {
+        if (validatePassword)
+            return loginValidation(user.getLogin()) &&
                 emailValidation(user.getEmail()) &&
                 passwordValidation(user.getPassword());
+        return loginValidation(user.getLogin()) &&
+                emailValidation(user.getEmail());
     }
 }

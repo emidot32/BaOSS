@@ -62,8 +62,6 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     private void attemptAuthentication(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        if ("OPTIONS".equals(httpServletRequest.getMethod()))
-            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
         httpServletResponse.setStatus(HttpServletResponse.SC_OK);
         //httpServletResponse.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
         //httpServletResponse.setHeader("Access-Control-Allow-Origin", "https://netbooksfront.herokuapp.com");

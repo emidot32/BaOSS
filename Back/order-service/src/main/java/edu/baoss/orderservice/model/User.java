@@ -2,12 +2,14 @@ package edu.baoss.orderservice.model;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -73,6 +75,9 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "address_id"))
     Set<Address> addresses = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    Set<BillingAccount> billingAccounts;
 
     @OneToMany(mappedBy = "user")
     Set<Order> orders;

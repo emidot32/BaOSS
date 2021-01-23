@@ -4,8 +4,9 @@ spring:
   jpa:
     database: POSTGRESQL
     show-sql: true
+    hibernate:
+      ddl-auto: update
     properties:
-      hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   datasource:
     driverClassName: org.postgresql.Driver

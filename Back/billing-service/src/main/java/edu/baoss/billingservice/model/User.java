@@ -1,17 +1,15 @@
-package edu.baoss.userservice.model;
+package edu.baoss.billingservice.model;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
 
 @Data
 @NoArgsConstructor
@@ -52,14 +50,6 @@ public class User {
     @Column(name = "contract_number", unique = true)
     int contractNumber;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name="gender", length = 7)
-    Gender gender;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name="usr_role", length = 30)
-    Role role;
-
     @Column(name = "activity_status")
     boolean activityStatus;
 
@@ -69,14 +59,9 @@ public class User {
     @Column(name = "min_refresh_date")
     Date minRefreshDate;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE
-    })
-    @JoinTable(name = "user_address",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "address_id"))
-    Set<Address> addresses = new HashSet<>();
-
-
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    Set<BillingAccount> billingAccounts;
 }
+
 

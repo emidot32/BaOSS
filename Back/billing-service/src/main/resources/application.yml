@@ -1,12 +1,13 @@
 spring:
   application:
-    name: user-service
+    name: billing-service
   jpa:
     database: POSTGRESQL
     show-sql: true
     properties:
-      hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
   datasource:
     driverClassName: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/baoss-db
@@ -14,7 +15,7 @@ spring:
     password: Aposuv74
 
 server:
-  port: 8082
+  port: 8085
 
 eureka:
   instance:
@@ -25,7 +26,3 @@ eureka:
       defaultZone:  http://localhost:8080/eureka
     fetchRegistry: true
     registerWithEureka: true
-#security:
-#  oauth2:
-#    resource:
-#      userInfoUri: http://localhost:5555/user-service/auth/user

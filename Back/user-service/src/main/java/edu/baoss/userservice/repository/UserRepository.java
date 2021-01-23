@@ -22,4 +22,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     int getMaxContractNumber();
 
     List<User> findAll(Sort id);
+
 }
