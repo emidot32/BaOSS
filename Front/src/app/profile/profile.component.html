@@ -1,2 +1,127 @@
-<p>profile works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2 usr-info-hdr"><h3>User Info</h3></div>
+        <div class="col-2">
+            <button type="button" class="btn btn-primary edit-btn" (click)="edit()">Edit</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4 text-user-info">
+            <p>&emsp;First name: <i>{{user.name}}</i></p>
+            <p>&emsp;Login: <i>{{user.login}}</i></p>
+            <p>&emsp;Email: <i>{{user.email}}</i></p>
+            <p>&emsp;Id card number: <i>**********</i></p>
+            <p>&emsp;Gender: <i>{{user.gender}}</i></p>
+            <p>&emsp;Role: <i>{{user.role}}</i></p>
+        </div>
+        <div class="col-4 text-user-info">
+            <p> Second name: <i>{{user.surname}}</i></p>
+            <p> Password: <i>********</i></p>
+            <p> Phone number: <i>{{user.phoneNumber}}</i></p>
+            <p> Contract number: <i>{{user.contractNumber}}</i></p>
+            <p> Birthday: <i>{{user.birthday}}</i></p>
+            <p> Registr. date: <i>{{regDate}}</i></p>
+        </div>
+    </div>
+    <div class="row-cols-1">
+        <h3>Addresses:</h3>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div *ngFor="let address of user.addresses">
+                <label for="{{address.id}}">
+                    <input id="{{address.id}}" [value]='address' type="radio" name="addresses"
+                           [(ngModel)]="addressSelected">
+                    {{address.country}}, {{address.city}}, {{address.street}}, {{address.buildingNum}}
+                    , {{address.roomNum}}, {{address.index}}
+                </label>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="addingAddress" class="form-group">
+        <div class="row">
+            <div class="col-2 adding-header">
+                <p>New Address: </p>
+            </div>
+            <div class="col-5">
+                <form [formGroup]="addressValidationForm" name="form" (ngSubmit)="confirmAddingAddress()" novalidate>
+                    <input type="text" class="form-control"
+                           [ngClass]="{'is-invalid':  addressValidationForm.get('address').invalid && addressValidationForm.controls['address'].touched,
+                           'is-valid': addressValidationForm.get('address').valid}"
+                           name="address" placeholder="Country, City, Street, BuildNum, RoomNum, Index"
+                           formControlName="address"
+                           required/>
+                    <div class="invalid-feedback"
+                         *ngIf="addressValidationForm.get('address').invalid && addressValidationForm.controls['address'].touched">
+                        {{getValidationMessage('address').message}}
+                    </div>
+                </form>
+            </div>
+            <div class="col-2">
+                <button [disabled]="addressValidationForm.invalid" type="button" class="btn btn-primary" (click)="confirmAddingAddress()">Confirm adding</button>
+            </div>
+            <div class="col-2">
+                <button type="button" class="btn btn-secondary" (click)="cancelAddingAddress()">Cancel adding</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-1">
+            <button type="button" class="btn btn-success add-btn" (click)="addAddress()">Add new</button>
+        </div>
+        <div class="col-sm-1">
+            <button type="button" class="btn btn-danger delete-btn" (click)="deleteAddress()">Delete</button>
+        </div>
+    </div>
+    <div class="row-cols-1">
+        <h3>Billing accounts:</h3>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div *ngFor="let ba of billingAccounts">
+                <label for="{{ba.id}}">
+                    <input id="{{ba.id}}" [value]='ba' type="radio" name="billingAccounts"
+                           [(ngModel)]="baSelected">
+                    Account Number: {{ba.accountNumber}},<br/>
+                    &emsp;  Balance: {{ba.balance}}
+                </label>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="addingBA" class="form-group">
+        <div class="row">
+            <div class="col-sm-4 adding-header">
+                <p>Enter account number (16 numbers): </p>
+            </div>
+            <div class="col-3">
+                <form [formGroup]="baValidationForm" name="form" (ngSubmit)="confirmAddingBA()" novalidate>
+                    <input type="number" class="form-control"
+                           [ngClass]="{'is-invalid':  baValidationForm.get('accountNumber').invalid && baValidationForm.controls['accountNumber'].touched,
+                           'is-valid': baValidationForm.get('accountNumber').valid}"
+                           name="accountNumber" placeholder="1234567890123456"
+                           formControlName="accountNumber"
+                           required/>
+                    <div class="invalid-feedback"
+                         *ngIf="baValidationForm.get('accountNumber').invalid && baValidationForm.controls['accountNumber'].touched">
+                        {{getValidationMessage('accountNumber').message}}
+                    </div>
+                </form>
+            </div>
+            <div class="col-2">
+                <button [disabled]="baValidationForm.invalid" type="button" class="btn btn-primary" (click)="confirmAddingBA()">Confirm adding</button>
+            </div>
+            <div class="col-2">
+                <button type="button" class="btn btn-secondary" (click)="cancelAddingBA()">Cancel adding</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-1">
+            <button type="button" class="btn btn-success add-btn" (click)="addBA()">Add new</button>
+        </div>
+        <div class="col-sm-1">
+            <button type="button" class="btn btn-danger delete-btn" (click)="deleteBA()">Delete</button>
+        </div>
+    </div>
+</div>
 <app-footer></app-footer>

@@ -77,6 +77,13 @@ export interface ConstantPrices {
     discountEndDate: string;
 }
 
+export interface BillingAccount {
+    id: number;
+    user: User;
+    accountNumber: string;
+    balance: number;
+}
+
 export interface Menu {
     name: string;
     url: string;

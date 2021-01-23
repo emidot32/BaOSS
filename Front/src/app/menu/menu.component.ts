@@ -12,7 +12,6 @@ import {Observable} from 'rxjs';
     styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
-    public count: number;
     public role: string;
     public login: string;
 
@@ -26,6 +25,7 @@ export class MenuComponent implements OnInit {
 
 
     ngOnInit() {
+        console.log(this.login);
         this.menu.push({name: 'Profile', url: `profile/${this.login}`});
     }
 }

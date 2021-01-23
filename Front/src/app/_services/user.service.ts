@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 
 import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
 
-import {User} from '../_models/interface';
+import {Address, BillingAccount, User} from '../_models/interface';
 
 
 import {environment} from '../../environments/environment';
@@ -11,31 +11,47 @@ import {throwError} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private http: HttpClient) {
-  }
-
-  escaping(str: string) {
-    if (str == null) {
-      return str;
+    constructor(private http: HttpClient) {
     }
-    return String(str).replace(/[&#$%~^*<>"'`=\/\\]/g, '');
-  }
 
-  getAll() {
-    return this.http.get<User[]>('/user-service/users');
-  }
+    escaping(str: string) {
+        if (str == null) {
+            return str;
+        }
+        return String(str).replace(/[&#$%~^*<>"'`=\/\\]/g, '');
+    }
 
-  register(user: User) {
-    return this.http.post<User>(`${environment.apiUrl}/user-service/auth/sign-up`, user);
-  }
+    getAllUsers() {
+        return this.http.get<User[]>('/user-service/users');
+    }
 
-  getUser(login: string) {
-    return this.http.get<User>(`${environment.apiUrl}/profile/${login}`);
-  }
+    register(user: User) {
+        return this.http.post<User>(`${environment.apiUrl}/user-service/auth/sign-up`, user);
+    }
+
+    getUser(login: string): Observable<User> {
+        return this.http.get<User>(`${environment.apiUrl}/user-service/user-info/${login}`);
+    }
+
+    getBillingAccountForUser(login: string): Observable<BillingAccount[]> {
+        return this.http.get<BillingAccount[]>(`${environment.apiUrl}/billing-service/billing-accounts?login=${login}`);
+    }
+
+    addOrDeleteAddressForUser(user: User, address: Address): Observable<User> {
+        return this.http.post<User>(`${environment.apiUrl}/user-service/user-info/user-address`, {user: user, address: address});
+    }
+
+    addOrDeleteBillingAccountForUser(billingAccount: BillingAccount): Observable<BillingAccount[]> {
+        return this.http.post<BillingAccount[]>(`${environment.apiUrl}/billing-service/user-billing-account`, billingAccount);
+    }
+
+    edit(user: User) {
+        return this.http.put<any>(`${environment.apiUrl}/user-service/user-info/update-user`, user);
+    }
 }
 
 

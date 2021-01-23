@@ -1,0 +1,31 @@
+.text-user-info i {
+    font-size: 20px;
+}
+
+.text-user-info p {
+    font-size: 20px;
+    font-family: Calibri;
+}
+.edit-btn {
+    margin-top: 5px;
+}
+.usr-info-hdr {
+    margin-top: 7px;
+}
+
+.delete-btn {
+    margin-left: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.add-btn {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.adding-header {
+    margin-left: 5px;
+    margin-top: 8px;
+}
+.adding-header p {
+    font-size: 16px;
+}

@@ -91,7 +91,7 @@ export class RegistrationComponent implements OnInit {
                 Validators.minLength(3),
                 Validators.maxLength(30)]),
             phoneNumber: new FormControl('', [
-                Validators.pattern('^[+]{1} [0-9]{3} [0-9]{3}-[0-9]{2}-[0-9]{2}$')]),
+                Validators.pattern('^^[+]{1}[0-9]{2} [0-9]{3} [0-9]{3} [0-9]{2} [0-9]{2}$')]),
             idCardNumber: new FormControl('', [
                 Validators.required,
                 Validators.pattern('^[0-9]{10}$')]),

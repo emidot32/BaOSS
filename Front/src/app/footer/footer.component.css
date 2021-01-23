@@ -1,15 +1,15 @@
 i {
     color: #293A43;
-    font-size: 11px;
+    font-size: 13px;
 }
 .back {
-    background-color: slategrey;
+    background-color: lightsteelblue;
 }
 .footer {
     /*position: absolute;*/
     /*bottom: 0;*/
     /*margin-bottom: -170px;*/
-    background-color: slategrey;
+    background-color: lightsteelblue;
     /*width: 100%;*/
     /* Set the fixed height of the footer here */
     height: 50px;

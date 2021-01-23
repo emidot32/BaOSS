@@ -19,11 +19,11 @@ export class HeaderAuthComponent implements OnInit {
     constructor(private router: Router,
                 private authenticationService: AuthenticationService) {
         // this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-        this.currentUser = this.authenticationService.currentUserValue.login;
-        this.currentRole = this.authenticationService.currentUserValue.role;
     }
 
     ngOnInit() {
+        this.currentUser = this.authenticationService.currentUserValue.login;
+        this.currentRole = this.authenticationService.currentUserValue.role;
     }
 
     logout() {

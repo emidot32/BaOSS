@@ -3,6 +3,7 @@ import {Observable} from 'rxjs/internal/Observable';
 import {Injectable} from '@angular/core';
 import {tap} from 'rxjs/operators';
 import {AuthenticationService} from '../_services/authentication.service';
+import {tokenize} from 'ngx-bootstrap/typeahead';
 
 
 @Injectable()

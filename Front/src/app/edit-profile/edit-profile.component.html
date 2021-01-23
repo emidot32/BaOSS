@@ -1,0 +1,91 @@
+<div class="container">
+    <form [formGroup]="form" name="form" novalidate>
+        <h3 class="page-header">Edit Profile</h3>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group row">
+                    <p class="col-3 form-label">First name:</p>
+                    <div class="col-6">
+                        <input type="text" class="form-control" [ngClass]="{'is-invalid':  form.get('userName').invalid && form.controls['userName'].touched,
+                        'is-valid': form.get('userName').valid && form.controls['userName'].touched}" name="userName"
+                               formControlName="userName" required/>
+                        <div class="invalid-feedback"
+                             *ngIf="form.get('userName').invalid && form.controls['userName'].touched">
+                            {{getValidationMessage('userName').message}}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <p class="col-3 form-label">Login:</p>
+                    <div class="col-6">
+                        <input type="text" class="form-control" [ngClass]="{'is-invalid':  form.get('userLogin').invalid && form.controls['userLogin'].touched,
+                        'is-valid': form.get('userLogin').valid && form.controls['userLogin'].touched}" name="userLogin"
+                               formControlName="userLogin" required/>
+                        <div class="invalid-feedback"
+                             *ngIf="form.get('userLogin').invalid && form.controls['userLogin'].touched">
+                            {{getValidationMessage('userLogin').message}}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <p class="col-3 form-label">Email:</p>
+                    <div class="col-6">
+                        <input type="text" class="form-control" [ngClass]="{'is-invalid':  form.get('userEmail').invalid && form.controls['userEmail'].touched,
+                        'is-valid': form.get('userEmail').valid && form.controls['userEmail'].touched}" name="userEmail"
+                               formControlName="userEmail" required/>
+                        <div class="invalid-feedback"
+                             *ngIf="form.get('userEmail').invalid && form.controls['userEmail'].touched">
+                            {{getValidationMessage('userEmail').message}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group row">
+                    <p class="col-3 form-label">Second name:</p>
+                    <div class="col-6">
+                        <input type="text" class="form-control" [ngClass]="{'is-invalid':  form.get('userSurname').invalid && form.controls['userSurname'].touched,
+                        'is-valid': form.get('userSurname').valid && form.controls['userSurname'].touched}" name="userSurname"
+                               formControlName="userSurname" required/>
+                        <div class="invalid-feedback"
+                             *ngIf="form.get('userSurname').invalid && form.controls['userSurname'].touched">
+                            {{getValidationMessage('userSurname').message}}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <p class="col-3 form-label">Password:</p>
+                    <div class="col-6">
+                        <input type="text" class="form-control" [ngClass]="{'is-invalid':  form.get('userPassword').invalid && form.controls['userPassword'].touched,
+                        'is-valid': form.get('userPassword').valid && form.controls['userPassword'].touched}" name="userPassword"
+                               formControlName="userPassword"/>
+                        <div class="invalid-feedback"
+                             *ngIf="form.get('userPassword').invalid && form.controls['userPassword'].touched">
+                            {{getValidationMessage('userPassword').message}}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <p class="col-3 form-label">Phone number:</p>
+                    <div class="col-6">
+                        <input type="text" class="form-control" [ngClass]="{'is-invalid':  form.get('phoneNumber').invalid && form.controls['phoneNumber'].touched,
+                        'is-valid': form.get('phoneNumber').valid && form.controls['phoneNumber'].touched}" name="phoneNumber"
+                               formControlName="phoneNumber" />
+                        <div class="invalid-feedback"
+                             *ngIf="form.get('phoneNumber').invalid && form.controls['phoneNumber'].touched">
+                            {{getValidationMessage('phoneNumber').message}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-1">
+                <button [disabled]="form.invalid" type="button" class="btn btn-primary" (click)="edit()">Save</button>
+            </div>
+            <div class="col-1">
+                <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>
