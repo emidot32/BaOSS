@@ -14,3 +14,12 @@ eureka:
       defaultZone: http://localhost:8080/eureka
     fetchRegistry: true
     registerWithEureka: true
+
+#zuul:
+#  routes:
+#    user-service:
+#      path: /user-service/**
+#      serviceId: user-service
+#    order-service:
+#      path: /order-service/**
+#      serviceId: order-service

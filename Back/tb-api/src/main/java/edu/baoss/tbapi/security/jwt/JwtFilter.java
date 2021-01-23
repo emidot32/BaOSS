@@ -33,6 +33,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String token = jwtProvider.resolveToken(httpServletRequest);
         try {
             if (token != null && jwtProvider.validateToken(token)) {
+                //httpServletResponse.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
                 Authentication auth = getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
