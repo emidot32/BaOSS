@@ -33,14 +33,12 @@ public class JwtFilter extends OncePerRequestFilter {
         String token = jwtProvider.resolveToken(httpServletRequest);
         try {
             if (token != null && jwtProvider.validateToken(token)) {
-                //httpServletResponse.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
                 Authentication auth = getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
-        } catch (TokenValidationException ex) {
+        } catch (Exception ex) {
             SecurityContextHolder.clearContext();
             //httpServletResponse.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
-            //httpServletResponse.setHeader("Access-Control-Allow-Origin", "https://netbooksfront.herokuapp.com");
             httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
             httpServletResponse.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
             httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
@@ -48,7 +46,7 @@ public class JwtFilter extends OncePerRequestFilter {
                     "Content-Type, Authorization, Origin, Accept, Access-Control-Request-Method, " +
                     "Access-Control-Request-Headers");
 
-            httpServletResponse.sendError(ex.getHttpStatus().value(), ex.getMessage());
+            httpServletResponse.sendError(403, ex.getMessage()+" Please logout and login again.");
             return;
         }
         filterChain.doFilter(httpServletRequest, httpServletResponse);
@@ -57,19 +55,17 @@ public class JwtFilter extends OncePerRequestFilter {
 
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = userService.loadUserByUsername(jwtProvider.getUsername(token));
-        System.out.println(userDetails);
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
     private void attemptAuthentication(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-        //httpServletResponse.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
-        //httpServletResponse.setHeader("Access-Control-Allow-Origin", "https://netbooksfront.herokuapp.com");
-        httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
-        httpServletResponse.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
-        httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
-        httpServletResponse.setHeader("Access-Control-Allow-Headers", "X-Requested-With, " +
-                "Content-Type, Authorization, Origin, Accept, Access-Control-Request-Method, " +
-                "Access-Control-Request-Headers");
+            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+            //httpServletResponse.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+            httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
+            httpServletResponse.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
+            httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
+            httpServletResponse.setHeader("Access-Control-Allow-Headers", "X-Requested-With, " +
+                    "Content-Type, Authorization, Origin, Accept, Access-Control-Request-Method, " +
+                    "Access-Control-Request-Headers");
     }
 }
