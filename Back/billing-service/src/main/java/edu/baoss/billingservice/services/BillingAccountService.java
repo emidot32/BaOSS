@@ -4,7 +4,7 @@ import edu.baoss.billingservice.model.BillingAccount;
 import edu.baoss.billingservice.model.User;
 import edu.baoss.billingservice.repositories.BillingAccountRepository;
 import edu.baoss.billingservice.repositories.UserRepository;
-import edu.baoss.userservice.exceptions.UserNotFoundException;
+import edu.baoss.billingservice.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

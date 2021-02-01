@@ -1,4 +1,4 @@
-package edu.baoss.userservice.exceptions;
+package edu.baoss.billingservice.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
