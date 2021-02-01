@@ -14,15 +14,8 @@ import java.util.Date;
 
 @Service(value = "userService")
 public class UserService implements UserDetailsService {
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
     @Autowired
     private UserFeignProxy userFeignProxy;
-
-//    public ResponseEntity<?> registerUser(User user){
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        return userFeignProxy.register(user);
-//    }
 
     public void setMinRefreshDate(String login, Date date) {
         userFeignProxy.setMinRefreshDateByLogin(login, date);
