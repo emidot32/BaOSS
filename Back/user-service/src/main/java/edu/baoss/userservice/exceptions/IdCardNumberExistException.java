@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
-@ResponseStatus(value= HttpStatus.BAD_REQUEST, reason="The user with this id card number is exists")
+@ResponseStatus(value= HttpStatus.BAD_REQUEST, reason="The user with this id card number exists")
 public class IdCardNumberExistException extends RuntimeException {
     private final String message;
 

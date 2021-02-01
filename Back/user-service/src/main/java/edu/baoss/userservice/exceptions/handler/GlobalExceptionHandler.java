@@ -15,16 +15,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
     protected ResponseEntity<?> handleUserNotFoundException() {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).
                 body(new SimpleException("There is no such user"));
     }
-
-//    @ExceptionHandler(Exception.class)
-//    protected ResponseEntity<?> handleDefaultException() {
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).
-//                body(new SimpleException("An unexpected error has occurred. Please contact system administrator"));
-//    }
-
 
     @Data
     @AllArgsConstructor

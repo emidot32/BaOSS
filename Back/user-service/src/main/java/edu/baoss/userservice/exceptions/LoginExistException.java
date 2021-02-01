@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
-@ResponseStatus(value= HttpStatus.BAD_REQUEST, reason="The user with this login is exists")
+@ResponseStatus(value= HttpStatus.BAD_REQUEST, reason="The user with this login exists")
 public class LoginExistException  extends RuntimeException{
     private final String message;
 

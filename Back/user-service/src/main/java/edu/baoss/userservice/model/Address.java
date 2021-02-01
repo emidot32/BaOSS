@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler","users"})
 @Entity
 @Table(name="address")
 public class Address {

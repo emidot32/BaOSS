@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
-@ResponseStatus(value= HttpStatus.BAD_REQUEST, reason="The user with this email is exists")
+@ResponseStatus(value= HttpStatus.BAD_REQUEST, reason="The user with this email exists")
 public class EmailExistException extends RuntimeException {
     private final String message;
     @Override
