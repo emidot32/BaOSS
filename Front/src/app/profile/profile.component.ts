@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {formatDate} from '@angular/common';
 import {FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
+import {AuthService} from '../_services/auth.service';
 
 @Component({
     selector: 'app-profile',
@@ -37,7 +38,8 @@ export class ProfileComponent implements OnInit {
     constructor(private userService: UserService,
                 private activatedRoute: ActivatedRoute,
                 private router: Router,
-                private toaster: ToastrService) {
+                private toaster: ToastrService,
+                private authService: AuthService) {
         this.addressValidationForm = new FormGroup({
             address: new FormControl('', [
                 Validators.required,
@@ -51,18 +53,17 @@ export class ProfileComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.activatedRoute.params.subscribe(params => {
-            this.userService.getUser(params.login).subscribe( data => {
-                this.user = data;
-                this.regDate = formatDate(data.regDate, 'yyyy-MM-dd', 'en-US');
-            },
-                error => this.toaster.error(error.error.message));
-            this.userService.getBillingAccountForUser(params.login).subscribe( data => this.billingAccounts = data);
-        });
+        const login = this.authService.currentUserValue.login;
+        this.userService.getUser(login).subscribe( data => {
+            this.user = data;
+            this.regDate = formatDate(data.regDate, 'yyyy-MM-dd', 'en-US');
+        },
+            error => this.toaster.error(error.error.message));
+        this.userService.getBillingAccountForUser(login).subscribe( data => this.billingAccounts = data);
     }
 
     edit() {
-        this.router.navigate([`/homeath/profile/${this.user.login}/edit`]);
+        this.router.navigate([`/homeath/profile/edit`]);
     }
 
     addAddress() {

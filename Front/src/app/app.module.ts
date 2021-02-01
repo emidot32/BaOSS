@@ -33,14 +33,15 @@ import {ProfileComponent} from './profile/profile.component';
 import {HomeathComponent} from './homeath/homeath.component';
 import {JwtInterceptor} from './_helpers/jwt.interceptor';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { OrderEntryComponent } from './order-entry/order-entry.component';
 
 const homeComponents: Routes = [
     {path: 'offers', component: OffersComponent},
 ];
 const homeAthComponents: Routes = [
     {path: 'offers', component: OffersComponent},
-    {path: 'profile/:login', component: ProfileComponent},
-    {path: 'profile/:login/edit', component: EditProfileComponent},
+    {path: 'profile', component: ProfileComponent},
+    {path: 'profile/edit', component: EditProfileComponent},
 ];
 
 
@@ -50,6 +51,7 @@ const appRoutes: Routes = [
     {path: 'homeath', component: HomeathComponent, children: homeAthComponents},
     {path: 'login', component: AuthorizationComponent},
     {path: 'register', component: RegistrationComponent},
+    {path: 'order-entry', component: OrderEntryComponent},
     // otherwise redirect to home
     {path: '**', redirectTo: 'home/offers'}
 ];
@@ -69,6 +71,7 @@ const appRoutes: Routes = [
         ProfileComponent,
         HomeathComponent,
         EditProfileComponent,
+        OrderEntryComponent,
     ],
     imports: [
         InfiniteScrollModule,

@@ -2,13 +2,13 @@ import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from
 import {Observable} from 'rxjs/internal/Observable';
 import {Injectable} from '@angular/core';
 import {tap} from 'rxjs/operators';
-import {AuthenticationService} from '../_services/authentication.service';
+import {AuthService} from '../_services/auth.service';
 import {tokenize} from 'ngx-bootstrap/typeahead';
 
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(private authenticationService: AuthService) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

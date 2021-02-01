@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthenticationService} from '../_services/authentication.service';
+import {AuthService} from '../_services/auth.service';
 import {User} from '../_models/interface';
 
 @Component({
@@ -10,7 +10,7 @@ import {User} from '../_models/interface';
 export class HomeComponent implements OnInit {
     currentUser: User;
 
-    constructor(private authService: AuthenticationService) {
+    constructor(private authService: AuthService) {
     }
 
     ngOnInit() {

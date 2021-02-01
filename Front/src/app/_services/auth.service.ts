@@ -10,7 +10,7 @@ import {User} from '../_models/interface';
 const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
 @Injectable({providedIn: 'root'})
-export class AuthenticationService {
+export class AuthService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
   public role: string;

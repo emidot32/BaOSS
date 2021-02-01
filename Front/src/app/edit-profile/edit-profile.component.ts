@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
-import {AuthenticationService} from '../_services/authentication.service';
+import {AuthService} from '../_services/auth.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {UserService} from '../_services/user.service';
 import {User} from '../_models/interface';
@@ -52,11 +52,12 @@ export class EditProfileComponent implements OnInit {
     constructor(private userService: UserService,
                 private activatedRoute: ActivatedRoute,
                 private router: Router,
-                private toastr: ToastrService) {
+                private toastr: ToastrService,
+                private authService: AuthService) {
     }
 
     ngOnInit() {
-        this.login = this.activatedRoute.snapshot.params.login;
+        this.login = this.authService.currentUserValue.login;
         this.form = new FormGroup({
             userLogin: new FormControl('', [
                 Validators.required,
@@ -115,7 +116,7 @@ export class EditProfileComponent implements OnInit {
             .subscribe(
                 () => {
                     this.toastr.success(`Profile is successfully updated`);
-                    this.router.navigate([`/homeath/profile/${this.login}`]);
+                    this.router.navigate([`/homeath/profile`]);
                 },
                 error => {
                     this.toastr.error(error.error.message);
@@ -123,7 +124,7 @@ export class EditProfileComponent implements OnInit {
     }
 
     cancelEdit() {
-        this.router.navigate([`/homeath/profile/${this.login}`]);
+        this.router.navigate([`/homeath/profile`]);
     }
 
     getValidationMessage(controlName: string) {

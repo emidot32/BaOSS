@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {InternetOffer, DtvOffer, Tariff, ConstantPrices} from '../_models/interface';
+import {InternetOffer, DtvOffer, Tariff, ConstantPrices, Discount} from '../_models/interface';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
+import {ToastrService} from 'ngx-toastr';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -32,5 +33,9 @@ export class OffersService {
 
   getConstantPrices(): Observable<ConstantPrices> {
     return this.http.get<ConstantPrices>(`${environment.apiUrl}/offer-service/offers/constant-prices`);
+  }
+
+  getActiveDiscounts(): Observable<Discount[]> {
+    return this.http.get<Discount[]>(`${environment.apiUrl}/offer-service/offers/active-discounts`);
   }
 }

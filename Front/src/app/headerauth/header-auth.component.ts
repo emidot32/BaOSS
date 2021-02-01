@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 
 import {Router} from '@angular/router';
-import {AuthenticationService} from '../_services/authentication.service';
+import {AuthService} from '../_services/auth.service';
 import {User} from '../_models/interface';
 import {MenuComponent} from '../menu/menu.component';
 
@@ -17,7 +17,7 @@ export class HeaderAuthComponent implements OnInit {
 
 
     constructor(private router: Router,
-                private authenticationService: AuthenticationService) {
+                private authenticationService: AuthService) {
         // this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     }
 

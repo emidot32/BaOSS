@@ -1,0 +1,68 @@
+.offers-instances {
+    float: left;
+    position: absolute;
+    margin-right: 80%;
+    margin-left: 30px;
+    margin-top: 20px;
+}
+.footer {
+    float: bottom;
+    position: absolute;
+    margin-top: 36.1%;
+    width: 100%;
+}
+.activated-discounts {
+    float: left;
+    position: absolute;
+    margin-right: 80%;
+    margin-left: 30px;
+    margin-top: 15%;
+}
+.first {
+    position: absolute;
+    margin-right: 65%;
+    margin-left: 18%;
+    margin-top: 1%;
+}
+.second {
+    position: absolute;
+    margin-right: 65%;
+    margin-left: 18%;
+    margin-top: 17%;
+}
+.third {
+    position: absolute;
+    margin-right: 65%;
+    margin-left: 18%;
+    margin-top: 22%;
+}
+.g5-support-span {
+    display: inline-block;
+    width: 120px;
+}
+.delivery-span {
+    display: inline-block;
+    width: 200px;
+}
+.fixed-ip-span {
+    display: inline-block;
+    width: 90px;
+}
+.int-installation-span {
+    display: inline-block;
+    width: 200px;
+}
+.ipv6-support-span {
+    display: inline-block;
+    width: 120px;
+}
+.cable-length {
+    width: 50px;
+    height: 28px;
+}
+.cable-length-span {
+    display: inline-block;
+    width: 100px;
+}
+input.ng-touched.ng-invalid {border:solid red 2px;}
+input.ng-touched.ng-valid {border:solid green 2px;}

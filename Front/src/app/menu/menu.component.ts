@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Menu, User} from '../_models/interface';
-import {AuthenticationService} from '../_services/authentication.service';
+import {AuthService} from '../_services/auth.service';
 import {Observable} from 'rxjs';
 
 // import {NotificationService} from "../_services/notification.service";
@@ -16,7 +16,7 @@ export class MenuComponent implements OnInit {
     public login: string;
 
 
-    constructor(private authenticationService: AuthenticationService) {
+    constructor(private authenticationService: AuthService) {
         this.login = authenticationService.currentUserValue.login;
         this.role = authenticationService.currentUserValue.role;
     }
@@ -25,7 +25,6 @@ export class MenuComponent implements OnInit {
 
 
     ngOnInit() {
-        console.log(this.login);
-        this.menu.push({name: 'Profile', url: `profile/${this.login}`});
+        this.menu.push({name: 'Profile', url: `profile`});
     }
 }

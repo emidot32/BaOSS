@@ -11,7 +11,8 @@
                     </div>
 
                     <div class="col-lg-4">
-                        <a class="btn btn-block btn-blue" [routerLink]="['/login']">Login</a>
+                        <a class="btn btn-block btn-blue" [routerLink]="['/login']"
+                           [queryParams]="{'nextPage':'profile'}">Login</a>
                     </div>
                 </div>
             </div>

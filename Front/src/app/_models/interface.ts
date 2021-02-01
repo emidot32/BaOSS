@@ -55,26 +55,35 @@ export interface Tariff {
     discount: number;
     discountEndDate: string;
     priceEnding: string;
-    tariff_name: string;
-    internet_GBs: number;
-    free_minutes: number;
-    free_sms: number;
-    roaming_per_minute_call_price: number;
-    roaming_per_minute_internet_price: number;
-    one_sms_price: number;
-    minute_of_call_price: number;
+    tariffName: string;
+    internetGBs: number;
+    freeMinutes: number;
+    freeSms: number;
+    roamingPerMinuteCallPrice: number;
+    roamingPerMinuteInternetPrice: number;
+    oneSmsPrice: number;
+    minuteOfCallPrice: number;
 }
 
 export interface ConstantPrices {
     id: string;
-    fixed_ip_prices: number[];
-    ipv6_support_prices: number[];
-    installation_prices_for_internet_product: number[];
-    installation_prices_for_dtv_product: number[];
-    delivery_prices: number[];
-    support_of_5g_prices: number[];
+    fixedIpPrices: number[];
+    ipv6SupportPrices: number[];
+    installationPricesForInternetProduct: number[];
+    installationPricesForDtvProduct: number[];
+    deliveryPrices: number[];
+    supportOf5gPrices: number[];
+    cableOneMeterPrice: number[];
     discount: number;
     discountEndDate: string;
+}
+
+export interface Discount {
+    id: string;
+    value: number;
+    startDate: Date;
+    endDate: Date;
+    appliedFor: string;
 }
 
 export interface BillingAccount {
@@ -82,6 +91,41 @@ export interface BillingAccount {
     user: User;
     accountNumber: string;
     balance: number;
+}
+
+export interface PhoneNumber {
+    id: string;
+    phoneNumber: string;
+    price: number;
+    used: boolean;
+    simCardNumber: string;
+    countryCode: string;
+    pinCode: string;
+    pukCode: string;
+}
+export interface Device {
+    id: string;
+    name: string;
+    type: string;
+    price: number;
+    throughput: string;
+    portsNum: number;
+    portTypes: string;
+    used: boolean[];
+    forSale: boolean;
+    guarantee: number;
+    standards: string;
+    memory: number;
+    macAddresses: string[];
+    serialNumbers: string[];
+    frequencies: string;
+    protocolsAndTechnologies: string;
+}
+export interface Cable {
+    id: string;
+    type: string;
+    length: number;
+    category: number;
 }
 
 export interface Menu {
