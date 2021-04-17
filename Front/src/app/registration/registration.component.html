@@ -1,8 +1,10 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://unpkg.com/ngx-bootstrap/datepicker/bs-datepicker.css">
 <div class="back align-content-center">
   <div class="register-form container">
     <form [formGroup]="registerForm" name="form" (ngSubmit)="register()" novalidate>
       <div class="row">
-        <div class="col-sm-8 col-md-6 col-lg-4 mx-auto">
+        <div class="col-sm-12 col-md-10 col-lg-4 mx-auto">
           <h2>Registration</h2>
 
 
@@ -71,7 +73,7 @@
 
           <div class="form-group">
             <select class="form-control" formControlName="gender">
-              <option value="" disabled selected>Gender</option>
+              <option disabled selected>Gender</option>
               <option value="MALE">MALE</option>
               <option value="FEMALE">FEMALE</option>
               <option value="NONE">NONE</option>
@@ -88,24 +90,35 @@
             </div>
           </div>
 
-          <div class="form-group">
-            <input type="text" class="form-control"
-                   [ngClass]="{'is-invalid':  registerForm.get('address').invalid && registerForm.controls['address'].touched,
+          <div class="form-group ">
+<!--            <div class="row">-->
+              <input type="text" class="form-control "
+                     [ngClass]="{'is-invalid':  registerForm.get('address').invalid && registerForm.controls['address'].touched,
                    'is-valid': registerForm.get('address').valid}"
-                   name="address" placeholder="Country, City, Street, BuildNum, RoomNum, Index" formControlName="address"
-                   required/>
+                     name="address" placeholder="Country, City, Street, BuildNum, RoomNum, Index" formControlName="address"
+                     required/>
+<!--              <input class="btn btn-secondary col-2 col-sm-3" (click)="showMapFunc()" value="Show map"/>-->
+<!--            </div>-->
+
             <div class="invalid-feedback"
                  *ngIf="registerForm.get('address').invalid && registerForm.controls['address'].touched">
               {{getValidationMessage('address').message}}
             </div>
           </div>
 
-          <mat-form-field appearance="fill">
-            <mat-label></mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="birthday">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
+<!--          <agm-map *ngIf="showMap"-->
+<!--                   [latitude]="lat" [longitude]="lng" >-->
+<!--            <agm-marker [latitude]="lat" [longitude]="lng"-->
+<!--                        (dragEnd)="markerDragEnd($event)" [markerDraggable]="true"></agm-marker>-->
+<!--          </agm-map>-->
+
+          <div class="form-group">
+            <input type="text"
+                   placeholder="Birthday: mm/dd/yyyy"
+                   class="form-control"
+                   formControlName="birthday"
+                   bsDatepicker>
+          </div>
 
 
           <div class="form-row">

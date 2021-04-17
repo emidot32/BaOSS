@@ -7,9 +7,11 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.stereotype.Component;
 
-@Component
+import java.util.HashSet;
+import java.util.Set;
+
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,11 +20,8 @@ import org.springframework.stereotype.Component;
 public class ConnectedBuilding {
     @Id
     private String id;
-    private String country;
-    private String city;
-    private String street;
-    @Field("building_num")
-    private String buildingNum;
+    @Field("connected_addresses")
+    Set<ConnectedAddress> connectedAddresses = new HashSet<>();
     @Field("mac_address")
     private String macAddress;
     @Field("switch_serial_number")

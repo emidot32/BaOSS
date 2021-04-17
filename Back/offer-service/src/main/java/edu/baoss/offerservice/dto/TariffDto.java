@@ -16,7 +16,7 @@ public class TariffDto implements IOfferDto {
     int discount;
     String discountEndDate;
     String priceEnding;
-    String tariff_name;
+    String tariffName;
     int internetGBs;
     int freeMinutes;
     int freeSms;

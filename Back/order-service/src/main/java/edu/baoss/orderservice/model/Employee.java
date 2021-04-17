@@ -1,18 +1,21 @@
 package edu.baoss.orderservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
-@Component
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name="employee")
 public class Employee {
@@ -38,8 +41,27 @@ public class Employee {
     int salary;
 
     @ManyToMany
+    @Transient
+    @JsonIgnore
     @JoinTable(name = "delivery_worker",
             joinColumns = @JoinColumn(name = "empl_id", referencedColumnName = "empl_id"),
             inverseJoinColumns = @JoinColumn(name = "delivery_id", referencedColumnName = "delivery_id"))
-    Set<Delivery> deliveries;
+    Set<Delivery> deliveries = new HashSet<>();
+
+    //public Employee(long id) {
+//        this.id = id;
+//    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return id == employee.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

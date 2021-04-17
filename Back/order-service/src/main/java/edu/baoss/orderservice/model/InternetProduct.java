@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.*;
 import java.util.Set;
 
-@Component
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

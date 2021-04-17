@@ -37,6 +37,10 @@ export class UserService {
         return this.http.get<User>(`${environment.apiUrl}/user-service/user-info/${login}`);
     }
 
+    getAddressesByLogin(login: string): Observable<Address[]> {
+        return this.http.get<Address[]>(`${environment.apiUrl}/user-service/user-info/addresses?login=${login}`);
+    }
+
     getBillingAccountForUser(login: string): Observable<BillingAccount[]> {
         return this.http.get<BillingAccount[]>(`${environment.apiUrl}/billing-service/billing-accounts?login=${login}`);
     }

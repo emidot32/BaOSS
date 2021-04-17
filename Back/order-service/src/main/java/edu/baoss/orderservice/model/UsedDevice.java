@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
-@Component
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,9 +15,8 @@ import javax.persistence.*;
 @Table(name="used_device")
 public class UsedDevice {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "device_id")
-    long id;
+    String id;
 
     @Column(name = "device_name", nullable = false)
     String deviceName;
@@ -28,6 +27,10 @@ public class UsedDevice {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "inet_prod_id", referencedColumnName = "inet_prod_id")
     InternetProduct internetProduct;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "dtv_prod_id", referencedColumnName = "dtv_prod_id")
+    DtvProduct dtvProduct;
 
 
 }

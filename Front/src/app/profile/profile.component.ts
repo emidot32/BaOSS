@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Address, BillingAccount, User} from '../_models/interface';
 import {UserService} from '../_services/user.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {formatDate} from '@angular/common';
+import {DatePipe, formatDate} from '@angular/common';
 import {FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 import {AuthService} from '../_services/auth.service';
@@ -18,6 +18,7 @@ export class ProfileComponent implements OnInit {
     addressSelected: Address;
     baSelected: BillingAccount;
     regDate: string;
+    birthday: string;
     addingAddress = false;
     addingBA = false;
     addressValidationForm: FormGroup;
@@ -39,7 +40,8 @@ export class ProfileComponent implements OnInit {
                 private activatedRoute: ActivatedRoute,
                 private router: Router,
                 private toaster: ToastrService,
-                private authService: AuthService) {
+                private authService: AuthService,
+                private dateFormatPipe: DatePipe) {
         this.addressValidationForm = new FormGroup({
             address: new FormControl('', [
                 Validators.required,
@@ -56,7 +58,8 @@ export class ProfileComponent implements OnInit {
         const login = this.authService.currentUserValue.login;
         this.userService.getUser(login).subscribe( data => {
             this.user = data;
-            this.regDate = formatDate(data.regDate, 'yyyy-MM-dd', 'en-US');
+            this.regDate = this.dateFormatPipe.transform(data.regDate, 'dd/MM/yyyy');
+            this.birthday = this.dateFormatPipe.transform(data.birthday, 'dd/MM/yyyy');
         },
             error => this.toaster.error(error.error.message));
         this.userService.getBillingAccountForUser(login).subscribe( data => this.billingAccounts = data);

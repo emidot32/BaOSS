@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
 import {UserService} from '../_services/user.service';
-import {AlertService} from '../_services/alert.service';
 import {Router} from '@angular/router';
 import {FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {Address, User} from '../_models/interface';
 import {environment} from '../../environments/environment';
 import {ToastrService} from 'ngx-toastr';
+import {MapsAPILoader} from '@agm/core';
 
 @Component({
     selector: 'app-registration',
@@ -13,7 +13,9 @@ import {ToastrService} from 'ngx-toastr';
     styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
-
+    lat = 50.45;
+    lng = 30.55;
+    showMap = false;
     registerForm: FormGroup;
     model: User = {} as User;
     accountValidationMessages = {
@@ -48,7 +50,7 @@ export class RegistrationComponent implements OnInit {
             {type: 'pattern', message: 'Phone number should be like +38 XXX XXX-XX-XX'}
         ],
         idCardNumber: [
-            {type: 'required', message: 'Password is required'},
+            {type: 'required', message: 'ID Card Number is required'},
             {type: 'pattern', message: 'Id Card Number must be 10 characters long'}
         ],
         address: [
@@ -60,7 +62,9 @@ export class RegistrationComponent implements OnInit {
 
     constructor(private userService: UserService,
                 private router: Router,
-                private toastr: ToastrService) {
+                private toastr: ToastrService,
+                private mapsAPILoader: MapsAPILoader,
+                private ngZone: NgZone) {
 
         this.registerForm = new FormGroup({
 
@@ -103,7 +107,38 @@ export class RegistrationComponent implements OnInit {
         });
     }
 
+
     ngOnInit() {
+    }
+
+
+    markerDragEnd($event: any) {
+        console.log($event);
+        this.lat = $event.coords.lat;
+        this.lng = $event.coords.lng;
+        this.getAddress(this.lat, this.lng);
+    }
+
+    getAddress(latitude, longitude) {
+        new google.maps.Geocoder().geocode({ 'location': { lat: latitude, lng: longitude } }, (results, status) => {
+            console.log(results);
+            console.log(status);
+            if (status === 'OK') {
+                if (results[0]) {
+                    this.registerForm.controls.address.setValue(results[0].formatted_address);
+                } else {
+                    window.alert('No results found');
+                }
+            } else {
+                window.alert('Geocoder failed due to: ' + status);
+            }
+
+        });
+        this.showMap = false;
+    }
+
+    showMapFunc() {
+        this.showMap = true;
     }
 
     getValidationMessage(controlName: string) {
@@ -156,6 +191,7 @@ export class RegistrationComponent implements OnInit {
                     this.toastr.error(error.error.message);
                 });
     }
+
 
 }
 

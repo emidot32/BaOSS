@@ -43,4 +43,11 @@ public class Address {
     @Transient
     @ManyToMany(mappedBy = "addresses")
     Set<User> users;
+
+    public boolean equalsByBuilding(Address address) {
+        return  country.equals(address.country) &&
+                city.equals(address.city) &&
+                street.equals(address.street) &&
+                buildingNum.equals(address.buildingNum);
+    }
 }

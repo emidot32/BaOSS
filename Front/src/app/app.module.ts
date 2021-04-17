@@ -3,7 +3,9 @@ import {NgModule} from '@angular/core';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {TooltipModule} from 'ngx-bootstrap/tooltip';
 import {ModalModule} from 'ngx-bootstrap/modal';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import {FullCalendarModule} from '@fullcalendar/angular'; // for FullCalendar!
+import { MatDialogModule } from '@angular/material/dialog';
 import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RegistrationComponent} from './registration/registration.component';
@@ -23,6 +25,7 @@ import {
 import {MatNativeDateModule} from '@angular/material/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
+import { AgmCoreModule } from '@agm/core';
 
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -34,6 +37,8 @@ import {HomeathComponent} from './homeath/homeath.component';
 import {JwtInterceptor} from './_helpers/jwt.interceptor';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { OrderEntryComponent } from './order-entry/order-entry.component';
+import { DeviceInfoComponent } from './device-info/device-info.component';
+import {DatePipe} from '@angular/common';
 
 const homeComponents: Routes = [
     {path: 'offers', component: OffersComponent},
@@ -72,6 +77,7 @@ const appRoutes: Routes = [
         HomeathComponent,
         EditProfileComponent,
         OrderEntryComponent,
+        DeviceInfoComponent,
     ],
     imports: [
         InfiniteScrollModule,
@@ -85,19 +91,26 @@ const appRoutes: Routes = [
         MatAutocompleteModule,
         FullCalendarModule, // for FullCalendar!
         BsDropdownModule.forRoot(),
+        BsDatepickerModule.forRoot(),
         TooltipModule.forRoot(),
         ModalModule.forRoot(),
         HttpClientModule,
         ToastrModule.forRoot(),
+        AgmCoreModule.forRoot({
+            apiKey: 'AIzaSyCoN_WOqtup2l3tXVeMQpuS2fyvhqifcok',
+            libraries: ['places']
+        }),
         MatAutocompleteModule,
         MatFormFieldModule,
         MatDatepickerModule,
         MatInputModule,
         MatNativeDateModule,
         BrowserAnimationsModule,
-        MatSelectModule
+        MatSelectModule,
+        MatDialogModule
     ],
-    providers: [{provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}],
+    providers: [{provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}, DatePipe],
+    entryComponents: [DeviceInfoComponent],
     bootstrap: [AppComponent]
 })
 export class AppModule {

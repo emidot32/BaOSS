@@ -1,4 +1,4 @@
-package edu.baoss.orderservice.model;
+package edu.baoss.orderservice.model.enums;
 
 
 public enum Role {

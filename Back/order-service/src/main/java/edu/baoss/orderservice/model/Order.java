@@ -1,19 +1,19 @@
 package edu.baoss.orderservice.model;
 
+import edu.baoss.orderservice.model.enums.OrderStatus;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
-@Component
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name="ordr")
 public class Order {
@@ -38,8 +38,11 @@ public class Order {
     @Temporal(TemporalType.TIMESTAMP)
     Date completionDate;
 
-    @Column(name = "total_cost")
-    int totalCost;
+    @Column(name = "total_mrc")
+    double totalMRC;
+
+    @Column(name = "total_nrc")
+    double totalNRC;
 
     @Column(name = "order_aim", nullable = false)
     String orderAim;
@@ -50,8 +53,8 @@ public class Order {
     @Column(name = "invoice_path")
     String invoicePath;
     
-    @Column(name = "order_types")
-    String orderTypes;
+    @Column(name = "products")
+    String products;
     
     @OneToMany(mappedBy = "order")
     Set<Task> tasks;

@@ -3,3 +3,10 @@
     color: white;
 
 }
+.footer {
+    float: bottom;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 20px;
+    width: 100%;
+}

@@ -1,5 +1,6 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://unpkg.com/ngx-bootstrap/datepicker/bs-datepicker.css">
 <app-headerauth></app-headerauth>
-
 <div class="offers-instances">
     <h4>Products:</h4>
     <div *ngFor="let item of products">
@@ -21,36 +22,36 @@
 <div *ngIf="products[0].check" [ngClass]="calculateClassForMobile()">
     <h5>Mobile Product parameters:</h5>
     <label for="phoneNumberList">Phone number: </label>
-    <select id="phoneNumberList" [(ngModel)]="selectedPhoneNumber" name="phoneNumberList">
+    <select id="phoneNumberList" [(ngModel)]="selectedPhoneNumber" name="phoneNumberList" (ngModelChange)="calculateTotalPrices()">
         <option *ngFor="let phoneNumber of phoneNumbers" [ngValue]="phoneNumber">
             {{phoneNumber.phoneNumber}} - {{phoneNumber.price}}$
         </option>
     </select><br/>
     <label for="tariffList">Tariff: </label>
-    <select id="tariffList" [(ngModel)]="selectedTariff" name="tariffList">
+    <select id="tariffList" [(ngModel)]="selectedTariff" name="tariffList" (ngModelChange)="calculateTotalPrices()">
         <option *ngFor="let tariff of tariffs" [ngValue]="tariff">
             {{tariff.tariffName}} - {{tariff.discountedPrice}}{{tariff.priceEnding}}</option>
     </select><br/>
-    <span class="g5-support-span">5G support:</span>
-    <input id="g5_support_checkbox" [checked]="support5g"
+    <span class="span-120w">5G support:</span>
+    <input [(ngModel)]="support5g"
            class="form-check-input"
-           type="checkbox">
+           type="checkbox" (ngModelChange)="calculateTotalPrices()">
     <span> - {{constantPrices.supportOf5gPrices[1]}}$</span>
     <br/>
     <div *ngIf="!products[1].check">
         <span class="delivery-span">Delivery and activation:</span>
-        <input id="mobile_delivery" [checked]="deliveryAndActivationMobile"
+        <input id="mobile_delivery" [(ngModel)]="deliveryAndActivationMobile"
                class="form-check-input"
-               type="checkbox">
+               type="checkbox" (ngModelChange)="calculateTotalPrices()">
         <span> - {{constantPrices.deliveryPrices[1]}}$ </span><br/>
-        <p>You can pick up your SIM card at the store for the address: <i>Kyiv, Kopernika, 1</i></p>
+        <p>You can pick up your SIM card at the store for the address: <i>{{storeAddress}}</i></p>
     </div>
 </div>
 
 <div *ngIf="products[1].check" class="first internet-block">
     <h5>Internet Product parameters:</h5>
     <label for="speedList">Speed: </label>
-    <select id="speedList" [(ngModel)]="selectedSpeed" name="speedList">
+    <select id="speedList" [(ngModel)]="selectedSpeed" name="speedList" (ngModelChange)="calculateTotalPrices()">
         <option *ngFor="let intOffer of internetOffers" [ngValue]="intOffer">
             {{intOffer.speed}}Mb/s - {{intOffer.discountedPrice}}{{intOffer.priceEnding}}</option>
     </select><br/>
@@ -59,7 +60,7 @@
             <span class="cable-length-span">Cable length: </span>
             <input type="number" class="cable-length" [ngClass]="{'is-invalid':  cableLengthForm.get('cableLength').invalid
             && cableLengthForm.get('cableLength').touched,
-                   'is-valid': cableLengthForm.get('cableLength').valid}" (ngModelChange)="calculateTotalCablePrice()"
+                   'is-valid': cableLengthForm.get('cableLength').valid}" (ngModelChange)="calculateTotalPrices()"
                    name="cableLength" placeholder="3"
                    formControlName="cableLength" required/>
             <span class="cable-price-span"> - {{constantPrices.cableOneMeterPrice[1]}}$/meter</span><br/>
@@ -73,22 +74,24 @@
     </form>
     <div *ngIf="devices" class="device-block">
         <label for="deviceList">Device (option):</label>
-        <select id="deviceList" [(ngModel)]="selectedDevice" name="deviceList">
+        <select id="deviceList" [(ngModel)]="selectedDevice" name="deviceList" (ngModelChange)="calculateTotalPrices()">
             <option *ngFor="let device of devices" [ngValue]="device">
-                {{device.type}} {{device.name}} - {{device.price}}$</option>
+                {{device.type}} {{device.name}} - {{device.price}}$
+            </option>
         </select>
+        <i class="fa fa-info info-btn" aria-hidden="true" (click)="openDeviceInfoWindow()"></i>
     </div>
     <span class="fixed-ip-span">Fixed IP:</span>
-    <input [checked]="fixedIpSupport"
+    <input [(ngModel)]="fixedIpSupport" (ngModelChange)="calculateTotalPrices()"
            class="form-check-input"
            type="checkbox">
     <span> - {{constantPrices.fixedIpPrices[1]}}$/month</span>
     <br/>
-<!--    <span class="ipv6-support-span">IPv6 support:</span>-->
-<!--    <input [checked]="ipv6Support"-->
-<!--           class="form-check-input"-->
-<!--           type="checkbox">-->
-<!--    <span> - {{constantPrices.ipv6SupportPrices[1]}}$/month</span>-->
+    <!--    <span class="ipv6-support-span">IPv6 support:</span>-->
+    <!--    <input [checked]="ipv6Support"-->
+    <!--           class="form-check-input"-->
+    <!--           type="checkbox">-->
+    <!--    <span> - {{constantPrices.ipv6SupportPrices[1]}}$/month</span>-->
     <span class="int-installation-span">Delivery and Installation:</span>
     <input [checked]="installation"
            class="form-check-input"
@@ -98,11 +101,202 @@
 
 <div *ngIf="products[2].check" class="second dtv-block">
     <h5>DTV Product parameters:</h5>
-    <label for="channelsList">Channel number: </label>
-    <select id="channelsList" [(ngModel)]="selectedChannelNumber" name="channelsList">
+    <label for="channelsList">Number of channels: </label>
+    <select id="channelsList" [(ngModel)]="selectedChannelNumber" name="channelsList" (ngModelChange)="calculateTotalPrices()">
         <option *ngFor="let dtvOffer of dtvOffers" [ngValue]="dtvOffer">
             {{dtvOffer.channelNumber}} - {{dtvOffer.discountedPrice}}{{dtvOffer.priceEnding}}</option>
     </select><br/>
+</div>
+
+<div class="delivery-payment-info">
+    <h4 class="delivery-payment-info-header">Delivery and Payment info</h4>
+    <div class="address-selector">
+        <span class="address-span">Address:</span>
+        <div *ngIf="deliveryAndActivationMobile || products[1].check; then thenBlock else elseBlock"></div>
+        <ng-template #thenBlock>
+            <select *ngIf="userAddresses" [(ngModel)]="selectedAddress" name="addressList">
+                <option *ngFor="let address of userAddresses" [ngValue]="address">
+                    {{address.country}}, {{address.city}}, {{address.street}}, {{address.buildingNum}}
+                    , {{address.roomNum}}, {{address.index}}</option>
+            </select>
+        </ng-template>
+        <ng-template #elseBlock>
+            <i>{{storeAddress}}</i>
+        </ng-template>
+    </div>
+    <br/>
+    <div class="billing-account-selector">
+        <span class="span-120w">Billing account:</span>
+        <select [(ngModel)]="selectedAccount" name="billingAccounts">
+            <option *ngFor="let account of billingAccounts" [ngValue]="account">
+                {{account.accountNumber}} - {{account.balance}}$
+            </option>
+        </select>
+    </div>
+    <br/>
+    <div class="date-picker">
+        <span class="span-120w">Delivery date:</span>
+        <input type="text"
+               placeholder="mm/dd/yyyy"
+               class="form-control"
+               (bsValueChange)="validateAndGetAvailableTimes($event)"
+               bsDatepicker>
+        <p *ngIf="dateErrorMessage" class="date-error">{{dateErrorMessage}}</p>
+    </div>
+    <br/>
+    <div *ngIf="(deliveryAndActivationMobile || products[1].check) && deliveryDate" class="delivery-time-selector">
+        <span class="span-80w">Time:</span>
+        <select [(ngModel)]="deliveryTime" name="deliveryTime">
+            <option *ngFor="let time of availableTimes" [ngValue]="time">{{time}}</option>
+        </select><br/>
+    </div>
+</div>
+<div class="summary-block">
+    <h4>Summary</h4>
+    <table style="width: 500px">
+        <thead>
+        <tr>
+            <th scope="col" class="summary-product-name main-block"><h5>Product</h5></th>
+            <th scope="col" class="price-cell">NRC</th>
+            <th scope="col" class="price-cell">MRC</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr *ngIf="products[0].check">
+                <td class="main-block">
+                    <h6>Mobile Product</h6>
+                </td>
+            </tr>
+            <tr *ngIf="selectedPhoneNumber">
+                <td class="summary-product-name">
+                    <span class="child-value">Phone number - {{selectedPhoneNumber.phoneNumber}}</span>
+                </td>
+                <td class="price-cell">
+                    <span>{{selectedPhoneNumber.price}}$</span>
+                </td>
+                <td class="price-cell">
+                    <span>0$</span>
+                </td>
+            </tr>
+            <tr *ngIf="selectedTariff">
+                <td class="summary-product-name">
+                    <span class="child-value">Tariff - {{selectedTariff.tariffName}}</span>
+                </td>
+                <td class="price-cell">
+                    <span>0$</span>
+                </td>
+                <td class="price-cell">
+                    <span>{{selectedTariff.discountedPrice}}$</span>
+                </td>
+            </tr>
+            <tr *ngIf="support5g">
+                <td class="summary-product-name">
+                    <span class="child-value">5G support</span>
+                </td>
+                <td class="price-cell">
+                    <span>{{constantPrices.supportOf5gPrices[1]}}$</span>
+                </td>
+                <td class="price-cell">
+                    <span>0$</span>
+                </td>
+            </tr>
+
+            <tr *ngIf="products[1].check">
+                <td class="main-block">
+                    <h6>Internet Product</h6>
+                </td>
+            </tr>
+            <tr *ngIf="selectedSpeed">
+                <td class="summary-product-name">
+                    <span class="child-value">Speed - {{selectedSpeed.speed}} Mb/s</span>
+                </td>
+                <td class="price-cell">
+                    <span>0$</span>
+                </td>
+                <td class="price-cell">
+                    <span>{{selectedSpeed.discountedPrice}}$</span>
+                </td>
+            </tr>
+            <tr *ngIf="products[1].check">
+                <td class="summary-product-name">
+                    <span class="child-value">Cable - {{cableLengthForm.controls.cableLength.value}}</span>
+                </td>
+                <td class="price-cell">
+                    <span>{{cablePriceTotal}}$</span>
+                </td>
+                <td class="price-cell">
+                    <span>0$</span>
+                </td>
+            </tr>
+            <tr *ngIf="(selectedDevice && selectedDevice.name != 'None')">
+                <td class="summary-product-name">
+                    <span class="child-value">Device - {{selectedDevice.type}} - {{selectedDevice.name}}</span>
+                </td>
+                <td class="price-cell">
+                    <span>{{selectedDevice.price}}$</span>
+                </td>
+                <td class="price-cell">
+                    <span>0$</span>
+                </td>
+            </tr>
+            <tr *ngIf="fixedIpSupport">
+                <td class="summary-product-name">
+                    <span class="child-value">Fixed IP</span>
+                </td>
+                <td class="price-cell">
+                    <span>0$</span>
+                </td>
+                <td class="price-cell">
+                    <span>{{constantPrices.fixedIpPrices[1]}}$</span>
+                </td>
+            </tr>
+
+            <tr *ngIf="products[2].check">
+                <td class="main-block">
+                    <h6>DTV Product</h6>
+                </td>
+            </tr>
+            <tr *ngIf="selectedChannelNumber">
+                <td class="summary-product-name">
+                    <span class="child-value">Number of channels - {{selectedChannelNumber.channelNumber}}</span>
+                </td>
+                <td class="price-cell">
+                    <span>0$</span>
+                </td>
+                <td class="price-cell">
+                    <span>{{selectedChannelNumber.discountedPrice}}$</span>
+                </td>
+            </tr>
+
+            <tr *ngIf="(deliveryPrice!=0)">
+                <td class="summary-product-name main-block">
+                    <h6>Delivery & installation/activation</h6>
+                </td>
+                <td class="price-cell">
+                    <span>{{deliveryPrice}}$</span>
+                </td>
+                <td class="price-cell">
+                    <span>0$</span>
+                </td>
+            </tr>
+
+            <tr *ngIf="(deliveryPrice!=0)">
+                <td class="summary-product-name total-cell">
+                    <h5>Total:</h5>
+                </td>
+                <td class="price-cell">
+                    <b>{{totalNRC}}$</b>
+                </td>
+                <td class="price-cell">
+                    <b>{{totalMRC}}$</b>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="submit-cancel-buttons">
+    <button type="button" class="btn btn-success add-btn submit-button" (click)="submit()">Submit</button>
+    <button type="button" class="btn btn-secondary cancel-button" (click)="goBack()">Cancel</button>
 </div>
 
 <app-footer class="footer"></app-footer>

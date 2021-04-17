@@ -47,7 +47,7 @@
   position: absolute;
   alignment: center;
   left: 75%;
-  top: 2.5%;
+  margin-top: 22px;
 }
 
 .btn-logout {

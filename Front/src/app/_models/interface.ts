@@ -128,6 +128,38 @@ export interface Cable {
     category: number;
 }
 
+export interface OrderValue {
+    userId: number;
+    selectedProducts: string[];
+    selectedPhoneNumber: PhoneNumber;
+    selectedTariff: Tariff;
+    support5g: boolean;
+    deliveryAndActivationMobile: boolean;
+    selectedSpeed: InternetOffer;
+    selectedDevice: Device;
+    selectedChannelNumber: DtvOffer;
+    fixedIpSupport: boolean;
+    installation: boolean;
+    cableLength: number;
+    cablePriceTotal: number;
+    selectedAddress: Address;
+    selectedAccount: BillingAccount;
+    deliveryDateStr: string;
+    deliveryTime: string;
+    totalNRC: number;
+    totalMRC: number;
+    deliveryPrice: number;
+    constantPrices: ConstantPrices;
+}
+
+export interface Order {
+    id: number;
+}
+
+export interface Task {
+    id: number;
+}
+
 export interface Menu {
     name: string;
     url: string;

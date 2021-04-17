@@ -1,14 +1,14 @@
 package edu.baoss.orderservice.model;
 
+import edu.baoss.orderservice.model.enums.InstanceStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.Date;
 
-@Component
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

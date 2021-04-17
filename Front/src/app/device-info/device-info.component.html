@@ -1,0 +1,34 @@
+
+<div *ngIf="data.device; then thenBlock else elseBlock"></div>
+<ng-template #thenBlock>
+    <div *ngIf="data.device.name=='None'; then noneBlock else deviceBlock"></div>
+    <ng-template #noneBlock>
+        <header >
+            <h3>'None' means that you do not buy any devices</h3>
+        </header>
+    </ng-template>
+    <ng-template #deviceBlock>
+        <div id="device-info">
+            <header id="modal-header">
+                <h3>{{data.device.type}} {{data.device.name}}</h3>
+            </header>
+            <div>
+                <p>Model: {{data.device.name}}</p>
+                <p>Price: {{data.device.price}}$</p>
+                <p>Throughput: {{data.device.throughput}} Mb/s</p>
+                <p>Number of ports: {{data.device.portsNum}}</p>
+                <p>Type of ports: {{data.device.portTypes}}</p>
+                <p>Frequencies: {{data.device.frequencies}}</p>
+                <p>Supported standards: {{data.device.standards}}</p>
+                <p>Protocols and technologies: {{data.device.protocolsAndTechnologies}}</p>
+                <p class="hint">* - the price is giving considering discounts (if discounts are presented)</p>
+            </div>
+        </div>
+    </ng-template>
+
+</ng-template>
+<ng-template #elseBlock>
+    <header id="warning">
+        <h3>Please select some device!</h3>
+    </header>
+</ng-template>

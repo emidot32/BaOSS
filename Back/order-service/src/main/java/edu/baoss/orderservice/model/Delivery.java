@@ -1,9 +1,9 @@
 package edu.baoss.orderservice.model;
 
+import edu.baoss.orderservice.model.enums.DeliveryStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -24,6 +24,9 @@ public class Delivery {
     @Column(name = "delivery_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     Date deliveryDate;
+
+    @Column(name = "duration")
+    int duration;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)

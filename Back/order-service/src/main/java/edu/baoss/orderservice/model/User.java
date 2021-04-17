@@ -1,11 +1,13 @@
 package edu.baoss.orderservice.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import edu.baoss.orderservice.model.enums.Gender;
+import edu.baoss.orderservice.model.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -69,19 +71,25 @@ public class User {
     Date minRefreshDate;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {
-            CascadeType.ALL,
+            CascadeType.PERSIST, CascadeType.MERGE
     })
     @JoinTable(name = "user_address",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "address_id"))
     Set<Address> addresses = new HashSet<>();
 
+    @JsonIgnore
+    @Transient
     @OneToMany(mappedBy = "user")
     Set<BillingAccount> billingAccounts;
 
+    @JsonIgnore
+    @Transient
     @OneToMany(mappedBy = "user")
     Set<Order> orders;
 
+    @JsonIgnore
+    @Transient
     @OneToMany(mappedBy = "user")
     Set<Instance> instances;
 }

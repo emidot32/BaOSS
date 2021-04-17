@@ -35,8 +35,8 @@ export class AuthService {
     return this.http.post<any>(`${environment.apiUrl}/auth/sign-in`, body)
       .pipe(map(user => {
         this.role = user.role;
-        console.log(`Signed in user: ${user}`);
         // store user details and jwt token in local storage to keep user logged in between reviewPage refreshes
+        console.log(user);
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);
         return user;

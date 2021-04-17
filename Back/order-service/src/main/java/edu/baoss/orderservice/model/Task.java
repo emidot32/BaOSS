@@ -1,16 +1,16 @@
 package edu.baoss.orderservice.model;
 
 
+import edu.baoss.orderservice.model.enums.TaskStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
-@Component
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

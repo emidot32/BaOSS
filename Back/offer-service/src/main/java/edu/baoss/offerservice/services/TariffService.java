@@ -37,7 +37,7 @@ public class TariffService extends OfferService {
         Tariff tariff = (Tariff) offer;
         return TariffDto.builder()
                 .id(offer.getId())
-                .tariff_name(tariff.getTariff_name())
+                .tariffName(tariff.getTariff_name())
                 .startingPrice(offer.getRent())
                 .discountedPrice(discountedPrice)
                 .priceEnding(priceEnding)

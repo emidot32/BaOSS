@@ -23,7 +23,7 @@ public class BillingAccount {
     User user;
 
     @Column(name = "account_number", unique = true)
-    int accountNumber;
+    String accountNumber;
 
     @Min(0)
     @Column(name = "balance")

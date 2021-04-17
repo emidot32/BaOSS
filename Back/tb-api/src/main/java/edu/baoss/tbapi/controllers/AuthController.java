@@ -29,7 +29,7 @@ public class AuthController {
 
     @PostMapping("/sign-in")
     @ResponseBody
-    public ResponseEntity<Map<String, String>> signIn(@RequestBody User user) {
+    public ResponseEntity<Map<String, Object>> signIn(@RequestBody User user) {
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         user.getLogin(),
@@ -38,8 +38,9 @@ public class AuthController {
         User fullUser = userService.getUserByLogin(user.getLogin());
         System.out.println("Full: "+fullUser);
         String token = jwtProvider.createToken(fullUser.getLogin(), fullUser.getRole());
-        Map<String, String> response = new HashMap<>();
+        Map<String, Object> response = new HashMap<>();
         response.put("token", token);
+        response.put("id", fullUser.getId());
         response.put("login", user.getLogin());
         response.put("role", fullUser.getRole().name());
         System.out.println(response);
