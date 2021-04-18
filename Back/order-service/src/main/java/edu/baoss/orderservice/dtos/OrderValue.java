@@ -5,12 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderValue {
+public class OrderValue implements Serializable {
     long userId;
     String[] selectedProducts;
     PhoneNumber selectedPhoneNumber;

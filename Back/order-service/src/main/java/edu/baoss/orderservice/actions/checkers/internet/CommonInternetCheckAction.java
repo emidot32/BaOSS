@@ -2,6 +2,7 @@ package edu.baoss.orderservice.actions.checkers.internet;
 
 import edu.baoss.orderservice.actions.checkers.CheckAction;
 import edu.baoss.orderservice.dtos.OrderValue;
+import edu.baoss.orderservice.exceptions.DeliveryNotSpecifiedException;
 import edu.baoss.orderservice.exceptions.NoAddressInOrderValueException;
 import edu.baoss.orderservice.exceptions.WrongCableLengthException;
 import edu.baoss.orderservice.exceptions.NoInternetSpeedInOrderValueException;
@@ -20,6 +21,9 @@ public class CommonInternetCheckAction implements CheckAction {
                 throw new WrongCableLengthException("Cable length must be between 0 and 30!");
             if (orderValue.getSelectedAddress() == null)
                 throw new NoAddressInOrderValueException("Order configuration needs address for delivery or installation!");
+            if (orderValue.getDeliveryTime() == null) {
+                throw new DeliveryNotSpecifiedException("Delivery time is not specified!");
+            }
         }
     }
 

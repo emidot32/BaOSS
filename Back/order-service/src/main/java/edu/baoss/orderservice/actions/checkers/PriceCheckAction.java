@@ -35,8 +35,6 @@ public class PriceCheckAction implements CheckAction{
             }
         }
         totalNRC += orderValue.getDeliveryPrice();
-        System.out.println(Math.round(totalNRC));
-        System.out.println(Math.round(orderValue.getTotalNRC()));
         if (Math.round(totalMRC) != Math.round(orderValue.getTotalMRC()))
             throw new MrcPriceDiscrepancyException("Total MRC price does not match the selected products!");
         if (Math.round(totalNRC) != Math.round(orderValue.getTotalNRC()))

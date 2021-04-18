@@ -16,8 +16,14 @@ public class CommonMobileCheckAction implements CheckAction {
                 throw new NoMobileTariffInOrderValueException("Mobile tariff is absent but Mobile Product is selected!");
             if (orderValue.getSelectedPhoneNumber() == null)
                 throw new NoPhoneNumberInOrderValueException("Phone number is absent but Mobile Product is selected!");
-            if (orderValue.isDeliveryAndActivationMobile() && orderValue.getSelectedAddress() == null)
-                throw new NoAddressInOrderValueException("Order configuration needs address for delivery or installation!");
+            if (orderValue.isDeliveryAndActivationMobile()) {
+                if (orderValue.getSelectedAddress() == null)
+                    throw new NoAddressInOrderValueException("Order configuration needs address for delivery or installation!");
+                if (orderValue.getDeliveryTime() == null) {
+                    throw new DeliveryNotSpecifiedException("Delivery time is not specified!");
+                }
+            }
+
         }
     }
 }

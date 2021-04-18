@@ -12,7 +12,10 @@ spring:
     driverClassName: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/baoss-db
     username: postgres
-    password: Aposuv74
+    password: 123456
+  rabbitmq:
+    username: "guest"
+    password: "guest"
 
 server:
   port: 8081
@@ -26,6 +29,7 @@ eureka:
       defaultZone:  http://localhost:8080/eureka
     fetchRegistry: true
     registerWithEureka: true
+
 #security:
 #  oauth2:
 #    resource:

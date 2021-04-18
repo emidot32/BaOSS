@@ -9,9 +9,8 @@ public class CommonCheckAction implements CheckAction{
     public void check(OrderValue orderValue) {
         if (orderValue.getSelectedAccount() == null)
             throw new NoBillingAccountInOrderValueException("Billing Account is not specified!");
-
         String deliveryDateStr = orderValue.getDeliveryDateStr();
-        if (deliveryDateStr == null || deliveryDateStr.isEmpty() || orderValue.getDeliveryTime() == null)
-            throw new DeliveryNotSpecifiedException("Delivery date or time is not specified!");
+        if (deliveryDateStr == null || deliveryDateStr.isEmpty())
+            throw new DeliveryNotSpecifiedException("Delivery date is not specified!");
     }
 }

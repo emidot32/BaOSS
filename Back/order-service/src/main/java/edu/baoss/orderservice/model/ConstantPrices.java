@@ -5,11 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ConstantPrices {
+public class ConstantPrices implements Serializable {
     String id;
     double[] fixedIpPrices;
     double[] ipv6SupportPrices;

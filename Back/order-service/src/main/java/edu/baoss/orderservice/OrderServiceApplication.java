@@ -1,5 +1,6 @@
 package edu.baoss.orderservice;
 
+import edu.baoss.orderservice.rabbitmq.configs.RabbitConfiguration;
 import edu.baoss.orderservice.services.DeliveryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -8,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Import;
 
 import java.text.SimpleDateFormat;
 
@@ -15,10 +17,8 @@ import java.text.SimpleDateFormat;
 @EnableEurekaClient
 @EnableDiscoveryClient
 @EnableFeignClients
+@Import(RabbitConfiguration.class)
 public class OrderServiceApplication implements CommandLineRunner {
-    @Autowired
-    DeliveryService deliveryService;
-    SimpleDateFormat onlyDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     public static void main(String[] args) {
         SpringApplication.run(OrderServiceApplication.class, args);
@@ -26,7 +26,7 @@ public class OrderServiceApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        String[] products = new String[] {"Mobile product", "Internet product"};
-        System.out.println(deliveryService.getAvailableHours(onlyDateFormat.parse("16/03/2021"), products));
+//        String[] products = new String[] {"Mobile product", "Internet product"};
+//        System.out.println(deliveryService.getAvailableHours(onlyDateFormat.parse("16/03/2021"), products));
     }
 }

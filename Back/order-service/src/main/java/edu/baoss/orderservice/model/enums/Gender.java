@@ -1,6 +1,8 @@
 package edu.baoss.orderservice.model.enums;
 
-public enum Gender {
+import java.io.Serializable;
+
+public enum Gender implements Serializable {
     NONE,
     MALE,
     FEMALE;

@@ -12,7 +12,7 @@ spring:
     driverClassName: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/baoss-db
     username: postgres
-    password: Aposuv74
+    password: 123456
 
 server:
   port: 8085

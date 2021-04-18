@@ -221,7 +221,13 @@ export class OrderEntryComponent implements OnInit {
                 if (this.selectedChannelNumber == null) { return 'Please select number of channels'; }
             }
             if (this.selectedAccount == null) { return 'Please select billing account'; }
-            if (this.deliveryDate == null || this.deliveryTime == null) { return 'Please select date and time'; }
+            if (this.deliveryDate == null) {
+                if ((this.deliveryAndActivationMobile || this.products[1].check) && this.deliveryTime == null) {
+                    return 'Please select date and time';
+                } else {
+                    return 'Please select date';
+                }
+            }
         }
         return '';
     }

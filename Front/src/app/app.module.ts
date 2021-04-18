@@ -97,7 +97,7 @@ const appRoutes: Routes = [
         HttpClientModule,
         ToastrModule.forRoot(),
         AgmCoreModule.forRoot({
-            apiKey: 'AIzaSyCoN_WOqtup2l3tXVeMQpuS2fyvhqifcok',
+
             libraries: ['places']
         }),
         MatAutocompleteModule,

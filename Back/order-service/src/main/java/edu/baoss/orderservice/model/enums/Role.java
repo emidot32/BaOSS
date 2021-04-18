@@ -1,7 +1,9 @@
 package edu.baoss.orderservice.model.enums;
 
 
-public enum Role {
+import java.io.Serializable;
+
+public enum Role implements Serializable {
     USER,
     FITTER,
     OFFERS_MANAGER,
