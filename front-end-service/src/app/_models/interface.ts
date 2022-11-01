@@ -289,3 +289,8 @@ export interface Toaster {
     status: string;
     message: string;
 }
+
+export interface ChartData {
+    x: object[];
+    y: object[];
+}
