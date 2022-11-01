@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: resource-service
+  data:
+    mongodb:
+      #      uri: mongodb://localhost:27017/resource_db
+      host: localhost
+      port: 27018
+      database: resource_db
+
+server:
+  port: 8084
+
+eureka:
+  instance:
+    preferIpAddress: true
+    #appname: ${spring.application.name}  # ==> This is a instance of ABC-SERVICE
+  client:
+    serviceUrl:
+      defaultZone:  http://localhost:8080/eureka
+    fetchRegistry: true
+    registerWithEureka: true
+
+baoss:
+  resources:
+    import-default: ${IMPORT_DEFAULT_RESOURCES:true}
+#security:
+#  oauth2:
+#    resource:
+#      userInfoUri: http://localhost:5555/user-service/auth/user

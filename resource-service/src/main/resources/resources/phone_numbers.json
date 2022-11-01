@@ -1,0 +1,142 @@
+[
+  {
+    "phoneNumber": "0944567834",
+    "used": false,
+    "simCardNumber": "89123456",
+    "price": 2,
+    "countryCode": "38",
+    "pinCode": "1111",
+    "pukCode": "11112222",
+    "currency": "dollar"
+  },
+  {
+    "phoneNumber": "0944445555",
+    "used": false,
+    "simCardNumber": "89123457",
+    "price": 20,
+    "countryCode": "38",
+    "pinCode": "1112",
+    "pukCode": "11112223",
+    "currency": "dollar"
+  },
+  {
+    "phoneNumber": "0944567811",
+    "used": false,
+    "simCardNumber": "89123458",
+    "price": 2,
+    "countryCode": "38",
+    "pinCode": "1113",
+    "pukCode": "11112224",
+    "currency": "dollar"
+  },
+  {
+    "phoneNumber": "0944533834",
+    "used": false,
+    "simCardNumber": "89123453",
+    "price": 2,
+    "countryCode": "38",
+    "pinCode": "1114",
+    "pukCode": "11112225",
+    "currency": "dollar"
+  },
+  {
+    "phoneNumber": "0952288555",
+    "used": false,
+    "simCardNumber": "89121456",
+    "price": 10,
+    "countryCode": "38",
+    "pinCode": "1115",
+    "pukCode": "11112226",
+    "currency": "dollar"
+  },
+  {
+    "phoneNumber": "0955437896",
+    "used": false,
+    "simCardNumber": "89123460",
+    "price": 2,
+    "countryCode": "38",
+    "pinCode": "1116",
+    "pukCode": "11112225",
+    "currency": "dollar"
+  },
+  {
+    "phoneNumber": "0944564554",
+    "used": false,
+    "simCardNumber": "8912576",
+    "price": 2,
+    "countryCode": "38",
+    "pinCode": "1113",
+    "pukCode": "11112224",
+    "currency": "dollar"
+  },
+  {
+    "phoneNumber": "0945678734",
+    "used": false,
+    "simCardNumber": "89123459",
+    "price": 2,
+    "countryCode": "38",
+    "pinCode": "1114",
+    "pukCode": "11112225",
+    "currency": "dollar"
+  },
+  {
+    "phoneNumber": "0944323327",
+    "used": false,
+    "simCardNumber": "89126855",
+    "price": 2,
+    "countryCode": "38",
+    "pinCode": "1114",
+    "pukCode": "11112225",
+    "currency": "dollar"
+  },
+  {
+    "phoneNumber": "0944564533",
+    "used": false,
+    "simCardNumber": "89123453",
+    "price": 2,
+    "countryCode": "38",
+    "pinCode": "1111",
+    "pukCode": "11112222",
+    "currency": "dollar"
+  },
+  {
+    "phoneNumber": "0944789834",
+    "used": false,
+    "simCardNumber": "89123834",
+    "price": 2,
+    "countryCode": "38",
+    "pinCode": "1111",
+    "pukCode": "11112222",
+    "currency": "dollar"
+  },
+  {
+    "phoneNumber": "0944567877",
+    "used": false,
+    "simCardNumber": "89123877",
+    "price": 2,
+    "countryCode": "38",
+    "pinCode": "1111",
+    "pukCode": "11112222",
+    "currency": "dollar"
+  },
+  {
+    "phoneNumber": "0943332222",
+    "used": false,
+    "simCardNumber": "89123222",
+    "price": 20,
+    "countryCode": "38",
+    "pinCode": "1111",
+    "pukCode": "11112222",
+    "currency": "dollar"
+  },
+  {
+    "phoneNumber": "0944546677",
+    "used": false,
+    "simCardNumber": "89123766",
+    "price": 10,
+    "countryCode": "38",
+    "pinCode": "1111",
+    "pukCode": "11112222",
+    "currency": "dollar"
+  }
+]

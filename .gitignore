@@ -1,0 +1,9 @@
+/front-end-service/node_modules/
+/front-end-service/dist/
+.idea/
+*.iml
+target/
+.mvn/
+venv/
+static/
+dumps/

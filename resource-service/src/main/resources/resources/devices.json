@@ -1,0 +1,143 @@
+[
+  {
+    "name": "Cisco SG350-10-K9-EU",
+    "type": "Switch",
+    "price": 200,
+    "throughput": "20000",
+    "portsNum": 12,
+    "portTypes": "SFP, Gigabit Ethernet, Fast Ethernet",
+    "used": [
+      true,
+      true,
+      false
+    ],
+    "forSale": false,
+    "guarantee": 60,
+    "memory": 32,
+    "macAddresses": [
+      "00:0a:95:9c:68:01",
+      "00:0a:95:9c:68:02",
+      "00:0a:95:9c:68:03"
+    ],
+    "serialNumbers": [
+      "115301",
+      "115302",
+      "115303"
+    ],
+    "standards": ["802.1D", "802.1p CoS", "802.1Q VLAN", "802.1s", "802.1w", "802.3ad", "802.1ab", "802.3", "802.3ab", "802.3z"]
+  },
+  {
+    "name": "Cisco Catalyst 2960 (WS-C2960+24TC-L)",
+    "type": "Switch",
+    "price": 2000,
+    "throughput": "24000",
+    "portsNum": 26,
+    "portTypes": "SFP, Gigabit Ethernet, Fast Ethernet",
+    "used": [
+      true,
+      false,
+      false
+    ],
+    "forSale": false,
+    "guarantee": 60,
+    "memory": 128,
+    "macAddresses": [
+      "00:0a:95:9c:69:01",
+      "00:0a:95:9c:69:02",
+      "00:0a:95:9c:69:03"
+    ],
+    "serialNumbers": [
+      "115401",
+      "115402",
+      "115403"
+    ],
+    "standards": ["802.1D", "802.1p CoS", "802.1Q VLAN", "802.1s", "802.1w", "802.3ad", "802.1ab", "802.3", "802.3ab", "802.3z"]
+  },
+  {
+    "name": "TP-LINK Archer A6",
+    "type": "Router",
+    "price": 40,
+    "throughput": "1000",
+    "portsNum": 5,
+    "used": [
+      false,
+      false,
+      false
+    ],
+    "forSale": true,
+    "guarantee": 24,
+    "standards": ["802.11b/g/a", "802.11n", "802.11ac"],
+    "memory": 0,
+    "macAddresses": [
+      "00:0a:95:9d:6a:10",
+      "00:0a:95:9d:6a:11",
+      "00:0a:95:9d:6a:12"
+    ],
+    "serialNumbers": [
+      "115501",
+      "115502",
+      "115503"
+    ],
+    "frequencies": ["2.4", "5"],
+    "protocolsAndTechnologies": ["DHCP", "L2TP", "PPPoE", "PPTP", "VPN", "DNS"]
+  },
+  {
+    "name": "TP-LINK TL-WR841N",
+    "type": "Router",
+    "price": 20,
+    "throughput": "300",
+    "portsNum": 5,
+    "used": [
+      false,
+      false,
+      false,
+      false
+    ],
+    "forSale": true,
+    "guarantee": 24,
+    "standards": ["802.11b/g/a", "802.11n"],
+    "memory": 0,
+    "macAddresses": [
+      "00:0a:95:9d:6b:10",
+      "00:0a:95:9d:6b:11",
+      "00:0a:95:9d:6b:12",
+      "00:0a:95:9d:6b:13"
+    ],
+    "serialNumbers": [
+      "115601",
+      "115602",
+      "115603",
+      "115604"
+    ],
+    "frequencies": ["2.4"],
+    "protocolsAndTechnologies": ["DHCP", "L2TP", "PPPoE", "PPTP", "VPN", "DNS"]
+  },
+  {
+    "name": "TP-LINK Archer A2",
+    "type": "Router",
+    "price": 28,
+    "throughput": "700",
+    "portsNum": 5,
+    "used": [
+      false,
+      false,
+      false
+    ],
+    "forSale": true,
+    "guarantee": 24,
+    "standards": ["802.11b/g/a", "802.11n", "802.11ac"],
+    "memory": 0,
+    "macAddresses": [
+      "00:0a:95:9d:6c:10",
+      "00:0a:95:9d:6c:11",
+      "00:0a:95:9d:6c:12"
+    ],
+    "serialNumbers": [
+      "115701",
+      "115702",
+      "115703"
+    ],
+    "frequencies": ["2.4", "5"],
+    "protocolsAndTechnologies": ["DHCP", "L2TP", "PPPoE", "PPTP", "VPN", "DNS"]
+  }
+]

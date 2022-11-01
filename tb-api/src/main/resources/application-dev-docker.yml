@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: tb-api
+
+server:
+  port: 5555
+
+eureka:
+  instance:
+    preferIpAddress: true
+    #appname: ${spring.application.name} 
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-server:8080/eureka
+    registerWithEureka: true
+    fetchRegistry: true
+
+ribbon:
+  ReadTimeout: 100000
+
+zuul:
+  host:
+    connect-timeout-millis: 100000
+    connection-request-timeout-millis: 100000
+    socket-timeout-millis: 100000
+# Disable Hystrix timeout globally (for all services)
+#hystrix:
+#  command:
+#    resource-service:
+#      execution:
+#        timeout:
+#          enabled: false
+#    default:
+#      execution:
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 60000
+#        timeout:
+#          enabled: false
+
+#zuul:
+#  routes:
+#    user-service:
+#      path: /user-service/**
+#      serviceId: user-service
+#    order-service:
+#      path: /order-service/**
+#      serviceId: order-service
+#    resource-service:
+#      path: /resource-service/**
+#      serviceId: resource-service

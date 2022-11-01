@@ -1,0 +1,122 @@
+<div *ngIf="order" class="container-fluid">
+    <div class="row">
+        <div class="col-2 order-hdr"><h3>Order №{{order.order.id}}</h3></div>
+    </div>
+    <div class="row">
+        <div class="col-4 text-order-info">
+            <p>Order status: <i>{{order.order.status}}</i></p>
+            <p>Start date: <i>{{order.order.startDateStr}}</i></p>
+            <p>Total NRC: <i>{{order.order.totalNRC}}$</i></p>
+        </div>
+        <div class="col-4 text-order-info">
+            <p>Order Aim: <i>{{order.order.orderAim}}</i></p>
+            <p>Completion date: <i>{{order.order.completionDateStr}}</i></p>
+            <p>Total MRC: <i>{{order.order.totalMRC}}$</i></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2 instances-hdr"><h3>Instances</h3></div>
+    </div>
+    <div class="row instances">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">№</th>
+                <th scope="col">Instance</th>
+                <th scope="col">Status</th>
+                <th scope="col">Activation Date</th>
+<!--                <th scope="col">Billing Account Number</th>-->
+                <th scope="col">Disconnection Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let instance of order.productInstances; let intIndex= index">
+                <td>
+                    <div class="num">
+                        <i>{{intIndex + 1}}</i>
+                    </div>
+                </td>
+                <td>
+                    <div class="num">
+                        <a [routerLink]="['/homeath/instance/', instance.id]" [queryParams]="{product: instance.product}">
+                            {{instance.product}} Instance №{{instance.id}}
+                        </a>
+                    </div>
+                </td>
+                <td>
+                    <div class="num">
+                        <i>{{instance.status}}</i>
+                    </div>
+                </td>
+                <td>
+                    <div class="num">
+                        <i>{{instance.activatedDateStr}}</i>
+                    </div>
+                </td>
+<!--                <td>-->
+<!--                    <div class="num">-->
+<!--                        <i>Billing Account №{{instance.billingAccountId}}</i>-->
+<!--                    </div>-->
+<!--                </td>-->
+                <td>
+                    <div class="num">
+                        <i>{{instance.disconnectedDateStr}}</i>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col-2 tasks-hdr"><h3>Tasks</h3></div>
+    </div>
+    <div class="row tasks">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">№</th>
+                <th scope="col">Task Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Status</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">Completion Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let task of order.tasks; let intIndex= index">
+                <td>
+                    <div class="num">
+                        <i>{{intIndex + 1}}</i>
+                    </div>
+                </td>
+                <td>
+                    <div class="num">
+                        <i>{{task.name}}</i>
+                    </div>
+                </td>
+                <td>
+                    <div class="num">
+                        <i>{{task.description}}</i>
+                    </div>
+                </td>
+                <td>
+                    <div class="num">
+                        <i>{{task.status}}</i>
+                    </div>
+                </td>
+                <td>
+                    <div class="num">
+                        <i>{{task.startDateStr}}</i>
+                    </div>
+                </td>
+                <td>
+                    <div class="num">
+                        <i>{{task.completionDateStr}}</i>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<app-footer class="footer"></app-footer>

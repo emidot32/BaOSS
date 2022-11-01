@@ -1,0 +1,250 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <h3>Internet Offers:</h3>
+            <table *ngIf="internetOffers" class="table">
+                <thead>
+                <tr>
+                    <th scope="col">№</th>
+                    <th scope="col">Speed</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Discount</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let intOffer of internetOffers; let intIndex= index">
+                    <td>
+                        <div class="num">
+                            <i>{{intIndex + 1}}</i>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="num">
+                            <i>{{intOffer.speed}}Mb/s</i>
+                        </div>
+                    </td>
+                    <td>
+                        <div [ngSwitch]="intOffer.discount" class="num">
+                            <ng-template ngSwitchCase="0">
+                                <i>{{intOffer.startingPrice}} {{intOffer.priceEnding}}</i>
+                            </ng-template>
+                            <ng-template ngSwitchDefault>
+                                <p>
+                                    <i style="color:red"><s>{{intOffer.startingPrice}}</s></i>&nbsp;
+                                    <i style="color:green">{{intOffer.discountedPrice}} </i>
+                                    <i>{{intOffer.priceEnding}}</i>
+                                </p>
+                            </ng-template>
+                        </div>
+                    </td>
+                    <td>
+                        <div [ngSwitch]="intOffer.discount" class="num">
+                            <ng-template ngSwitchCase="0"></ng-template>
+                            <ng-template ngSwitchDefault>
+                                <i>-{{intOffer.discount}}%</i>
+                            </ng-template>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <p *ngIf="internetOffers && internetOffers[0].discount">* - discount is active
+                to {{internetOffers[0].discountEndDate}}</p>
+            <div [ngSwitch]="constantPrices.discount">
+                <ng-template ngSwitchCase="0">
+                    <p>
+                        Fixed IP price:
+                        <i>{{constantPrices.fixedIpPrices[0]}}$/month</i><br/>
+                        <!--                        IPv6 support price:-->
+                        <!--                        <i>{{constantPrices.ipv6SupportPrices[0]}}$/month</i><br/>-->
+                        Internet product installation price (including delivery):
+                        <i>{{constantPrices.installationPricesForInternetProduct[0]}}$</i>
+                    </p>
+                </ng-template>
+                <ng-template ngSwitchDefault>
+                    <p>
+                        Fixed IP price:&nbsp;
+                        <i style="color:red"><s>{{constantPrices.fixedIpPrices[0]}}</s></i>&nbsp;
+                        <i style="color:green">{{constantPrices.fixedIpPrices[1]}}$ </i><br/>
+                        IPv6 support price:&nbsp;
+                        <i style="color:red"><s>{{constantPrices.ipv6SupportPrices[0]}}</s></i>&nbsp;
+                        <i style="color:green">{{constantPrices.ipv6SupportPrices[1]}}$ </i><br/>
+                        Internet product installation price (including delivery):&nbsp;
+                        <i style="color:red"><s>{{constantPrices.installationPricesForInternetProduct[0]}}</s></i>&nbsp;
+                        <i style="color:green">{{constantPrices.installationPricesForInternetProduct[1]}}$ </i>
+                    </p>
+                </ng-template>
+            </div>
+        </div>
+
+        <div class="col-sm dtv-offers">
+            <h3>DTV Offers:</h3>
+            <table *ngIf="dtvOffers" class="table">
+                <thead>
+                <tr>
+                    <th scope="col">№</th>
+                    <th scope="col">Number of channels</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Discount</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let dtvOffer of dtvOffers; let dtvIndex= index">
+                    <td>
+                        <div class="num">
+                            <i>{{dtvIndex + 1}}</i>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="num">
+                            <i>{{dtvOffer.channelNumber}}</i>
+                        </div>
+                    </td>
+                    <td>
+                        <div [ngSwitch]="dtvOffer.discount" class="num">
+                            <ng-template ngSwitchCase="0">
+                                <i>{{dtvOffer.startingPrice}} {{dtvOffer.priceEnding}}</i>
+                            </ng-template>
+                            <ng-template ngSwitchDefault>
+                                <p>
+                                    <i style="color:red"><s>{{dtvOffer.startingPrice}}</s></i>&nbsp;
+                                    <i style="color:green">{{dtvOffer.discountedPrice}} </i>
+                                    <i>{{dtvOffer.priceEnding}}</i>
+                                </p>
+                            </ng-template>
+                        </div>
+                    </td>
+                    <td>
+                        <div [ngSwitch]="dtvOffer.discount" class="num">
+                            <ng-template ngSwitchCase="0"></ng-template>
+                            <ng-template ngSwitchDefault>
+                                <i>-{{dtvOffer.discount}}%</i>
+                            </ng-template>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <p *ngIf="dtvOffers && dtvOffers[0].discount">* - discount is active to {{dtvOffers[0].discountEndDate}}</p>
+            <!--            <div [ngSwitch]="constantPrices.discount">-->
+            <!--                <ng-template ngSwitchCase="0">-->
+            <!--                    <p>-->
+            <!--                        DTV product installation price (including delivery):-->
+            <!--                        <i>{{constantPrices.installationPricesForDtvProduct[0]}}$</i>-->
+            <!--                    </p>-->
+            <!--                </ng-template>-->
+            <!--                <ng-template ngSwitchDefault>-->
+            <!--                    <p>-->
+            <!--                        DTV product installation price (including delivery):&nbsp;-->
+            <!--                        <i style="color:red"><s>{{constantPrices.installationPricesForDtvProduct[0]}}</s></i>&nbsp;-->
+            <!--                        <i style="color:green">{{constantPrices.installationPricesForDtvProduct[1]}}$ </i>-->
+            <!--                    </p>-->
+            <!--                </ng-template>-->
+            <!--            </div>-->
+        </div>
+
+        <div class="col-sm tariffs">
+            <h3>Tariffs:</h3>
+            <table *ngIf="tariffs" class="table">
+                <thead>
+                <tr>
+                    <th scope="col">№</th>
+                    <th scope="col">Tariff name</th>
+                    <th scope="col">Free GBs</th>
+                    <th scope="col">Free minutes</th>
+                    <th scope="col">Free SMSs</th>
+                    <th scope="col">Roaming 100Mb</th>
+                    <th scope="col">Roaming 1 minute</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Discount</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let tariff of tariffs; let tariffIndex= index">
+                    <td>
+                        <div class="num">
+                            <i>{{tariffIndex + 1}}</i>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="num">
+                            <i>{{tariff.tariffName}}</i>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="num">
+                            <i>{{tariff.internetGBs}}</i>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="num">
+                            <i>{{tariff.freeMinutes}}</i>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="num">
+                            <i>{{tariff.freeSms}}</i>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="num">
+                            <i>{{tariff.roamingPerMinuteInternetPrice}} $</i>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="num">
+                            <i>{{tariff.roamingPerMinuteCallPrice}} $</i>
+                        </div>
+                    </td>
+                    <td>
+                        <div [ngSwitch]="tariff.discount" class="num">
+                            <ng-template ngSwitchCase="0">
+                                <i>{{tariff.startingPrice}} {{tariff.priceEnding}}</i>
+                            </ng-template>
+                            <ng-template ngSwitchDefault>
+                                <p>
+                                    <i style="color:red"><s>{{tariff.startingPrice}}</s></i>&nbsp;
+                                    <i style="color:green">{{tariff.discountedPrice}} </i>
+                                    <i>{{tariff.priceEnding}}</i>
+                                </p>
+                            </ng-template>
+                        </div>
+                    </td>
+                    <td>
+                        <div [ngSwitch]="tariff.discount" class="num">
+                            <ng-template ngSwitchCase="0"></ng-template>
+                            <ng-template ngSwitchDefault>
+                                <i>-{{tariff.discount}}%</i>
+                            </ng-template>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <p *ngIf="tariffs && tariffs[0].discount">* - discount is active to {{tariffs[0].discountEndDate}}</p>
+            <div [ngSwitch]="constantPrices.discount">
+                <ng-template ngSwitchCase="0">
+                    <p>
+                        5G support price:
+                        <i>{{constantPrices.supportOf5gPrices[0]}}$</i>
+                    </p>
+                </ng-template>
+                <ng-template ngSwitchDefault>
+                    <p>
+                        Delivery and activation price:&nbsp;
+                        <i style="color:red"><s>{{constantPrices.deliveryPrices[0]}}</s></i>&nbsp;
+                        <i style="color:green">{{constantPrices.deliveryPrices[1]}}$ </i>
+                    </p>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <a class="btn btn-block btn-green" (click)="goToOE()">To order entry</a>
+        </div>
+    </div>
+</div>
+
+<app-footer class="footer"></app-footer>
+

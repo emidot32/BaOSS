@@ -1,0 +1,13 @@
+.btn-green {
+    background-color: green;
+    color: white;
+    margin-bottom: 15px;
+
+}
+.footer {
+    float: bottom;
+    position: relative;
+    bottom: 0;
+    margin-bottom: 0px;
+    width: 100%;
+}

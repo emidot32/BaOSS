@@ -1,0 +1,39 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: tb-api
+
+server:
+  port: 5555
+
+eureka:
+  instance:
+    preferIpAddress: true
+    #appname: ${spring.application.name} 
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8080/eureka
+    registerWithEureka: true
+    fetchRegistry: true
+
+ribbon:
+  ReadTimeout: 100000
+
+zuul:
+  host:
+    connect-timeout-millis: 100000
+    connection-request-timeout-millis: 100000
+    socket-timeout-millis: 100000
+
+#hystrix:
+#  command:
+#    resource-service:
+#      execution:
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 100000
+#
+#resource-service:
+#  ribbon:
+#    ReadTimeout: 100000

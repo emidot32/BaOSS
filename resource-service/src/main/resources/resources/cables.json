@@ -1,0 +1,15 @@
+[
+  {
+    "type": "coaxial",
+    "length": 200
+  },
+  {
+    "type": "twisted pair",
+    "length": 100000,
+    "category": 3
+  },
+  {
+    "type": "fiber optic",
+    "length": 500
+  }
+]

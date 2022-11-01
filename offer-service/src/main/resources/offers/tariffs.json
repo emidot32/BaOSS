@@ -1,0 +1,54 @@
+[
+  {
+    "tariffName": "All in one",
+    "rent": 12,
+    "rentTime": 30,
+    "internetGBs": 10,
+    "freeMinutes": 100,
+    "freeSms": 100,
+    "roamingPerMinuteCallPrice": 0.3,
+    "roamingPerMinuteInternetPrice": 0.5,
+    "oneSmsPrice": 0.1,
+    "minuteOfCallPrice": 0.5,
+    "currency": "dollar"
+  },
+  {
+    "tariffName": "Internet Super",
+    "rent": 8,
+    "rentTime": 30,
+    "internetGBs": 10,
+    "freeMinutes": 30,
+    "freeSms": 30,
+    "roamingPerMinuteCallPrice": 0.3,
+    "roamingPerMinuteInternetPrice": 0.5,
+    "oneSmsPrice": 0.1,
+    "minuteOfCallPrice": 0.5,
+    "currency": "dollar"
+  },
+  {
+    "tariffName": "Internet Advanced",
+    "rent": 6,
+    "rentTime": 30,
+    "internetGBs": 6,
+    "freeMinutes": 30,
+    "freeSms": 30,
+    "roamingPerMinuteCallPrice": 0.3,
+    "roamingPerMinuteInternetPrice": 0.5,
+    "oneSmsPrice": 0.1,
+    "minuteOfCallPrice": 0.5,
+    "currency": "dollar"
+  },
+  {
+    "tariffName": "Internet Basic",
+    "rent": 4,
+    "rentTime": 30,
+    "internetGBs": 3,
+    "freeMinutes": 30,
+    "freeSms": 30,
+    "roamingPerMinuteCallPrice": 0.3,
+    "roamingPerMinuteInternetPrice": 0.5,
+    "oneSmsPrice": 0.1,
+    "minuteOfCallPrice": 0.5,
+    "currency": "dollar"
+  }
+]

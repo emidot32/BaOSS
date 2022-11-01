@@ -1,0 +1,14 @@
+[
+  {
+    "value":  15,
+    "startDate": "02/09/2022 00:00",
+    "endDate": "02/02/2023 00:00",
+    "appliedFor": "Internet Product"
+  },
+  {
+    "value":  10,
+    "startDate": "02/09/2022 00:00",
+    "endDate": "02/02/2023 00:00",
+    "appliedFor": "Mobile Product"
+  }
+]

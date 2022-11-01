@@ -1,0 +1,132 @@
+    postgres-db:
+    image: postgres:14.4
+    ports:
+      - 5434:5432
+	expose:
+	  - 5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Aposuv74
+      - POSTGRES_DB=baoss_db
+    volumes:
+      - postgres-volume:/var/lib/postgresql/data
+      - ./logs:/logs
+    networks:
+      - common-network
+  mongo-db:
+    image: mongo
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_DATABASE=offers_db
+      - MONGO_INITDB_ROOT_USERNAME=mongo
+      - MONGO_INITDB_ROOT_PASSWORD=Aposuv74
+    volumes:
+      - mongo-volume:/var/lib/mongo/data
+      - ./logs:/logs
+    networks:
+      - common-network
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - rabbit-volume:/var/lib/rabbitmq/
+      - ./logs:/logs
+    networks:
+      - common-network
+  
+  tb-api:
+    build:
+      context: ./tb-api
+    ports:
+      - 5555:5555
+    networks:
+      - common-network
+  order-service:
+    build:
+      context: ./order-service
+    ports:
+      - 8081:8081
+    networks:
+      - common-network
+    # depends-on:
+    #  - eureka-server
+    #  - tb-api
+    #  - postgres-db
+    #  - rabbitmq
+  user-service:
+    build:
+      context: ./user-service
+    ports:
+      - 8082:8082
+    networks:
+      - common-network
+    #depends-on:
+    #  - eureka-server
+    #  - tb-api
+    # - postgres-db
+  offer-service:
+    build:
+      context: ./offer-service
+    ports:
+      - 8083:8083
+    networks:
+      - common-network
+    #depends-on:
+    #  - eureka-server
+    #  - tb-api
+    #  - mongo-db
+  resource-service:
+    build:
+      context: ./resource-service
+    ports:
+      - 8086:8086
+    networks:
+      - common-network
+    #depends-on:
+    #  - eureka-server
+    #  - tb-api
+    #  - mongo-db
+  billing-service:
+    build:
+      context: ./billing-service
+    ports:
+      - 8085:8085
+    networks:
+      - common-network
+    #depends-on:
+    #  - eureka-server
+    #  - tb-api
+    #  - postgres-db
+  front-end-service:
+    build:
+      context: ./front-end-service
+    ports:
+      - 4200:4200
+    volumes:
+      - /media/disk_d/Programming/BaOSS/front-end-service/node_modules
+    networks:
+      - common-network
+    #depends-on:
+    #  - order-service
+	
+	  #resource-mongo-db:
+  #  image: mongo
+  #  container_name: resource-mongo-db
+  #  ports:
+  #    - 27018:27017
+  #  #environment:
+    #  - MONGO_INITDB_DATABASE=resource_db
+    #  - MONGO_INITDB_ROOT_USERNAME=mongo
+    #  - MONGO_INITDB_ROOT_PASSWORD=Aposuv74
+  #  volumes:
+   #   - ./init-mongodb:/docker-entrypoint-initdb.d
+   #   - ./init-mongodb/data:/tmp/data
+   #   - mongo-volume:/var/lib/mongo/data
+   #   - ./logs:/logs
+    #command: mongod
+   # networks:
+   #   - common-network

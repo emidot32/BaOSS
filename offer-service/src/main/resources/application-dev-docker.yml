@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: offer-service
+  data:
+    mongodb:
+      #      uri: mongodb://localhost:27017/offers_db
+      host: mongo-db
+      port: 27017
+      database: offers_db
+#      username: mongo
+#      password: Aposuv74
+
+server:
+  port: 8083
+
+eureka:
+  instance:
+    preferIpAddress: true
+    #appname: ${spring.application.name}  # ==> This is a instance of ABC-SERVICE
+  client:
+    serviceUrl:
+      defaultZone:  http://eureka-server:8080/eureka
+    fetchRegistry: true
+    registerWithEureka: true
+
+baoss:
+  offers:
+    import-default: ${IMPORT_DEFAULT_OFFERS:true}
+#security:
+#  oauth2:
+#    resource:
+#      userInfoUri: http://localhost:5555/user-service/auth/user

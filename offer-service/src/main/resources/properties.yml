@@ -1,0 +1,3 @@
+#baoss:
+#  offers:
+#    import-default: ${IMPORT_DEFAULT_OFFERS:true}

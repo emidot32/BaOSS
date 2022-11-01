@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: order-service
+  jpa:
+#    generate-ddl: true
+    database: POSTGRESQL
+    show-sql: true
+#    hibernate:
+#      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+#      hibernate:
+#        event:
+#          merge:
+#            entity_copy_observer: allow
+
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/baoss_db
+    username: postgres
+    password: Aposuv74
+
+  rabbitmq:
+    username: "guest"
+    password: "guest"
+
+server:
+  port: 8081
+
+eureka:
+  instance:
+    preferIpAddress: true
+    #appname: ${spring.application.name}
+  client:
+    serviceUrl:
+      defaultZone:  http://localhost:8080/eureka
+    fetchRegistry: true
+    registerWithEureka: true
+
+tb-api:
+  url: "http://localhost:5555"
+
+baoss:
+  orders:
+    clean-install: ${CLEAN_INSTALL:false}
+    number-of-users-for-generation: ${USER_NUMBER_GENERATION:0}
+#security:
+#  oauth2:
+#    resource:
+#      userInfoUri: http://localhost:5555/user-service/auth/user

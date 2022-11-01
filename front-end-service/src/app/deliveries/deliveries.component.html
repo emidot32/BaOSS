@@ -1,0 +1,103 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="container">
+    <div class="row">
+        <h3>Deliveries:</h3>
+    </div>
+    <div class="row">
+        <table *ngIf="todayDeliveries" class="table">
+            <thead>
+            <tr>
+                <th scope="col">№</th>
+                <th scope="col">Delivery</th>
+                <th scope="col">Status</th>
+                <th scope="col">Delivery Time</th>
+                <th scope="col">Duration</th>
+                <th scope="col">Address</th>
+                <th scope="col">Products</th>
+                <th scope="col">Order</th>
+                <th scope="col">Info</th>
+                <th scope="col">Info Form</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let delivery of todayDeliveries; let intIndex= index">
+                <td>
+                    <div class="num">
+                        <i>{{intIndex + 1}}</i>
+                    </div>
+                </td>
+                <td>
+                    <div class="num">
+                        <i>Delivery №{{delivery.id}}</i>
+                    </div>
+                </td>
+                <td>
+                    <div class="num">
+                        <i>{{delivery.status}}</i>
+                    </div>
+                </td>
+                <td>
+                    <div class="num">
+                        <i>{{delivery.deliveryDateStr}}</i>
+                    </div>
+                </td>
+                <td>
+                    <div class="num">
+                        <i>{{delivery.duration}}</i>
+                    </div>
+                </td>
+                <td>
+                    <div class="num">
+                        <i>{{getAddressStr(delivery)}}</i>
+                    </div>
+                </td>
+                <td>
+                    <div class="num">
+                        <i>{{delivery.products}}</i>
+                    </div>
+                </td>
+                <td>
+                    <div class="num">
+                        <a [routerLink]="['/homeath/order/'+delivery.orderId]">Order №{{delivery.orderId}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div class="num">
+                        <div *ngIf="delivery.additionalInfo.simCardNumber">
+                            <i>SIM Card Number: <b>{{delivery.additionalInfo.simCardNumber}}</b></i>
+                        </div>
+                        <div *ngIf="delivery.additionalInfo.cableLength">
+                            <i>Cable length: <b>{{delivery.additionalInfo.cableLength}}</b> m</i>
+                        </div>
+                        <div *ngIf="delivery.additionalInfo.deviceSerialNumber">
+                            <i>Device Serial Number: <b>{{delivery.additionalInfo.deviceSerialNumber}}</b></i>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <form [formGroup]="macAddressForm" name="form" (ngSubmit)="sendEvent(delivery)" novalidate>
+<!--                        <div *ngIf="delivery.needInfo && delivery.responsible && delivery.deliveryStarted" class="form-group">-->
+                        <div *ngIf="delivery.needInfo && delivery.responsible && delivery.status != 'COMPLETED'" class="form-group">
+                            <input type="text" class="form-control" [ngClass]="{'is-invalid':  macAddressForm.get('macAddress').invalid
+                                   && macAddressForm.controls['macAddress'].touched, 'is-valid': macAddressForm.get('macAddress').valid}"
+                                   name="macAddress" placeholder="00:00:00:00:00:00" formControlName="macAddress" required/>
+                            <div class="invalid-feedback"
+                                 *ngIf="macAddressForm.get('macAddress').invalid && macAddressForm.controls['macAddress'].touched">
+                                {{getValidationMessage('macAddress').message}}
+                            </div>
+                        </div>
+                    </form>
+                </td>
+                <td>
+<!--                    <div *ngIf="delivery.deliveryStarted" class="num">-->
+                    <div *ngIf="delivery.status != 'COMPLETED'" class="num">
+                        <button [disabled]="delivery.needInfo && macAddressForm.invalid "
+                                class="btn btn-success" (click)="sendEvent(delivery)">Submit</button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

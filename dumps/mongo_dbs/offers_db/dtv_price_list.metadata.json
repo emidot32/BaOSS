@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"offers_db.dtv_price_list"}],"uuid":"ba8eee1c583c43c884ae2840e310f22e","collectionName":"dtv_price_list"}

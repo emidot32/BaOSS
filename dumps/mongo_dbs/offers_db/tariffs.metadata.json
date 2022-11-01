@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"offers_db.tariffs"}],"uuid":"0b768d8ba7b54a3182a319313ec9bef0","collectionName":"tariffs"}

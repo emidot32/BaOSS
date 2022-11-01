@@ -1,0 +1,20 @@
+[
+  {
+    "rent": 10,
+    "rentTime": 30,
+    "channelNumber": 50,
+    "currency": "dollar"
+  },
+  {
+    "rent": 5,
+    "rentTime": 30,
+    "channelNumber": 30,
+    "currency": "dollar"
+  },
+  {
+    "rent": 2,
+    "rentTime": 30,
+    "channelNumber": 20,
+    "currency": "dollar"
+  }
+]

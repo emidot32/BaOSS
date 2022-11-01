@@ -1,0 +1,9 @@
+FROM maven AS MAVEN_BUILD
+COPY src /home/eureka-server/src
+COPY pom.xml /home/eureka-server
+RUN mvn -f /home/eureka-server/pom.xml clean package -DprofileActive=dev-docker -U
+
+FROM openjdk
+COPY --from=MAVEN_BUILD /home/eureka-server/target/eureka-server-0.0.1.jar /usr/local/lib/eureka-server.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "/usr/local/lib/eureka-server.jar", "--spring.profiles.active=dev-docker"]

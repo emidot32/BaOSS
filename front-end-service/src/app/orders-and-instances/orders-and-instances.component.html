@@ -1,0 +1,110 @@
+<div class="container">
+    <div class="row">
+        <h3>Orders:</h3>
+        <table *ngIf="allOrdersForUser" class="table">
+            <thead>
+            <tr>
+                <th scope="col">№</th>
+                <th scope="col">Order</th>
+                <th scope="col">Status</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">Completion Date</th>
+                <th scope="col">Total NRC</th>
+                <th scope="col">Order Aim</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let order of allOrdersForUser; let intIndex= index">
+                <td>
+                    <div class="num">
+                        <i>{{intIndex + 1}}</i>
+                    </div>
+                </td>
+                <td>
+                    <div class="num">
+                        <a [routerLink]="['/homeath/order/'+order.id]">Order №{{order.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div class="num">
+                        <i>{{order.status}}</i>
+                    </div>
+                </td>
+                <td>
+                    <div class="num">
+                        <i>{{order.startDateStr}}</i>
+                    </div>
+                </td>
+                <td>
+                    <div class="num">
+                        <i>{{order.completionDateStr}}</i>
+                    </div>
+                </td>
+                <td>
+                    <div class="num">
+                        <i>{{order.totalNRC}}$</i>
+                    </div>
+                </td>
+                <td>
+                    <div class="num">
+                        <i>{{order.orderAim}}</i>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row"><br/></div>
+    <div class="row">
+        <h3>Instances:</h3>
+        <table *ngIf="allInstancesForUser" class="table">
+            <thead>
+            <tr>
+                <th scope="col">№</th>
+                <th scope="col">Instance</th>
+                <th scope="col">Status</th>
+                <th scope="col">Activation Date</th>
+<!--                <th scope="col">Billing Account Number</th>-->
+                <th scope="col">Disconnection Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let instance of allInstancesForUser; let intIndex= index">
+                <td>
+                    <div class="num">
+                        <i>{{intIndex + 1}}</i>
+                    </div>
+                </td>
+                <td>
+                    <div class="num">
+                        <a [routerLink]="['/homeath/instance/', instance.id]" [queryParams]="{product: instance.product}">
+                            {{instance.product}} Instance №{{instance.id}}
+                        </a>
+                    </div>
+                </td>
+                <td>
+                    <div class="num">
+                        <i>{{instance.status}}</i>
+                    </div>
+                </td>
+                <td>
+                    <div class="num">
+                        <i>{{instance.activatedDateStr}}</i>
+                    </div>
+                </td>
+<!--                <td>-->
+<!--                    <div class="num">-->
+<!--                        <i>Billing Account №{{instance.billingAccountId}}</i>-->
+<!--                    </div>-->
+<!--                </td>-->
+                <td>
+                    <div class="num">
+                        <i>{{instance.disconnectedDateStr}}</i>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<app-footer class="footer"></app-footer>

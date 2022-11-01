@@ -1,0 +1,57 @@
+.img-logo {
+  width: 100%;
+  /*width: 400px;
+  height: 100px;*/
+}
+
+.btn-blue {
+  color: #fff;
+  background-color: #F0650D;
+}
+
+.btn-blue:hover {
+  background-color: #f17425;
+}
+
+.btn-gray {
+  background-color: #4B5A65;
+  text-decoration: none;
+  color: #fff;
+}
+
+.btn-gray:hover {
+  background-color: #3e4d55;
+}
+
+.cont-color {
+  background-color: #1a252b;
+}
+
+.header-user p {
+  margin: 5px;
+  font-size: 20px;
+  color: #EBF1FF;
+}
+
+.app-name {
+  font-size: 30px;
+  text-align: left;
+  margin-top: 15px;
+}
+.app-name p {
+  color: #EBF1FF;
+  font-size: 30px;
+}
+
+.btns {
+  position: absolute;
+  alignment: center;
+  left: 75%;
+  margin-top: 22px;
+  margin-left: -15px;
+}
+
+.btn-logout {
+  color: #fff;
+}
+

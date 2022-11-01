@@ -1,0 +1,9 @@
+FROM maven AS MAVEN_BUILD
+COPY src /home/resource-service/src
+COPY pom.xml /home/resource-service
+RUN mvn -f /home/resource-service/pom.xml clean package -DprofileActive=dev-docker -U
+
+FROM openjdk
+COPY --from=MAVEN_BUILD /home/resource-service/target/resource-service-0.0.1.jar /usr/local/lib/resource-service.jar
+EXPOSE 8084
+ENTRYPOINT ["java", "-jar", "/usr/local/lib/resource-service.jar", "--spring.profiles.active=dev-docker"]

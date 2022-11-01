@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"offers_db.constant_prices"}],"uuid":"aaf138cf419e40198d889bcf15005ec4","collectionName":"constant_prices"}

@@ -1,0 +1,169 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-5 instance-hdr"><h3>{{product}} Instance №{{id}}</h3></div>
+    </div>
+    <div *ngIf="mobileProductInstance" class="container">
+        <div class="row">
+            <h4>Instance Info</h4>
+        </div>
+        <div class="row instance-info">
+            <div class="col-4 instance-all-info">
+                <p>Instance status: <i>{{mobileProductInstance.status}}</i></p>
+                <p>Activated Date: <i>{{mobileProductInstance.activatedDateStr}}</i></p>
+                <p>Balance: <i>{{mobileProductInstance.balance}}$</i></p>
+            </div>
+            <div class="col-4 instance-all-info">
+<!--                <p>Billing Account: <i>Billing Account №{{mobileProductInstance.billingAccountId}}</i></p>-->
+                <p>Disconnected Date: <i>{{mobileProductInstance.disconnectedDateStr}}</i></p>
+                <p>Support 5G: <input id="support-5g" type="checkbox" [(ngModel)]="mobileProductInstance.support5g" disabled></p>
+            </div>
+        </div>
+        <div class="row">
+            <h4>Tariff Info</h4>
+        </div>
+        <div class="row tariff-info">
+            <div class="col-4 instance-all-info">
+                <p>Tariff: <i>{{mobileProductInstance.tariff.tariffName}}</i></p>
+                <p>Free GBs: <i>{{mobileProductInstance.tariff.internetGBs}}GBs</i></p>
+                <p>Free SMSs: <i>{{mobileProductInstance.tariff.freeSms}}</i></p>
+            </div>
+            <div class="col-4 instance-all-info">
+                <div [ngSwitch]="mobileProductInstance.tariff.discount" class="num">
+                    <ng-template ngSwitchCase="0">
+                        <p>MRC: <i>{{mobileProductInstance.tariff.startingPrice}} {{mobileProductInstance.tariff.priceEnding}}</i></p>
+                    </ng-template>
+                    <ng-template ngSwitchDefault>
+                        <p>MRC:
+                            <i style="color:red"><s>{{mobileProductInstance.tariff.startingPrice}}</s></i>&nbsp;
+                            <i style="color:green">{{mobileProductInstance.tariff.discountedPrice}} </i>
+                            <i>{{mobileProductInstance.tariff.priceEnding}}</i>
+                        </p>
+                    </ng-template>
+                </div>
+                <p>Free minutes: <i>{{mobileProductInstance.tariff.freeMinutes}}</i></p>
+                <p>One minute cost: <i>{{mobileProductInstance.tariff.minuteOfCallPrice}}$</i></p>
+            </div>
+        </div>
+        <div class="row">
+            <h4>Phone Number Info</h4>
+        </div>
+        <div class="row phone-number-info">
+            <div class="col-4 instance-all-info">
+                <p>Phone Number: <i>+{{mobileProductInstance.phoneNumber.countryCode}} {{mobileProductInstance.phoneNumber.phoneNumber}}</i></p>
+                <p>SIM card number: <i>{{mobileProductInstance.phoneNumber.simCardNumber}}</i></p>
+            </div>
+            <div class="col-4 instance-all-info">
+                <p>Phone Number price: <i>{{mobileProductInstance.phoneNumber.price}}$</i></p>
+                <p>PIN Code: <i>{{mobileProductInstance.phoneNumber.pinCode}}</i></p>
+            </div>
+        </div>
+        <div class="row">
+            <p *ngIf="mobileProductInstance.tariff.discount">* - discount is active to {{mobileProductInstance.tariff.discountEndDate}}</p>
+        </div>
+    </div>
+    <div *ngIf="internetProductInstance" class="container">
+        <div class="row">
+            <h4>Instance Info</h4>
+        </div>
+        <div class="row instance-info">
+            <div class="col-5 instance-all-info">
+                <p>Instance status: <i>{{internetProductInstance.status}}</i></p>
+                <p>Activated Date: <i>{{internetProductInstance.activatedDateStr}}</i></p>
+                <p>Address: <i>{{getAddressStr()}}</i></p>
+                <p *ngIf="internetProductInstance.fixedIp">Fixed IP: <i>{{internetProductInstance.fixedIp}}</i></p>
+            </div>
+            <div class="col-4 instance-all-info">
+                <p>Disconnected Date: <i>{{internetProductInstance.disconnectedDateStr}}</i></p>
+                <p>Cable Length: <i>{{internetProductInstance.cableLen}} meters</i></p>
+            </div>
+        </div>
+        <div class="row">
+            <h4>Internet Offer Info</h4>
+        </div>
+        <div class="row inet-offer-info">
+            <div class="col-5 instance-all-info">
+                <p>Internet Speed: <i>{{internetProductInstance.internetOffer.speed}} Mb/s</i></p>
+            </div>
+            <div class="col-4 instance-all-info">
+                <div [ngSwitch]="internetProductInstance.internetOffer.discount" class="num">
+                    <ng-template ngSwitchCase="0">
+                        <p>MRC: <i>{{internetProductInstance.internetOffer.startingPrice}} {{internetProductInstance.internetOffer.priceEnding}}</i></p>
+                    </ng-template>
+                    <ng-template ngSwitchDefault>
+                        <p>MRC:
+                            <i style="color:red"><s>{{internetProductInstance.internetOffer.startingPrice}}</s></i>&nbsp;
+                            <i style="color:green">{{internetProductInstance.internetOffer.discountedPrice}} </i>
+                            <i>{{internetProductInstance.internetOffer.priceEnding}}</i>
+                        </p>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="internetProductInstance.device" class="row">
+            <h4>Device Info</h4>
+        </div>
+        <div *ngIf="internetProductInstance.device" class="row device-info">
+            <div class="col-5 instance-all-info">
+                <p>Device: <i>{{internetProductInstance.device.type}} {{internetProductInstance.device.name}}</i></p>
+                <p>Throughput: {{internetProductInstance.device.throughput}} Mb/s</p>
+                <p>Number of ports: {{internetProductInstance.device.portsNum}}</p>
+                <p>Type of ports: {{internetProductInstance.device.portTypes}}</p>
+                <p>Serial number: {{internetProductInstance.device.serialNumber}}</p>
+            </div>
+            <div class="col-6 instance-all-info">
+                <p>Price: <i>{{internetProductInstance.device.price}}</i></p>
+                <p>Frequencies: {{internetProductInstance.device.frequencies}}</p>
+                <p>Supported standards: {{internetProductInstance.device.standards}}</p>
+                <p>Protocols and technologies: {{internetProductInstance.device.protocolsAndTechnologies}}</p>
+                <p>MAC Address: {{internetProductInstance.device.macAddress}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <p *ngIf="internetProductInstance.internetOffer.discount">* - discount is active to {{internetProductInstance.internetOffer.discountEndDate}}</p>
+        </div>
+    </div>
+    <div *ngIf="dtvProductInstance" class="container">
+        <div class="row">
+            <h4>Instance Info</h4>
+        </div>
+        <div class="row instance-info">
+            <div class="col-4 instance-all-info">
+                <p>Instance status: <i>{{dtvProductInstance.status}}</i></p>
+                <p>Activated Date: <i>{{dtvProductInstance.activatedDateStr}}</i></p>
+                <p>Linked Internet Product Instance:
+                    <a [routerLink]="['/homeath/instance/', dtvProductInstance.internetProductId]" [queryParams]="{product: 'Internet Product'}">
+                        Internet Product Instance №{{dtvProductInstance.internetProductId}}
+                    </a>
+                </p>
+            </div>
+            <div class="col-4 instance-all-info">
+                <p>Disconnected Date: <i>{{dtvProductInstance.disconnectedDateStr}}</i></p>
+            </div>
+        </div>
+        <div class="row">
+            <h4>DTV Offer Info</h4>
+        </div>
+        <div class="row inet-offer-info">
+            <div class="col-4 instance-all-info">
+                <p>Number of channels: <i>{{dtvProductInstance.dtvOffer.channelNumber}}</i></p>
+            </div>
+            <div class="col-4 instance-all-info">
+                <div [ngSwitch]="dtvProductInstance.dtvOffer.discount" class="num">
+                    <ng-template ngSwitchCase="0">
+                        <p>MRC: <i>{{dtvProductInstance.dtvOffer.startingPrice}} {{dtvProductInstance.dtvOffer.priceEnding}}</i></p>
+                    </ng-template>
+                    <ng-template ngSwitchDefault>
+                        <p>MRC:
+                            <i style="color:red"><s>{{dtvProductInstance.dtvOffer.startingPrice}}</s></i>&nbsp;
+                            <i style="color:green">{{dtvProductInstance.dtvOffer.discountedPrice}} </i>
+                            <i>{{dtvProductInstance.dtvOffer.priceEnding}}</i>
+                        </p>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <p *ngIf="dtvProductInstance.dtvOffer.discount">* - discount is active to {{dtvProductInstance.dtvOffer.discountEndDate}}</p>
+        </div>
+    </div>
+</div>

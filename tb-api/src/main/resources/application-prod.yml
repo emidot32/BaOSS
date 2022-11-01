@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: tb-api
+
+server:
+  port: 5555
+
+eureka:
+  instance:
+    preferIpAddress: true
+    #appname: ${spring.application.name} 
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8080/eureka
+    registerWithEureka: true
+    fetchRegistry: true
+
+#zuul:
+#  routes:
+#    user-service:
+#      path: /user-service/**
+#      serviceId: user-service
+#    order-service:
+#      path: /order-service/**
+#      serviceId: order-service

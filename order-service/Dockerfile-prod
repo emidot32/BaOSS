@@ -1,0 +1,4 @@
+FROM openjdk:15-jdk-alpine
+MAINTAINER emidot32
+COPY target/order-service-0.0.1.jar order-service-0.0.1.jar
+ENTRYPOINT ["java","-jar","/order-service-0.0.1.jar"]

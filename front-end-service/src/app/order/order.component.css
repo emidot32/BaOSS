@@ -1,0 +1,16 @@
+.text-order-info i {
+    font-size: 20px;
+}
+
+.text-order-info p {
+    font-size: 20px;
+    margin-left: 10px;
+    font-family: Calibri;
+}
+.footer {
+    float: bottom;
+    position: relative;
+    bottom: 0;
+    margin-bottom: 0px;
+    width: 100%;
+}

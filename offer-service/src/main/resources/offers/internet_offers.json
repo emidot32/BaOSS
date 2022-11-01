@@ -1,0 +1,20 @@
+[
+  {
+    "rent": 20,
+    "rentTime": 30,
+    "speed": 300,
+    "currency": "dollar"
+  },
+  {
+    "rent": 10,
+    "rentTime": 30,
+    "speed": 100,
+    "currency": "dollar"
+  },
+  {
+    "rent": 6,
+    "rentTime": 30,
+    "speed": 50,
+    "currency": "dollar"
+  }
+]

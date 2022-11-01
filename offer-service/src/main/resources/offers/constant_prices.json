@@ -1,0 +1,12 @@
+[
+  {
+    "fixedIpPrice": 5,
+    "ipv6SupportPrice": 3,
+    "installationPriceForInternetProduct": 10,
+    "installationPriceForDtvProduct": 15,
+    "deliveryPrice": 10,
+    "supportOf5gPrice": 20,
+    "cableOneMeterPrice": 0.3,
+    "currency": "dollar"
+  }
+]

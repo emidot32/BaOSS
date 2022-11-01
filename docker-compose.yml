@@ -1,0 +1,200 @@
+version: '3'
+services:
+  postgres-db:
+    image: postgres:14.4
+    container_name: postgres-db
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Aposuv74
+      - POSTGRES_DB=baoss_db
+      - POSTGRES_HOST_AUTH_METHOD=md5
+    volumes:
+      - postgres-volume:/var/lib/postgresql/data
+      - ./logs:/logs
+    networks:
+      - common-network
+
+  mongo-db:
+    image: mongo
+    container_name: mongo-db
+    ports:
+      - 27017:27017
+    volumes:
+    #  - ./init-mongodb:/docker-entrypoint-initdb.d
+    #  - ./init-mongodb/data:/tmp/data
+      - mongo-volume:/var/lib/mongo/data
+      - ./logs:/logs
+    #command: mongod
+    networks:
+      - common-network
+            
+  rabbitmq:
+    image: rabbitmq:3.9.8-management-alpine
+    container_name: 'rabbitmq'
+    hostname: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - rabbit-volume:/var/lib/rabbitmq/
+      - ./logs:/logs
+    networks:
+      - common-network
+
+  eureka-server:
+    container_name: eureka-server
+    build:
+      context: ./eureka-server
+      dockerfile: ./Dockerfile-dev
+    ports:
+      - 8080:8080
+    expose:
+      - 8080
+    restart: always
+    networks:
+      - common-network
+      
+  tb-api:
+    container_name: tb-api
+    build:
+      context: ./tb-api
+      dockerfile: ./Dockerfile-dev
+    ports:
+      - 5555:5555
+    expose:
+      - 5555
+    restart: always
+    networks:
+      - common-network
+
+  user-service:
+    container_name: user-service
+    build:
+      context: ./user-service
+      dockerfile: ./Dockerfile-dev
+    ports:
+      - 8082:8082
+    expose:
+      - 8082
+    restart: always
+    environment:
+      - USER_NUMBER_GENERATION=0
+    networks:
+      - common-network
+    depends_on:
+      - postgres-db
+
+  order-service:
+    container_name: order-service
+    build:
+      context: ./order-service
+      dockerfile: ./Dockerfile-dev
+    ports:
+      - 8081:8081
+    expose:
+      - 8081
+    environment:
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - USER_NUMBER_GENERATION=0
+      - CLEAN_INSTALL=false
+    restart: always
+    networks:
+      - common-network
+    depends_on:
+      - postgres-db
+      - offer-service
+      - rabbitmq
+
+  offer-service:
+    container_name: offer-service
+    build:
+      context: ./offer-service
+      dockerfile: ./Dockerfile-dev
+    ports:
+      - 8083:8083
+    expose:
+      - 8083
+    environment:
+      - IMPORT_DEFAULT_OFFERS=true
+    restart: always
+    networks:
+      - common-network
+    depends_on:
+      - mongo-db
+
+  resource-service:
+    container_name: resource-service
+    build:
+      context: ./resource-service
+      dockerfile: ./Dockerfile-dev
+    ports:
+      - 8084:8084
+    expose:
+      - 8084
+    environment:
+      - IMPORT_DEFAULT_RESOURCES=true
+      - NUMBER_OF_PHONE_NUMBER=0
+    restart: always
+    networks:
+      - common-network
+    depends_on:
+      - mongo-db
+      
+  billing-service:
+    container_name: billing-service
+    build:
+      context: ./billing-service
+      dockerfile: ./Dockerfile-dev
+    ports:
+      - 8085:8085
+    expose:
+      - 8085
+    environment:
+      - USER_NUMBER_GENERATION=0
+    restart: always
+    networks:
+      - common-network
+    depends_on:
+      - postgres-db
+  
+  analytics-service:
+    container_name: analytics-service
+    build:
+      context: ./analytics-service
+    ports:
+      - 8086:8086
+    expose:
+      - 8086
+    restart: always
+    networks:
+      - common-network
+    depends_on:
+      - postgres-db
+
+  #front-end-service:
+    #container_name: front-end-service
+    #build:
+    #  context: ./front-end-service
+    #ports:
+    #  - 4200:4200
+    #expose:
+    #  - 4200
+    #volumes:
+    #  - /media/disk_d/Programming/BaOSS/front-end-service/node_modules
+    #networks:
+    #  - common-network
+    #depends-on:
+    #  - order-service
+
+
+networks:
+  common-network:
+    driver: bridge
+
+volumes:
+  postgres-volume:
+  mongo-volume:
+  rabbit-volume:
