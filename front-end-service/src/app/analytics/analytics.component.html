@@ -1,1 +1,54 @@
-<plotly-plot [data]="graph1.data" [layout]="graph1.layout"></plotly-plot>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://unpkg.com/ngx-bootstrap/datepicker/bs-datepicker.css">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2 parameters-hdr"><h3>Parameters</h3></div>
+    </div>
+    <div class="row">
+        <div class="col-1 date-label"><p>Start date:</p></div>
+        <div class="col-2 start-date-field">
+            <input type="text"
+                   placeholder="mm/dd/yyyy"
+                   class="form-control"
+                   (bsValueChange)="validateStartDate($event)"
+                   bsDatepicker>
+            <p *ngIf="startDateErrMsg" class="date-error">{{startDateErrMsg}}</p>
+        </div>
+        <div class="col-1 date-label"><p>End date:</p></div>
+        <div class="col-2 end-date-field">
+            <input type="text"
+                   placeholder="mm/dd/yyyy"
+                   class="form-control"
+                   (bsValueChange)="validateEndDate($event)"
+                   bsDatepicker>
+            <p *ngIf="endDateErrMsg" class="date-error">{{endDateErrMsg}}</p>
+        </div>
+    </div>
+    <div class="row step-div">
+        <div class="col-1-sm step-label"><p>Step:  </p></div>
+        <div class="col-1-lg">
+            <select id="stepVars" [(ngModel)]="step" name="stepVars">
+                <option *ngFor="let stepVar of stepVars" [ngValue]="stepVar">{{stepVar}}</option>
+            </select><br/>
+        </div>
+
+    </div>
+    <div class="row analytics-div">
+        <div class="col-1 analytics-label"><p>Analytics: </p></div>
+        <div *ngFor="let item of analyticVariants" class="form-check form-check-inline">
+            <input id="{{item.name}}" [value]="item.id" [checked]="item.check" (click)="getNeededAnalytics(item.id)"
+                   class="form-check-input"
+                   type="checkbox">
+            <label for="{{item.name}}" class="form-check-label">{{ item.name }}</label>
+        </div>
+    </div>
+    <div *ngIf=analyticSelected class="row results"><h3>Results</h3></div>
+    <div *ngIf="userNumber && userNumber != null" class="user-number">
+        <p>Registered users in specified date range: {{userNumber}}</p>
+    </div>
+    <div *ngIf="userNumberByProductsGraph && userNumberByProductsGraph != null" class="user-number-by-products">
+        <plotly-plot
+                [data]="userNumberByProductsGraph.data"
+                [layout]="userNumberByProductsGraph.layout"></plotly-plot>
+    </div>
+</div>

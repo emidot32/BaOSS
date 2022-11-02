@@ -34,7 +34,7 @@ export class MenuComponent implements OnInit {
             this.menu.push({name: 'Deliveries', url: `deliveries`});
         }
         if (this.role == 'SALES_MANAGER') {
-            // if (this.role == 'USER') {
+        // if (this.role == 'USER') {
             this.menu.push({name: 'Analytics', url: `analytics`});
         }
     }

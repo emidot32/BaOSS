@@ -1,3 +1,5 @@
+import {Plotly} from 'angular-plotly.js/src/app/shared/plotly.interface';
+
 export interface Address {
     addressId: number;
     buildingId: number;
@@ -293,4 +295,15 @@ export interface Toaster {
 export interface ChartData {
     x: object[];
     y: object[];
+}
+export interface GraphParams {
+    data: Plotly.Data[];
+    layout: object;
+}
+
+export interface CohortAnalysis {
+    userNumber: number;
+    userNumberByProducts: ChartData;
+    usersByDate: ChartData;
+    productsByDate: ChartData[];
 }
