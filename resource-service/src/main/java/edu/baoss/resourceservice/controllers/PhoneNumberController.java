@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -17,6 +18,13 @@ public class PhoneNumberController {
     @GetMapping("/all")
     public List<PhoneNumber> getPhoneNumbers(){
         return phoneNumberService.getPhoneNumbersForSale();
+    }
+
+    @GetMapping("/for-order-entry")
+    public List<PhoneNumber> getPartPhoneNumbers(){
+        return phoneNumberService.getPhoneNumbersForSale().stream()
+                .limit(100)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{phoneNumber}")

@@ -23,7 +23,7 @@ export class ResourceService {
   }
 
   getPhoneNumbersForSale(): Observable<PhoneNumber[]> {
-    return this.http.get<PhoneNumber[]>(`${environment.apiUrl}/resource-service/phone-numbers/all`);
+    return this.http.get<PhoneNumber[]>(`${environment.apiUrl}/resource-service/phone-numbers/for-order-entry`);
   }
 
   getTwistedPairCable(): Observable<Cable> {

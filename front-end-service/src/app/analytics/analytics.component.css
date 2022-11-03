@@ -19,6 +19,10 @@
 .results {
     margin-left: 1px;
 }
-.user-number {
+.text-value {
+    margin-top: 10px;
     margin-left: 10px;
+}
+.date-error {
+    color: red;
 }

@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   // apiUrl: 'https://netbooksback.herokuapp.com'
   apiUrl: 'http://localhost:5555',
-  // analyticsServiceUrl: 'http://localhost:8086',
+  //analyticsServiceUrl: 'http://localhost:8086',
   analyticsServiceUrl: 'http://localhost:5000',
   errorMessage: 'An unexpected error has occurred. Please contact your system administrator'
 

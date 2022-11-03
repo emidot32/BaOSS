@@ -43,12 +43,49 @@
         </div>
     </div>
     <div *ngIf=analyticSelected class="row results"><h3>Results</h3></div>
-    <div *ngIf="userNumber && userNumber != null" class="user-number">
+    <div *ngIf=analyticVariants[0].check class="row results"><h4>Cohort analysis</h4></div>
+    <div *ngIf="userNumber && userNumber != null" class="text-value">
         <p>Registered users in specified date range: {{userNumber}}</p>
     </div>
     <div *ngIf="userNumberByProductsGraph && userNumberByProductsGraph != null" class="user-number-by-products">
         <plotly-plot
                 [data]="userNumberByProductsGraph.data"
                 [layout]="userNumberByProductsGraph.layout"></plotly-plot>
+    </div>
+    <div *ngIf="usersByDateGraph && usersByDateGraph != null" class="users-by-date">
+        <plotly-plot
+                [data]="usersByDateGraph.data"
+                [layout]="usersByDateGraph.layout"></plotly-plot>
+    </div>
+    <div *ngIf="productsByDateGraph && productsByDateGraph != null" class="products-by-date">
+        <plotly-plot
+                [data]="productsByDateGraph.data"
+                [layout]="productsByDateGraph.layout"></plotly-plot>
+    </div>
+    <div *ngIf=analyticVariants[1].check class="row results"><h4>Business metrics</h4></div>
+    <div *ngIf="profit && profit != null" class="text-value">
+        <p>Gross Merchandise Volume (GMS) in specified date range: {{profit}}$</p>
+    </div>
+    <div *ngIf="profitByDateGraph && profitByDateGraph != null" class="profit-by-date">
+        <plotly-plot
+                [data]="profitByDateGraph.data"
+                [layout]="profitByDateGraph.layout"></plotly-plot>
+    </div>
+    <div *ngIf="aovs && aovs != null" class="text-value">
+        <p>Average Order Value (AOV) for NRC in specified date range: {{aovs[0]}}$</p>
+        <p>Average Order Value (AOV) for MRC in specified date range: {{aovs[1]}}$</p>
+    </div>
+    <div *ngIf="aovsByDateGraph && aovsByDateGraph != null" class="aovs-by-date">
+        <plotly-plot
+                [data]="aovsByDateGraph.data"
+                [layout]="aovsByDateGraph.layout"></plotly-plot>
+    </div>
+    <div *ngIf="arppu && arppu != null" class="text-value">
+        <p>Average revenue per paying user (ARPPU) in specified date range: {{arppu}}$</p>
+    </div>
+    <div *ngIf="arppuByDateGraph && arppuByDateGraph != null" class="profit-by-date">
+        <plotly-plot
+                [data]="arppuByDateGraph.data"
+                [layout]="arppuByDateGraph.layout"></plotly-plot>
     </div>
 </div>

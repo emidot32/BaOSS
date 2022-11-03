@@ -44,7 +44,7 @@ tb-api:
 baoss:
   orders:
     clean-install: ${CLEAN_INSTALL:false}
-    number-of-users-for-generation: ${USER_NUMBER_GENERATION:0}
+    number-of-users-for-generation: ${USER_NUMBER_GENERATION:500}
 #security:
 #  oauth2:
 #    resource:

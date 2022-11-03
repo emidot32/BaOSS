@@ -28,11 +28,19 @@ export class AnalyticsComponent implements OnInit {
         {id: 2, name: 'Profit forecasting', active: false, check: false}
     ];
     analyticSelected: boolean;
+    chartWidth = 920;
+    chartHeight = 440;
     // analytic results
     userNumber: number;
     userNumberByProductsGraph: GraphParams;
     usersByDateGraph: GraphParams;
     productsByDateGraph: GraphParams;
+    profit: number;
+    profitByDateGraph: GraphParams;
+    aovs: number[];
+    aovsByDateGraph: GraphParams;
+    arppu: number;
+    arppuByDateGraph: GraphParams;
 
     constructor(private analyticsService: AnalyticsService,
                 private router: Router,
@@ -72,35 +80,33 @@ export class AnalyticsComponent implements OnInit {
     getNeededAnalytics(id: number) {
         console.log(this.userNumberByProductsGraph);
         this.analyticVariants[id].check = !this.analyticVariants[id].check;
+        const startDateStr = this.startDate == null ? '' : this.dateFormatPipe.transform(this.startDate, 'dd-MM-yyyy');
+        const endDateStr = this.endDate == null ? '' : this.dateFormatPipe.transform(this.endDate, 'dd-MM-yyyy');
+        const step = this.step == null || this.step == '' ? 'day' : this.step;
         if (id == 0) {
             if (this.analyticVariants[id].check) {
-                const startDateStr = this.startDate == null ? '' : this.dateFormatPipe.transform(this.startDate, 'dd-MM-yyyy');
-                const endDateStr = this.endDate == null ? '' : this.dateFormatPipe.transform(this.endDate, 'dd-MM-yyyy');
-                const step = this.step == null || this.step == '' ? 'day' : this.step;
-                this.analyticsService.getUserNumber(startDateStr, endDateStr)
-                    .subscribe(data => this.userNumber = data,
-                        error => this.toaster.error(error.error.message));
-                this.analyticsService.getUserNumbersByProducts(startDateStr, endDateStr)
-                    .subscribe(data => this.userNumberByProductsGraph = {
-                            data: [{x: data.x, y: data.y, type: 'bar', text: data.y.map(String), textposition: 'auto'}] as Plotly.Data[],
-                            layout: {width: 820, height: 440, title: 'User numbers by products'}
-                        } as GraphParams,
-                        error => this.toaster.error(error.error.message));
-                this.analyticsService.getUsersByDate(startDateStr, endDateStr, step)
-                    .subscribe(data => this.usersByDateGraph = {
-                            data: [{x: data.x, y: data.y, type: 'scatter', mode: 'lines+points'}] as Plotly.Data[],
-                            layout: {width: 820, height: 440, title: 'User numbers by date'}
-                        } as GraphParams,
-                        error => this.toaster.error(error.error.message));
-                this.analyticsService.getProductsByDate(startDateStr, endDateStr, step)
-                    .subscribe(data => this.productsByDateGraph = {
-                            data: [
-                                {x: data[0].x, y: data[0].y, type: 'scatter', mode: 'lines+points', label: 'Mobile Product'},
-                                {x: data[1].x, y: data[1].y, type: 'scatter', mode: 'lines+points', label: 'Internet Product'},
-                                {x: data[2].x, y: data[2].y, type: 'scatter', mode: 'lines+points', label: 'DTV Product'},
-                            ] as Plotly.Data[],
-                            layout: {width: 820, height: 640, title: 'Products by date'}
-                        } as GraphParams,
+                this.analyticsService.getCohortAnalysis(startDateStr, endDateStr, step)
+                    .subscribe(data => {
+                            this.userNumber = data.userNumber;
+                            this.usersByDateGraph = {
+                                // tslint:disable-next-line:max-line-length
+                                data: [{x: data.usersByDate.x, y: data.usersByDate.y, type: 'scatter', mode: 'lines+markers'}] as Plotly.Data[],
+                                layout: {width: this.chartWidth, height: this.chartHeight, title: 'User numbers by date'}
+                            } as GraphParams;
+                            this.userNumberByProductsGraph = {
+                                // tslint:disable-next-line:max-line-length
+                                data: [{x: data.userNumberByProducts.x, y: data.userNumberByProducts.y, type: 'bar', text: data.userNumberByProducts.y.map(String), textposition: 'auto'}] as Plotly.Data[],
+                                layout: {width: this.chartWidth, height: this.chartHeight, title: 'User numbers by products'}
+                            } as GraphParams;
+                            this.productsByDateGraph = {
+                                data: [
+                                    {x: data.productsByDate[0].x, y: data.productsByDate[0].y, type: 'bar', name: 'Mobile Product'},
+                                    {x: data.productsByDate[1].x, y: data.productsByDate[1].y, type: 'bar', name: 'Internet Product'},
+                                    {x: data.productsByDate[2].x, y: data.productsByDate[2].y, type: 'bar', name: 'DTV Product'},
+                                ] as Plotly.Data[],
+                                layout: {width: 1060, height: this.chartHeight, title: 'Products by date'}
+                            } as GraphParams;
+                        },
                         error => this.toaster.error(error.error.message));
             } else {
                 this.userNumber = null;
@@ -110,7 +116,37 @@ export class AnalyticsComponent implements OnInit {
             }
         } else if (id == 1) {
             if (this.analyticVariants[id].check) {
-
+                this.analyticsService.getBusinessMetrics(startDateStr, endDateStr, step)
+                    .subscribe(data => {
+                            this.profit = data.profit;
+                            this.profitByDateGraph = {
+                                // tslint:disable-next-line:max-line-length
+                                data: [{x: data.profitByDate.x, y: data.profitByDate.y, type: 'scatter', mode: 'lines+markers'}] as Plotly.Data[],
+                                layout: {width: this.chartWidth, height: this.chartHeight, title: 'GMV by date'}
+                            } as GraphParams;
+                            this.aovs = data.aovs;
+                            this.aovsByDateGraph = {
+                                data: [
+                                    {x: data.aovsByDate[0].x, y: data.aovsByDate[0].y, type: 'scatter', mode: 'lines+markers', name: 'AOV NRC'},
+                                    {x: data.aovsByDate[1].x, y: data.aovsByDate[1].y, type: 'scatter', mode: 'lines+markers', name: 'AOV MRC'}
+                                ] as Plotly.Data[],
+                                layout: {width: 960, height: this.chartHeight, title: 'AOVs by date'}
+                            } as GraphParams;
+                            this.arppu = data.arppu;
+                            this.arppuByDateGraph = {
+                                // tslint:disable-next-line:max-line-length
+                                data: [{x: data.arppuByDate.x, y: data.arppuByDate.y, type: 'scatter', mode: 'lines+markers'}] as Plotly.Data[],
+                                layout: {width: this.chartWidth, height: this.chartHeight, title: 'ARPPU by date'}
+                            } as GraphParams;
+                        },
+                        error => this.toaster.error(error.error.message));
+            } else {
+                this.profit = null;
+                this.profitByDateGraph = null;
+                this.aovs = null;
+                this.aovsByDateGraph = null;
+                this.arppu = null;
+                this.arppuByDateGraph = null;
             }
         } else if (id == 2) {
             if (this.analyticVariants[id].check) {

@@ -307,3 +307,12 @@ export interface CohortAnalysis {
     usersByDate: ChartData;
     productsByDate: ChartData[];
 }
+
+export interface BusinessMetrics {
+    profitByDate: ChartData;
+    profit: number;
+    aovsByDate: ChartData[];
+    aovs: number[];
+    arppuByDate: ChartData;
+    arppu: number;
+}
