@@ -88,4 +88,22 @@
                 [data]="arppuByDateGraph.data"
                 [layout]="arppuByDateGraph.layout"></plotly-plot>
     </div>
+    <div *ngIf="clv && clv != null" class="text-value">
+        <p>Customer Lifetime Value (CLV) in specified date range: {{clv}}$</p>
+    </div>
+    <div *ngIf="clvByDateGraph && clvByDateGraph != null" class="profit-by-date">
+        <plotly-plot
+                [data]="clvByDateGraph.data"
+                [layout]="clvByDateGraph.layout"></plotly-plot>
+    </div>
+    <div *ngIf="profitByProduct && profitByProduct != null" class="profit-by-date">
+        <plotly-plot
+                [data]="profitByProduct.data"
+                [layout]="profitByProduct.layout"></plotly-plot>
+    </div>
+    <div *ngIf="profitByProductAndDate && profitByProductAndDate != null" class="profit-by-date">
+        <plotly-plot
+                [data]="profitByProductAndDate.data"
+                [layout]="profitByProductAndDate.layout"></plotly-plot>
+    </div>
 </div>

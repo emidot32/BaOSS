@@ -41,6 +41,10 @@ export class AnalyticsComponent implements OnInit {
     aovsByDateGraph: GraphParams;
     arppu: number;
     arppuByDateGraph: GraphParams;
+    clv: number;
+    clvByDateGraph: GraphParams;
+    profitByProduct: GraphParams;
+    profitByProductAndDate: GraphParams;
 
     constructor(private analyticsService: AnalyticsService,
                 private router: Router,
@@ -130,13 +134,35 @@ export class AnalyticsComponent implements OnInit {
                                     {x: data.aovsByDate[0].x, y: data.aovsByDate[0].y, type: 'scatter', mode: 'lines+markers', name: 'AOV NRC'},
                                     {x: data.aovsByDate[1].x, y: data.aovsByDate[1].y, type: 'scatter', mode: 'lines+markers', name: 'AOV MRC'}
                                 ] as Plotly.Data[],
-                                layout: {width: 960, height: this.chartHeight, title: 'AOVs by date'}
+                                layout: {width: 1060, height: this.chartHeight, title: 'AOVs by date'}
                             } as GraphParams;
                             this.arppu = data.arppu;
                             this.arppuByDateGraph = {
                                 // tslint:disable-next-line:max-line-length
                                 data: [{x: data.arppuByDate.x, y: data.arppuByDate.y, type: 'scatter', mode: 'lines+markers'}] as Plotly.Data[],
                                 layout: {width: this.chartWidth, height: this.chartHeight, title: 'ARPPU by date'}
+                            } as GraphParams;
+                            this.clv = data.clv;
+                            this.clvByDateGraph = {
+                                // tslint:disable-next-line:max-line-length
+                                data: [{x: data.clvByDate.x, y: data.clvByDate.y, type: 'scatter', mode: 'lines+markers'}] as Plotly.Data[],
+                                layout: {width: this.chartWidth, height: this.chartHeight, title: 'CLV by date'}
+                            } as GraphParams;
+                            this.profitByProduct = {
+                                // tslint:disable-next-line:max-line-length
+                                data: [{x: data.profitByProduct.x, y: data.profitByProduct.y, type: 'bar', text: data.profitByProduct.y.map(String), textposition: 'auto'}] as Plotly.Data[],
+                                layout: {width: this.chartWidth, height: this.chartHeight, title: 'Profit by products, dollar'}
+                            } as GraphParams;
+                            this.profitByProductAndDate = {
+                                data: [
+                                    // tslint:disable-next-line:max-line-length
+                                    {x: data.profitByProductAndDate[0].x, y: data.profitByProductAndDate[0].y, type: 'lines+markers', name: 'Mobile Product'},
+                                    // tslint:disable-next-line:max-line-length
+                                    {x: data.profitByProductAndDate[1].x, y: data.profitByProductAndDate[1].y, type: 'lines+markers', name: 'Internet Product'},
+                                    // tslint:disable-next-line:max-line-length
+                                    {x: data.profitByProductAndDate[2].x, y: data.profitByProductAndDate[2].y, type: 'lines+markers', name: 'DTV Product'},
+                                ] as Plotly.Data[],
+                                layout: {width: 1060, height: this.chartHeight, title: 'Profits by products and date, dollar'}
                             } as GraphParams;
                         },
                         error => this.toaster.error(error.error.message));
@@ -147,6 +173,10 @@ export class AnalyticsComponent implements OnInit {
                 this.aovsByDateGraph = null;
                 this.arppu = null;
                 this.arppuByDateGraph = null;
+                this.clv = null;
+                this.clvByDateGraph = null;
+                this.profitByProduct = null;
+                this.profitByProductAndDate = null;
             }
         } else if (id == 2) {
             if (this.analyticVariants[id].check) {

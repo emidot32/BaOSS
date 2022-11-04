@@ -81,7 +81,7 @@ services:
       - 8082
     restart: always
     environment:
-      - USER_NUMBER_GENERATION=0
+      - USER_NUMBER_GENERATION=500
     networks:
       - common-network
     depends_on:
@@ -98,7 +98,7 @@ services:
       - 8081
     environment:
       - SPRING_RABBITMQ_HOST=rabbitmq
-      - USER_NUMBER_GENERATION=0
+      - USER_NUMBER_GENERATION=500
       - CLEAN_INSTALL=false
     restart: always
     networks:
@@ -136,7 +136,7 @@ services:
       - 8084
     environment:
       - IMPORT_DEFAULT_RESOURCES=true
-      - NUMBER_OF_PHONE_NUMBER=0
+      - NUMBER_OF_PHONE_NUMBER=500
     restart: always
     networks:
       - common-network
@@ -153,7 +153,7 @@ services:
     expose:
       - 8085
     environment:
-      - USER_NUMBER_GENERATION=0
+      - USER_NUMBER_GENERATION=500
     restart: always
     networks:
       - common-network

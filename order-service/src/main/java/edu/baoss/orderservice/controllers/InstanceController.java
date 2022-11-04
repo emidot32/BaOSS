@@ -42,6 +42,21 @@ public class InstanceController {
         return instanceService.getDtvProductInstance(dtvProductId);
     }
 
+    @GetMapping("/mobile-products")
+    List<MobileProductInstance> getMobileProductInstances() {
+        return instanceService.getMobileProductInstances();
+    }
+
+    @GetMapping("/internet-products")
+    List<InternetProductInstance> getInternetProductInstances() {
+        return instanceService.getInternetProductInstances();
+    }
+
+    @GetMapping("/dtv-products")
+    List<DtvProductInstance> getDtvProductInstances() {
+        return instanceService.getDtvProductInstances();
+    }
+
     @PutMapping("/{instanceId}/inactivate")
     void inactivateInstance(@PathVariable long instanceId) {
         instanceService.inactivateInstance(instanceId);

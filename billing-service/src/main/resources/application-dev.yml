@@ -10,7 +10,7 @@ spring:
 #      ddl-auto: update
   datasource:
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/baoss-db
+    url: jdbc:postgresql://localhost:5432/baoss_db
     username: postgres
     password: Aposuv74
 

@@ -58,7 +58,7 @@ public class PaymentService {
 
     @Scheduled(cron = "55 23 * * *")
     public void doMrcPayment() {
-        orderServiceFeignProxy.getActiveInstances().stream()
+        orderServiceFeignProxy.getActiveProductInstances().stream()
                 .filter(this::needToPay)
                 .forEach(instance -> {
                     double balance = userRepository.findById(instance.getUserId())

@@ -315,4 +315,8 @@ export interface BusinessMetrics {
     aovs: number[];
     arppuByDate: ChartData;
     arppu: number;
+    clvByDate: ChartData;
+    clv: number;
+    profitByProduct: ChartData;
+    profitByProductAndDate: ChartData[];
 }

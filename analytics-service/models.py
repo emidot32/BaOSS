@@ -14,6 +14,7 @@ class User(db.Model):
     birthday = db.Column(db.DateTime)
     balance = db.Column(db.Float)
     reg_date = db.Column(db.DateTime)
+    # orders = db.relationship('Order', backref='user', lazy=True)
 
 
 class Order(db.Model):
@@ -81,6 +82,7 @@ class Payment(db.Model):
     __tablename__ = 'payments'
     payment_id = db.Column(db.Integer, primary_key=True)
     from_user = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    # user = db.relationship('User', backref='payments', lazy=True)
     value = db.Column(db.Float, nullable=False)
     payment_date = db.Column(db.DateTime)
     purpose = db.Column(db.String)

@@ -24,7 +24,7 @@ step_to_pattern = {day: "%d-%m-%Y", week: "%d-%m-%Y", month: "%m-%Y", quarter: "
 def cohort_analysis():
     return jsonify({
         "userNumber": get_user_number(),
-        "userNumberByProduct": get_user_number_by_product(),
+        "userNumberByProducts": get_user_number_by_product(),
         "usersByDate": get_users_by_date(),
         "productsByDate": get_products_by_date()
     })
@@ -38,7 +38,11 @@ def business_metrics():
         "aovsByDate": get_aovs_by_date(),
         "aovs": get_aovs(),
         "arppuByDate": get_arppu_by_date(),
-        "arppu": get_arppu()
+        "arppu": get_arppu(),
+        "profitByProduct": get_profits_by_product(),
+        "profitByProductAndDate": get_profits_by_product_and_date(),
+        "clv": get_clv(),
+        "clvByDate": get_clv_by_date()
     })
 
 
@@ -60,6 +64,8 @@ def get_users_by_date():
     step = request.args.get('step') if request.args.get('step') is not None else day
     users = User.query.filter(User.reg_date >= start_date)\
         .filter(User.reg_date <= end_date).all()
+    if len(users) == 0:
+        return {x: [], y: []}
     return get_nums_grouped_by_date(users, step, 'reg_date', 'user_id', lambda df: df.count())
 
 
@@ -79,6 +85,8 @@ def get_profit_by_date():
     step = request.args.get('step') if request.args.get('step') is not None else day
     payments = Payment.query.filter(Payment.payment_date >= start_date)\
         .filter(Payment.payment_date <= end_date).all()
+    if len(payments) == 0:
+        return {x: [], y: []}
     return get_nums_grouped_by_date(payments, step, 'payment_date', 'value', lambda df: df.sum())
 
 
@@ -98,6 +106,8 @@ def get_aovs_by_date():
         .filter(Order.completion_date is not None)\
         .filter(Order.completion_date >= start_date)\
         .filter(Order.completion_date <= end_date).all()
+    if len(orders) == 0:
+        return [{x: [], y: []}, {x: [], y: []}]
     aovs_by_date = [get_nums_grouped_by_date(orders, step, 'completion_date', 'total_nrc', lambda df: df.mean()),
                     get_nums_grouped_by_date(orders, step, 'completion_date', 'total_mrc', lambda df: df.mean())]
     return aovs_by_date
@@ -121,6 +131,8 @@ def get_arppu_by_date():
     step = request.args.get('step') if request.args.get('step') is not None else day
     payments = Payment.query.filter(Payment.payment_date >= start_date)\
         .filter(Payment.payment_date <= end_date).all()
+    if len(payments) == 0:
+        return {x: [], y: []}
     return get_arppu_grouped_by_date(payments, step)
 
 
@@ -131,6 +143,42 @@ def get_arppu():
     payment_values = [payment.value for payment in payments]
     user_number = len(set([payment.from_user for payment in payments]))
     return round(sum(payment_values)/user_number, 2)
+
+
+def get_profits_by_product():
+    start_date, end_date = get_date_range(lambda: db.session.query(func.min(Payment.payment_date)).first()[0])
+    payments = Payment.query.filter(Payment.payment_date >= start_date).filter(Payment.payment_date <= end_date).all()
+    if len(payments) == 0:
+        return {x: [], y: []}
+    product_to_profit = dict()
+    product_to_profit[mobile_product] = round(sum([payment.value for payment in payments if mobile_product in payment.purpose]), 2)
+    product_to_profit[internet_product] = round(sum([payment.value for payment in payments if internet_product in payment.purpose]), 2)
+    product_to_profit[dtv_product] = round(sum([payment.value for payment in payments if dtv_product in payment.purpose]), 2)
+    return {x: list(product_to_profit.keys()), y: list(product_to_profit.values())}
+
+
+def get_profits_by_product_and_date():
+    start_date, end_date = get_date_range(lambda: db.session.query(func.min(Payment.payment_date)).first()[0])
+    step = request.args.get('step') if request.args.get('step') is not None else day
+    all_payments = Payment.query.filter(Payment.payment_date >= start_date).filter(Payment.payment_date <= end_date)
+    if len(all_payments) == 0:
+        return [{x: [], y: []}, {x: [], y: []}, {x: [], y: []}]
+    mobile_payments = all_payments.filter(Payment.purpose.contains(mobile_product)).all()
+    internet_payments = all_payments.filter(Payment.purpose.contains(internet_product)).all()
+    dtv_payments = all_payments.filter(Payment.purpose.contains(dtv_product)).all()
+    return [get_nums_grouped_by_date(mobile_payments, step, 'payment_date', 'value', lambda df: df.sum()),
+            get_nums_grouped_by_date(internet_payments, step, 'payment_date', 'value', lambda df: df.sum()),
+            get_nums_grouped_by_date(dtv_payments, step, 'payment_date', 'value', lambda df: df.sum())]
+
+
+def get_clv():
+    return round(get_arppu() * 0.8 * 4, 2)
+
+
+def get_clv_by_date():
+    arppu_by_date = get_arppu_by_date()
+    arppu_by_date[y] = [round((arppu * 0.8 * 4), 2) for arppu in arppu_by_date[y]]
+    return arppu_by_date
 
 
 def get_date_range(func_for_start_date):
@@ -167,6 +215,8 @@ def get_product_numbers_by_date(start_date, end_date, step, product):
         .filter(Order.completion_date is not None)\
         .filter(Order.completion_date >= start_date)\
         .filter(Order.completion_date <= end_date).all()
+    if len(products) == 0:
+        return {x: [], y: []}
     return get_nums_grouped_by_date(products, step, 'completion_date', 'order_id', lambda df: df.count())
 
 
@@ -177,16 +227,24 @@ def get_nums_grouped_by_date(values, step, date_field, value_field, apply_to_gro
              for order_date in date_to_num.index.get_level_values(date_field).tolist()]
     values = np.array(date_to_num[value_field].values.tolist())
     values[np.isnan(values)] = 0
-    return {x: dates, y: [float(v) for v in values]}
+    return {x: dates, y: [round(float(v), 2) for v in values]}
 
 
 def get_arppu_grouped_by_date(values, step):
+    print(values)
     df = pd.DataFrame.from_records([v.__dict__ for v in values])[['payment_date', 'value', 'from_user']]
     date_to_sum = df[['payment_date', 'value']].groupby(pd.Grouper(key='payment_date', axis=0, freq=step[0].upper())).sum()
     date_to_users = df[['payment_date', 'from_user']].groupby(pd.Grouper(key='payment_date', axis=0, freq=step[0].upper())).agg(set)
     dates = [order_date.to_pydatetime().strftime(step_to_pattern[step]) for order_date in date_to_sum.index.get_level_values('payment_date').tolist()]
     sums = list(date_to_sum['value'].values)
     list_of_grouped_users = list(date_to_users['from_user'].values)
-    values = [round((0 if np.isnan(sums[i]) else sums[i]) / len(list_of_grouped_users[i]), 2) for i in range(len(sums))]
+    values = [calculate_arppu_by_date(list_of_grouped_users, sums, i) for i in range(len(sums))]
     return {x: dates, y: values}
 
+
+def calculate_arppu_by_date(list_of_grouped_users, sums, i):
+    unique_users = len(list_of_grouped_users[i])
+    if unique_users == 0:
+        return 0
+    sum = 0 if np.isnan(sums[i]) else sums[i]
+    return round(sum/unique_users, 2)

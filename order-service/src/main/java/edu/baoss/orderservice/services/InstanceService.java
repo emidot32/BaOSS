@@ -126,16 +126,37 @@ public class InstanceService {
                 .orElse(null);
     }
 
+    public List<MobileProductInstance> getMobileProductInstances() {
+        return mobileProductRepository.findAll().stream()
+                .filter(mobileProduct -> InstanceStatus.ACTIVE.equals(mobileProduct.getInstance().getStatus()))
+                .map(mobileProduct -> applicationContext.getBean(MobileProductConverter.class).entityToDto(mobileProduct, false))
+                .collect(Collectors.toList());
+    }
+
     public InternetProductInstance getInternetProductInstance(long internetProductId) {
         return internetProductRepository.findById(internetProductId)
                 .map(internetProduct -> applicationContext.getBean(InternetProductConverter.class).entityToDto(internetProduct, false))
                 .orElse(null);
     }
 
+    public List<InternetProductInstance> getInternetProductInstances() {
+        return internetProductRepository.findAll().stream()
+                .filter(internetProduct -> InstanceStatus.ACTIVE.equals(internetProduct.getInstance().getStatus()))
+                .map(internetProduct -> applicationContext.getBean(InternetProductConverter.class).entityToDto(internetProduct, false))
+                .collect(Collectors.toList());
+    }
+
     public DtvProductInstance getDtvProductInstance(long dtvProductId) {
         return dtvProductRepository.findById(dtvProductId)
                 .map(dtvProduct -> applicationContext.getBean(DtvProductConverter.class).entityToDto(dtvProduct, false))
                 .orElse(null);
+    }
+
+    public List<DtvProductInstance> getDtvProductInstances() {
+        return dtvProductRepository.findAll().stream()
+                .filter(dtvProduct -> InstanceStatus.ACTIVE.equals(dtvProduct.getInstance().getStatus()))
+                .map(dtvProduct -> applicationContext.getBean(DtvProductConverter.class).entityToDto(dtvProduct, false))
+                .collect(Collectors.toList());
     }
 
     public void setDeviceIdToInternetProduct(OrderValue orderValue) {
