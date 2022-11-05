@@ -114,10 +114,10 @@ export class AuthorizationComponent implements OnInit {
                 error => {
                     this.error = error;
                     this.loading = false;
-                    if (error.message != null && error.message != '') {
-                        this.toaster.error(error.message);
-                    } else if (error.error.message != null && error.error.message != '') {
+                    if (error.error.message != null && error.error.message != '') {
                         this.toaster.error(error.error.message);
+                    } else if (error.message != null && error.message != '') {
+                        this.toaster.error(error.message);
                     } else {
                         this.toaster.error(DEFAULT_ERROR_MESSAGE);
                     }

@@ -24,21 +24,9 @@ public class AddressDto {
     private String roomNum;
     private String entrance;
 
-    public AddressDto(Building building, Address address) {
-        this.addressId = address.getId();
-        this.country = building.getCountry();
-        this.city = building.getCity();
-        this.street = building.getStreet();
-        this.buildingNum = building.getBuildingNum();
-        this.index = building.getIndex();
-        this.latitude = building.getLatitude();
-        this.longitude = building.getLongitude();
-        this.roomNum = address.getRoomNum();
-        this.entrance = address.getEntrance();
-    }
-
     public AddressDto(Address address) {
         this.addressId = address.getId();
+        this.buildingId = address.getBuilding().getId();
         this.country = address.getBuilding().getCountry();
         this.city = address.getBuilding().getCity();
         this.street = address.getBuilding().getStreet();

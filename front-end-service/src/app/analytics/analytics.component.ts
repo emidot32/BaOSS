@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {AuthService} from '../_services/auth.service';
 import {ToastrService} from 'ngx-toastr';
 import {AnalyticsService} from '../_services/analytics.service';
-import {PRODUCTS} from '../_models/constants';
+import {DEFAULT_ERROR_MESSAGE, PRODUCTS} from '../_models/constants';
 import {ChartData, CohortAnalysis, GraphParams} from '../_models/interface';
 import {DatePipe} from '@angular/common';
 import {Plotly} from 'angular-plotly.js/src/app/shared/plotly.interface';
@@ -111,7 +111,15 @@ export class AnalyticsComponent implements OnInit {
                                 layout: {width: 1060, height: this.chartHeight, title: 'Products by date'}
                             } as GraphParams;
                         },
-                        error => this.toaster.error(error.error.message));
+                        error => {
+                            if (error.error.message != null && error.error.message != '') {
+                                this.toaster.error(error.error.message);
+                            } else if (error.message != null && error.message != '') {
+                                this.toaster.error(error.message);
+                            } else {
+                                this.toaster.error(DEFAULT_ERROR_MESSAGE);
+                            }
+                        });
             } else {
                 this.userNumber = null;
                 this.usersByDateGraph = null;
@@ -165,7 +173,15 @@ export class AnalyticsComponent implements OnInit {
                                 layout: {width: 1060, height: this.chartHeight, title: 'Profits by products and date, dollar'}
                             } as GraphParams;
                         },
-                        error => this.toaster.error(error.error.message));
+                        error => {
+                            if (error.error.message != null && error.error.message != '') {
+                                this.toaster.error(error.error.message);
+                            } else if (error.message != null && error.message != '') {
+                                this.toaster.error(error.message);
+                            } else {
+                                this.toaster.error(DEFAULT_ERROR_MESSAGE);
+                            }
+                        });
             } else {
                 this.profit = null;
                 this.profitByDateGraph = null;

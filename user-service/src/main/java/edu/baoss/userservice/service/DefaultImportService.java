@@ -65,8 +65,8 @@ public class DefaultImportService implements ApplicationRunner {
                     .country("Ukraine")
                     .city("Kyiv")
                     .street(STREETS.get(RANDOM.nextInt(STREETS.size())))
-                    .buildingNum(""+RANDOM.nextInt(10))
-                    .roomNum(""+RANDOM.nextInt(50))
+                    .buildingNum(""+(1 + RANDOM.nextInt(10)))
+                    .roomNum(""+(1 + RANDOM.nextInt(50)))
                     .build();
             userDto.getAddresses().add(addressDto);
             userService.register(userDto);

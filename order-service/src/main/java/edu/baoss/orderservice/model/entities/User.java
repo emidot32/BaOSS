@@ -14,6 +14,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static javax.persistence.CascadeType.*;
+import static javax.persistence.CascadeType.DETACH;
+
 
 @Data
 @NoArgsConstructor
@@ -66,9 +69,7 @@ public class User {
     @Column(name = "min_refresh_date")
     Date minRefreshDate;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE
-    })
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {MERGE, REMOVE, REFRESH, DETACH})
     @JoinTable(name = "user_address",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "address_id"))

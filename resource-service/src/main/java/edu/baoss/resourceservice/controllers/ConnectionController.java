@@ -15,6 +15,7 @@ public class ConnectionController {
 
     @GetMapping("/connected-buildings")
     public boolean isBuildingConnectedToNetwork(@RequestParam long buildingId) {
+        System.out.println(connectionService.isBuildingConnectedToNetwork(buildingId));
         return connectionService.isBuildingConnectedToNetwork(buildingId);
     }
 

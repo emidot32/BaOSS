@@ -74,4 +74,18 @@ public class Building implements Serializable {
     public int hashCode() {
         return Objects.hash(country, city, street, buildingNum, index, latitude, longitude);
     }
+
+    @Override
+    public String toString() {
+        return "Building{" +
+                "id=" + id +
+                ", country='" + country + '\'' +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", buildingNum='" + buildingNum + '\'' +
+                ", index='" + index + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", longitude='" + longitude + '\'' +
+                '}';
+    }
 }

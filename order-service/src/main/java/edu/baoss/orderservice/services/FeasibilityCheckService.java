@@ -50,6 +50,7 @@ public class FeasibilityCheckService {
                 checkActions.add(new CommonDtvCheckAction());
             }
         }
+        System.out.println(checkActions);
         checkActions.forEach(checkAction -> checkAction.check(new ActionContext(orderValue, applicationContext)));
     }
 

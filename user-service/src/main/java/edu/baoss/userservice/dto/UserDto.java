@@ -4,6 +4,7 @@ import edu.baoss.userservice.Constants;
 import edu.baoss.userservice.model.Gender;
 import edu.baoss.userservice.model.Role;
 import edu.baoss.userservice.model.User;
+import edu.baoss.userservice.utils.CommonUtils;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -70,9 +71,10 @@ public class UserDto implements Serializable {
         activityStatus = user.isActivityStatus();
         regDate = user.getRegDate() == null ? null : Constants.DATE_AND_TIME_FORMAT.format(user.getRegDate());
         minRefreshDate = user.getMinRefreshDate();
-        balance = user.getBalance();
+        balance = CommonUtils.round(user.getBalance(), 2);
         addresses = user.getAddresses().stream()
-                .map(address -> new AddressDto(address.getBuilding(), address))
+                .map(AddressDto::new)
                 .collect(Collectors.toSet());
     }
+
 }

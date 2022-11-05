@@ -17,6 +17,8 @@ spring:
 
 server:
   port: 8082
+  error:
+    include-message: always
 
 eureka:
   instance:
@@ -35,7 +37,7 @@ eureka:
 baoss:
   users:
     clean-install: ${CLEAN_INSTALL:false}
-    number-of-users-for-generation: ${USER_NUMBER_GENERATION:0}
+    number-of-users-for-generation: ${USER_NUMBER_GENERATION:20}
 
 tb-api:
   url: "http://localhost:5555"

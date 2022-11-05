@@ -1,10 +1,22 @@
-from flask import request, jsonify, Blueprint
-from flask import current_app as app
 from datetime import datetime
-from sqlalchemy import func
-from models import *
-import pandas as pd
+from dateutil.relativedelta import relativedelta
 import numpy as np
+import pandas as pd
+from flask import current_app as app
+from flask import request, jsonify
+from sqlalchemy import func
+from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import LinearRegression
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import GradientBoostingRegressor
+from sktime.forecasting.base import ForecastingHorizon
+from sktime.forecasting.fbprophet import Prophet
+from sktime.forecasting.naive import NaiveForecaster
+from sktime.forecasting.arima import ARIMA
+from sktime.forecasting.bats import BATS
+from sktime.forecasting.compose import make_reduction
+from sktime.forecasting.model_selection import temporal_train_test_split
+from models import *
 
 date_pattern = "%d-%m-%Y"
 internet_product = "Internet Product"
@@ -46,10 +58,19 @@ def business_metrics():
     })
 
 
+@app.route('/profit-forecast', methods=['GET'])
+def profit_forecast():
+    return jsonify({
+        "profitForecast": get_profit_forecast(),
+        # "forecastWithTest": get_profit_forecast(),
+        # "evaluations": get_profit_forecast()
+    })
+
+
 # @app.route('/statistic/user-number', methods=['GET'])
 def get_user_number():
     start_date, end_date = get_date_range(lambda: db.session.query(func.min(User.reg_date)).first()[0])
-    return len(User.query.filter(User.reg_date >= start_date).filter(User.reg_date <= end_date).all())
+    return len(User.query.filter(User.reg_date >= start_date).filter(User.reg_date <= end_date).filter(User.usr_role == 'USER').all())
 
 
 # @app.route('/statistic/user-number/products', methods=['GET'])
@@ -63,7 +84,8 @@ def get_users_by_date():
     start_date, end_date = get_date_range(lambda: db.session.query(func.min(User.reg_date)).first()[0])
     step = request.args.get('step') if request.args.get('step') is not None else day
     users = User.query.filter(User.reg_date >= start_date)\
-        .filter(User.reg_date <= end_date).all()
+        .filter(User.reg_date <= end_date)\
+        .filter(User.usr_role == 'USER').all()
     if len(users) == 0:
         return {x: [], y: []}
     return get_nums_grouped_by_date(users, step, 'reg_date', 'user_id', lambda df: df.count())
@@ -161,14 +183,12 @@ def get_profits_by_product_and_date():
     start_date, end_date = get_date_range(lambda: db.session.query(func.min(Payment.payment_date)).first()[0])
     step = request.args.get('step') if request.args.get('step') is not None else day
     all_payments = Payment.query.filter(Payment.payment_date >= start_date).filter(Payment.payment_date <= end_date)
-    if len(all_payments) == 0:
-        return [{x: [], y: []}, {x: [], y: []}, {x: [], y: []}]
     mobile_payments = all_payments.filter(Payment.purpose.contains(mobile_product)).all()
     internet_payments = all_payments.filter(Payment.purpose.contains(internet_product)).all()
     dtv_payments = all_payments.filter(Payment.purpose.contains(dtv_product)).all()
-    return [get_nums_grouped_by_date(mobile_payments, step, 'payment_date', 'value', lambda df: df.sum()),
-            get_nums_grouped_by_date(internet_payments, step, 'payment_date', 'value', lambda df: df.sum()),
-            get_nums_grouped_by_date(dtv_payments, step, 'payment_date', 'value', lambda df: df.sum())]
+    return [get_nums_grouped_by_date(mobile_payments, step, 'payment_date', 'value', lambda df: df.sum()) if len(mobile_payments) > 0 else {x: [], y: []},
+            get_nums_grouped_by_date(internet_payments, step, 'payment_date', 'value', lambda df: df.sum()) if len(internet_payments) > 0 else {x: [], y: []},
+            get_nums_grouped_by_date(dtv_payments, step, 'payment_date', 'value', lambda df: df.sum()) if len(dtv_payments) > 0 else {x: [], y: []}]
 
 
 def get_clv():
@@ -181,13 +201,25 @@ def get_clv_by_date():
     return arppu_by_date
 
 
-def get_date_range(func_for_start_date):
+def get_profit_forecast():
+    start_date, end_date = get_date_range(lambda: db.session.query(func.min(Payment.payment_date)).first()[0],
+                                          lambda: datetime.now() + relativedelta(months=+1))
+    step = request.args.get('step') if request.args.get('step') is not None else day
+    start_date = get_start_date_by_step(step)
+    payments = Payment.query.filter(Payment.payment_date >= start_date)\
+        .filter(Payment.payment_date <= end_date).all()
+    if len(payments) == 0:
+        return {x: [], y: []}
+    return get_sktime_forecast(payments, end_date, step)
+
+
+def get_date_range(func_for_start_date, func_for_end_date=lambda: datetime.now()):
     start_date_str = request.args.get('start_date')
     end_date_str = request.args.get('end_date')
     start_date = datetime.strptime(start_date_str, date_pattern) if start_date_str is not None and start_date_str != '' else None
     end_date = datetime.strptime(end_date_str, date_pattern) if end_date_str is not None and end_date_str != '' else None
     return start_date if start_date is not None else func_for_start_date(),\
-           end_date if end_date is not None else datetime.now()
+           end_date if end_date is not None else func_for_end_date()
 
 
 def get_number_of_users_by_products(start_date, end_date):
@@ -231,7 +263,6 @@ def get_nums_grouped_by_date(values, step, date_field, value_field, apply_to_gro
 
 
 def get_arppu_grouped_by_date(values, step):
-    print(values)
     df = pd.DataFrame.from_records([v.__dict__ for v in values])[['payment_date', 'value', 'from_user']]
     date_to_sum = df[['payment_date', 'value']].groupby(pd.Grouper(key='payment_date', axis=0, freq=step[0].upper())).sum()
     date_to_users = df[['payment_date', 'from_user']].groupby(pd.Grouper(key='payment_date', axis=0, freq=step[0].upper())).agg(set)
@@ -248,3 +279,35 @@ def calculate_arppu_by_date(list_of_grouped_users, sums, i):
         return 0
     sum = 0 if np.isnan(sums[i]) else sums[i]
     return round(sum/unique_users, 2)
+
+
+def get_sktime_forecast(values, end_date, step):
+    df = pd.DataFrame.from_records([v.__dict__ for v in values])[['payment_date', 'value']]
+    date_to_profit = df.groupby(pd.Grouper(key='payment_date', axis=0, freq=step[0].upper())).sum()
+    y_train, y_test = temporal_train_test_split(date_to_profit, test_size=10)
+    fh = ForecastingHorizon(pd.date_range(start=datetime.now(), end=end_date, freq=step[0].upper()), is_relative=False)
+    # fh = ForecastingHorizon(y_test.index, is_relative=False)
+    print(fh)
+    # prophet_forecaster = Prophet()
+    # prophet_forecaster.fit(date_to_profit)
+    # profit_forecast = prophet_forecaster.predict(fh)
+    naive_forecaster = NaiveForecaster(sp=12)
+    naive_forecaster.fit(y_train)
+    profit_forecast_naive = naive_forecaster.predict(fh)
+    print(profit_forecast_naive.to_string())
+    linear_regressor = make_reduction(LinearRegression())
+    linear_regressor.fit(y_train)
+    profit_forecast_linear = linear_regressor.predict(fh)
+    print(profit_forecast_linear.to_string())
+    return {x: [], y: []}
+
+
+def get_start_date_by_step(step):
+    if step == day:
+        return datetime.now() + relativedelta(months=-2)
+    elif step == week:
+        return datetime.now() + relativedelta(months=-12)
+    elif step == month:
+        return datetime.now() + relativedelta(years=-3)
+    else:
+        return db.session.query(func.min(Payment.payment_date)).first()[0]

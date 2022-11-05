@@ -100,10 +100,10 @@ export class EditProfileComponent implements OnInit {
                     this.form.controls.phoneNumber.setValue(this.user.phoneNumber);
                 },
                 error => {
-                    if (error.message != null && error.message != '') {
-                        this.toaster.error(error.message);
-                    } else if (error.error.message != null && error.error.message != '') {
+                    if (error.error.message != null && error.error.message != '') {
                         this.toaster.error(error.error.message);
+                    } else if (error.message != null && error.message != '') {
+                        this.toaster.error(error.message);
                     } else {
                         this.toaster.error(DEFAULT_ERROR_MESSAGE);
                     }

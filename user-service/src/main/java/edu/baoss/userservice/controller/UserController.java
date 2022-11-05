@@ -3,7 +3,6 @@ package edu.baoss.userservice.controller;
 import edu.baoss.userservice.dto.AddressDto;
 import edu.baoss.userservice.dto.UserAddressDto;
 import edu.baoss.userservice.dto.UserDto;
-import edu.baoss.userservice.model.Address;
 import edu.baoss.userservice.model.User;
 import edu.baoss.userservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -36,7 +34,7 @@ public class UserController {
 //    }
 
     @PostMapping("/user-address")
-    public UserDto addOrDeleteAddressForUser(@RequestBody UserAddressDto userAddressDto){
+    public UserDto addAddressForUser(@RequestBody UserAddressDto userAddressDto){
         return userService.addAddressForUser(new User(userAddressDto.getUser()), userAddressDto.getAddress(), true);
     }
 

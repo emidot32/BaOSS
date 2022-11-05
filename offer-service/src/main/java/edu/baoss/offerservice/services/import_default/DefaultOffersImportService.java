@@ -25,6 +25,7 @@ public abstract class DefaultOffersImportService<T> implements ApplicationRunner
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        System.out.println("offer generation started");
         if (importDefault && offersAreEmpty()) {
             List<T> defaultOffers;
             try {
@@ -40,6 +41,7 @@ public abstract class DefaultOffersImportService<T> implements ApplicationRunner
                             : objectMapper.convertValue(offer, getConcreteClass()))
                     .forEach(repository::save);
             //repository.saveAll(defaultOffers);
+            System.out.println("offer generation finished");
         }
     }
 

@@ -194,12 +194,13 @@ export class RegistrationComponent implements OnInit {
                     this.router.navigate(['/login']);
                 },
                 error => {
-                    if (error.message != null && error.message != '') {
-                        this.toaster.error(error.message);
-                    } else if (error.error.message != null && error.error.message != '') {
+                    if (error.error.message != null && error.error.message != '') {
                         this.toaster.error(error.error.message);
+                    } else if (error.message != null && error.message != '') {
+                        this.toaster.error(error.message);
                     } else {
                         this.toaster.error(DEFAULT_ERROR_MESSAGE);
+                        this.router.navigate(['/homeath/orders-and-instances']);
                     }
                 });
     }

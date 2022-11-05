@@ -18,4 +18,5 @@ public class PhoneNumber implements Serializable {
     String countryCode;
     String pinCode;
     String pukCode;
+    String currency;
 }

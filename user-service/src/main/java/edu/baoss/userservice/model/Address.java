@@ -9,6 +9,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+import static javax.persistence.CascadeType.*;
+import static javax.persistence.CascadeType.DETACH;
+
 
 @Data
 @NoArgsConstructor
@@ -27,7 +30,7 @@ public class Address implements Serializable {
     @Column(name = "entrance")
     String entrance;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {REMOVE, REFRESH, DETACH})
     @JoinColumn(name = "building_id", referencedColumnName = "building_id")
     Building building;
 

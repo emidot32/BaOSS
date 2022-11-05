@@ -26,13 +26,11 @@ public abstract class DefaultResourcesImportService<T> implements ApplicationRun
     @Value("${baoss.resources.import-default}")
     protected boolean importDefault;
 
-    @Autowired
-    private ConnectedBuildingsRepository connectedBuildingsRepository;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        System.out.println(connectedBuildingsRepository.findAll());
         if (importDefault && resourceIsEmpty()) {
+            System.out.println("Generation for " + getConcreteClass().getName() + "is started");
             List<T> defaultResources;
             try {
                 InputStream inputStream = new ClassPathResource(getFileName()).getInputStream();
@@ -45,7 +43,6 @@ public abstract class DefaultResourcesImportService<T> implements ApplicationRun
                     .map(resource -> getConcreteClass().isInstance(resource)
                             ? getConcreteClass().cast(resource)
                             : objectMapper.convertValue(resource, getConcreteClass()))
-                    .peek(System.out::println)
                     .forEach(repository::save);
         }
     }

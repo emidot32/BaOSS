@@ -29,7 +29,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "delete from user_address where user_id = :userId and address_id = :addressId", nativeQuery = true)
     void deleteAddressForUser(@Param("userId") long userId, @Param("addressId") long addressId);
 
-    @Query(value = "select max(contract_number) from usr", nativeQuery = true)
+    @Query(value = "select max(contract_number) from users", nativeQuery = true)
     int getMaxContractNumber();
 
     List<User> findAll(Sort id);

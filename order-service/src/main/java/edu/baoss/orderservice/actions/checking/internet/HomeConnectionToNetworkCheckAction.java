@@ -9,6 +9,7 @@ public class HomeConnectionToNetworkCheckAction extends FeasibilityCheckAction {
 
     @Override
     public void check(ActionContext context) {
+        System.out.println(context.getOrderValue().getSelectedAddress().getBuildingId());
         if (!context.getApplicationContext().getBean(ResourceServiceFeignProxy.class)
                 .isBuildingConnectedToNetwork(context.getOrderValue().getSelectedAddress().getBuildingId()))
             throw new HomeIsNotConnectedToNetworkException("The building is not connected to the network");

@@ -10,6 +10,7 @@ import edu.baoss.userservice.model.User;
 import edu.baoss.userservice.repository.AddressRepository;
 import edu.baoss.userservice.repository.BuildingRepository;
 import edu.baoss.userservice.repository.UserRepository;
+import edu.baoss.userservice.utils.CommonUtils;
 import lombok.RequiredArgsConstructor;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.data.domain.Sort;
@@ -49,7 +50,8 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException("User with login '"+login+"' is not found"));
     }
 
-    public UserDto register(UserDto userDto){
+    public UserDto register(UserDto userDto) {
+        Random random = new Random();
         if (userRepository.existsUserByLogin(userDto.getLogin())){
             throw new LoginExistException("Login is already in use");
         }
@@ -68,11 +70,14 @@ public class UserService {
         if (user.getIdCardNumber() == null) {
             user.setIdCardNumber(encoder.encode(userDto.getIdCardNumber()));
         }
-        if (user.getContractNumber() == 0) {
+        if (user.getContractNumber() == null || user.getContractNumber() == 0) {
             user.setContractNumber(userRepository.getMaxContractNumber() + 1);
         }
         if (user.getRegDate() == null) {
             user.setRegDate(new Date());
+        }
+        if (user.getBalance() == 0.0) {
+            user.setBalance(CommonUtils.round(50.0 + random.nextDouble()*300, 2));
         }
         user.setActivityStatus(true);
         user.getAddresses().clear();
@@ -90,6 +95,7 @@ public class UserService {
                     .filter(buildingFromDto::equals)
                     .findFirst();
             if (buildingFromDb.isPresent()) {
+                System.out.println(buildingFromDb + "is present");
                 Address addressFromDto = new Address(addressDto, buildingFromDb.get());
                 Optional<Address> addressFromDb = addressRepository.findAll()
                         .stream()
@@ -102,7 +108,7 @@ public class UserService {
                 }
             } else {
                 user.getAddresses().add(addressRepository.save(
-                        new Address(addressDto, buildingFromDto)));
+                        new Address(addressDto, buildingRepository.save(buildingFromDto))));
             }
         } else {
             throw new UserNotFoundException("User is not found");

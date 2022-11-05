@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
 @Data
 @SuperBuilder
@@ -18,8 +20,9 @@ public class Device implements Serializable {
     int portsNum;
     String portTypes;
     int guarantee;
-    String standards;
+    String[] standards;
     int memory;
-    String frequencies;
-    String protocolsAndTechnologies;
+    String[] frequencies;
+    String[] protocolsAndTechnologies;
+    Map<String, List<String>> parameters;
 }
