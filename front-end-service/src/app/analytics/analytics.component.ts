@@ -45,6 +45,9 @@ export class AnalyticsComponent implements OnInit {
     clvByDateGraph: GraphParams;
     profitByProduct: GraphParams;
     profitByProductAndDate: GraphParams;
+    profitForecast: GraphParams;
+    profitForecastTest: GraphParams;
+    mapeEvaluation: GraphParams;
 
     constructor(private analyticsService: AnalyticsService,
                 private router: Router,
@@ -196,7 +199,41 @@ export class AnalyticsComponent implements OnInit {
             }
         } else if (id == 2) {
             if (this.analyticVariants[id].check) {
-
+                this.analyticsService.getProfitForecast(endDateStr, step)
+                    .subscribe(data => {
+                            this.profitForecast = {
+                                // tslint:disable-next-line:max-line-length
+                                data: [{x: data.profitForecast[0].x, y: data.profitForecast[0].y, type: 'lines+markers', name: 'Current profit'},
+                                       {x: data.profitForecast[1].x, y: data.profitForecast[1].y, type: 'lines+markers', name: 'Naive Forecast'},
+                                       {x: data.profitForecast[2].x, y: data.profitForecast[2].y, type: 'lines+markers', name: 'Linear Regression'}] as Plotly.Data[],
+                                layout: {width: 1200, height: 600, title: 'Profit forecast'}
+                            } as GraphParams;
+                            this.profitForecastTest = {
+                                // tslint:disable-next-line:max-line-length
+                                data: [{x: data.forecastWithTest[0].x, y: data.forecastWithTest[0].y, type: 'lines+markers', name: 'Current profit'},
+                                       {x: data.forecastWithTest[1].x, y: data.forecastWithTest[1].y, type: 'lines+markers', name: 'Naive Forecast'},
+                                       {x: data.forecastWithTest[2].x, y: data.forecastWithTest[2].y, type: 'lines+markers', name: 'Linear Regression'}] as Plotly.Data[],
+                                layout: {width: 1200, height: 600, title: 'Testing profit forecast regressors'}
+                            } as GraphParams;
+                            this.mapeEvaluation = {
+                                // tslint:disable-next-line:max-line-length
+                                data: [{x: ['Naive Forecast', 'Linear Regression'], y: data.mapeEvaluation, type: 'bar', text: data.mapeEvaluation.map(String), textposition: 'auto'}] as Plotly.Data[],
+                                layout: {width: this.chartWidth, height: this.chartHeight, title: 'Evaluation by MAPE'}
+                            } as GraphParams;
+                        },
+                        error => {
+                            if (error.error.message != null && error.error.message != '') {
+                                this.toaster.error(error.error.message);
+                            } else if (error.message != null && error.message != '') {
+                                this.toaster.error(error.message);
+                            } else {
+                                this.toaster.error(DEFAULT_ERROR_MESSAGE);
+                            }
+                        });
+            } else {
+                this.profitForecast = null;
+                this.profitForecastTest = null;
+                this.mapeEvaluation = null;
             }
         }
         let anyAnalyticsSelected = false;

@@ -106,4 +106,20 @@
                 [data]="profitByProductAndDate.data"
                 [layout]="profitByProductAndDate.layout"></plotly-plot>
     </div>
+    <div *ngIf=analyticVariants[2].check class="row results"><h4>Profit forecasting</h4></div>
+    <div *ngIf="profitForecast && profitForecast != null" class="profit-by-date">
+        <plotly-plot
+                [data]="profitForecast.data"
+                [layout]="profitForecast.layout"></plotly-plot>
+    </div>
+    <div *ngIf="profitForecastTest && profitForecastTest != null" class="profit-by-date">
+        <plotly-plot
+                [data]="profitForecastTest.data"
+                [layout]="profitForecastTest.layout"></plotly-plot>
+    </div>
+    <div *ngIf="mapeEvaluation && mapeEvaluation != null" class="profit-by-date">
+        <plotly-plot
+                [data]="mapeEvaluation.data"
+                [layout]="mapeEvaluation.layout"></plotly-plot>
+    </div>
 </div>

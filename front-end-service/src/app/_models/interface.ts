@@ -320,3 +320,9 @@ export interface BusinessMetrics {
     profitByProduct: ChartData;
     profitByProductAndDate: ChartData[];
 }
+
+export interface ProfitForecast {
+    profitForecast: ChartData[];
+    forecastWithTest: ChartData[];
+    mapeEvaluation: number[];
+}

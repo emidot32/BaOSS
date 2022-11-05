@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {BusinessMetrics, ChartData, CohortAnalysis, ProductInstance} from '../_models/interface';
+import {BusinessMetrics, ChartData, CohortAnalysis, ProductInstance, ProfitForecast} from '../_models/interface';
 import {environment} from '../../environments/environment';
 
 @Injectable({
@@ -17,6 +17,10 @@ export class AnalyticsService {
   getBusinessMetrics(startDate: string, endDate: string, step: string): Observable<BusinessMetrics> {
     return this.http.get<BusinessMetrics>(`${environment.analyticsServiceUrl}/business-metrics?start_date=${startDate}&end_date=${endDate}&step=${step}`);
   }
+  getProfitForecast(endDate: string, step: string): Observable<ProfitForecast> {
+    return this.http.get<ProfitForecast>(`${environment.analyticsServiceUrl}/profit-forecast?end_date=${endDate}&step=${step}`);
+  }
+
   //
   // getUserNumber(startDate: string, endDate: string): Observable<number> {
   //   return this.http.get<number>(`${environment.analyticsServiceUrl}/statistic/user-number?start_date=${startDate}&end_date=${endDate}`);
