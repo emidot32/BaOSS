@@ -86,3 +86,7 @@ class Payment(db.Model):
     value = db.Column(db.Float, nullable=False)
     payment_date = db.Column(db.DateTime)
     purpose = db.Column(db.String)
+
+
+class NotEnoughDataForPrediction(Exception):
+    pass
