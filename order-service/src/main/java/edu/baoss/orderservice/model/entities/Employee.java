@@ -46,6 +46,9 @@ public class Employee {
             inverseJoinColumns = @JoinColumn(name = "delivery_id", referencedColumnName = "delivery_id"))
     Set<Delivery> deliveries = new HashSet<>();
 
+    public Employee(long id) {
+        this.id = id;
+    }
 
     @Override
     public boolean equals(Object o) {

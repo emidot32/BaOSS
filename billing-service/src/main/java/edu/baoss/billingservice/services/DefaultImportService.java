@@ -34,10 +34,12 @@ public class DefaultImportService implements ApplicationRunner {
 
     @Value("${baoss.billing.number-of-users-for-generation}")
     private int numberOfUsersForGeneration;
+    @Value("${baoss.billing.end-date}")
+    private String endDateStr;
+
     private final PaymentRepository paymentRepository;
     private final UserRepository userRepository;
     private final OrderServiceFeignProxy orderServiceFeignProxy;
-    private final ObjectMapper objectMapper;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -62,6 +64,7 @@ public class DefaultImportService implements ApplicationRunner {
                     .build();
             paymentRepository.save(nrcPayment);
         }
+        LocalDateTime endDate = LocalDateTime.parse(endDateStr);
         for (ProductInstance productInstance: productInstances) {
             LocalDateTime mrcDateTime =  ONLY_DATE_FORMAT.parse(productInstance.getActivatedDateStr()).toInstant()
                     .atZone(ZoneId.systemDefault())
@@ -75,7 +78,7 @@ public class DefaultImportService implements ApplicationRunner {
                         .build();
                 paymentRepository.save(mrcPayment);
                 mrcDateTime = mrcDateTime.plusMonths(1);
-            } while (mrcDateTime.isBefore(LocalDateTime.now(ZoneId.systemDefault())));
+            } while (mrcDateTime.isBefore(endDate));
         }
         System.out.println("Payments generation finished");
 

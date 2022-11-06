@@ -204,20 +204,26 @@ export class AnalyticsComponent implements OnInit {
                             this.profitForecast = {
                                 // tslint:disable-next-line:max-line-length
                                 data: [{x: data.profitForecast[0].x, y: data.profitForecast[0].y, type: 'lines+markers', name: 'Current profit'},
-                                       {x: data.profitForecast[1].x, y: data.profitForecast[1].y, type: 'lines+markers', name: 'Naive Forecast'},
-                                       {x: data.profitForecast[2].x, y: data.profitForecast[2].y, type: 'lines+markers', name: 'Linear Regression'}] as Plotly.Data[],
+                                       {x: data.profitForecast[1].x, y: data.profitForecast[1].y, type: 'lines+markers', name: data.regressors[0]},
+                                       {x: data.profitForecast[2].x, y: data.profitForecast[2].y, type: 'lines+markers', name: data.regressors[1]},
+                                       {x: data.profitForecast[3].x, y: data.profitForecast[3].y, type: 'lines+markers', name: data.regressors[2]},
+                                       {x: data.profitForecast[4].x, y: data.profitForecast[4].y, type: 'lines+markers', name: data.regressors[3]},
+                                ] as Plotly.Data[],
                                 layout: {width: 1200, height: 600, title: 'Profit forecast'}
                             } as GraphParams;
                             this.profitForecastTest = {
                                 // tslint:disable-next-line:max-line-length
                                 data: [{x: data.forecastWithTest[0].x, y: data.forecastWithTest[0].y, type: 'lines+markers', name: 'Current profit'},
-                                       {x: data.forecastWithTest[1].x, y: data.forecastWithTest[1].y, type: 'lines+markers', name: 'Naive Forecast'},
-                                       {x: data.forecastWithTest[2].x, y: data.forecastWithTest[2].y, type: 'lines+markers', name: 'Linear Regression'}] as Plotly.Data[],
+                                       {x: data.forecastWithTest[1].x, y: data.forecastWithTest[1].y, type: 'lines+markers', name: data.regressors[0]},
+                                       {x: data.forecastWithTest[2].x, y: data.forecastWithTest[2].y, type: 'lines+markers', name: data.regressors[1]},
+                                       {x: data.forecastWithTest[3].x, y: data.forecastWithTest[3].y, type: 'lines+markers', name: data.regressors[2]},
+                                       {x: data.forecastWithTest[4].x, y: data.forecastWithTest[4].y, type: 'lines+markers', name: data.regressors[3]}
+                                ] as Plotly.Data[],
                                 layout: {width: 1200, height: 600, title: 'Testing profit forecast regressors'}
                             } as GraphParams;
                             this.mapeEvaluation = {
                                 // tslint:disable-next-line:max-line-length
-                                data: [{x: ['Naive Forecast', 'Linear Regression'], y: data.mapeEvaluation, type: 'bar', text: data.mapeEvaluation.map(String), textposition: 'auto'}] as Plotly.Data[],
+                                data: [{x: data.regressors, y: data.mapeEvaluation, type: 'bar', text: data.mapeEvaluation.map(String), textposition: 'auto'}] as Plotly.Data[],
                                 layout: {width: this.chartWidth, height: this.chartHeight, title: 'Evaluation by MAPE'}
                             } as GraphParams;
                         },

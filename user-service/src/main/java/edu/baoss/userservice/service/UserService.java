@@ -95,7 +95,6 @@ public class UserService {
                     .filter(buildingFromDto::equals)
                     .findFirst();
             if (buildingFromDb.isPresent()) {
-                System.out.println(buildingFromDb + "is present");
                 Address addressFromDto = new Address(addressDto, buildingFromDb.get());
                 Optional<Address> addressFromDb = addressRepository.findAll()
                         .stream()

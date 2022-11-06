@@ -33,18 +33,25 @@ public class DefaultImportService implements ApplicationRunner {
     private final static List<String> STREETS = List.of( "Andrey Bubnov street", "Andrey Golovko street", "Andrey Ivanov street", "Andrew Malyshko street", "Botkina street", "Bratislava street", "Bratskaya street", "Brothers Zerov street", "Budyshchanskaya street", "Bukovinskaya street", "Bulgakov street", "Valkovskaya street", "Vandy Vasilevskaya street", "Vasily Blucher street", "Vasily Verkhovinets street", "Vasily Vyshyvanny street", "Vasily Donchuk street", "Vasily Zhukovsky street", "Dovzhenko street", "Dovnar-Zapolsky street", "Dokovskaya street", "Dokuchaevskaya street");
     @Value("${baoss.users.number-of-users-for-generation}")
     private int numberOfUsersForGeneration;
+    @Value("${baoss.users.start-date}")
+    private String startDateStr;
+    @Value("${baoss.users.end-date}")
+    private String endDateStr;
 
     private final UserService userService;
     
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        if (numberOfUsersForGeneration == 0 || userService.getAllUsers().size() > 7) {
+        if (numberOfUsersForGeneration == 0 || userService.getAllUsers().size() > 10) {
             return;
         }
         Thread.sleep(7000);
-
-        for (int i = 7; i < numberOfUsersForGeneration; i++) {
+        int maxUserId = userService.getAllUsers().stream()
+                .mapToInt(userDto -> (int) userDto.getId())
+                .max()
+                .orElse(0);
+        for (int i = maxUserId; i < numberOfUsersForGeneration; i++) {
             String userStr = "user" + i;
             UserDto userDto = UserDto.builder()
                     .id(i)
@@ -74,7 +81,8 @@ public class DefaultImportService implements ApplicationRunner {
     }
 
     private Date getRandomDate() {
-        String minDate = "2018-01-01T10:00:01";
+        String minDate = startDateStr;
+        LocalDateTime endDate = LocalDateTime.parse(endDateStr);
         LocalDateTime generated;
         do {
             generated = LocalDateTime.parse(minDate);
@@ -83,7 +91,7 @@ public class DefaultImportService implements ApplicationRunner {
             generated = generated.plusDays(RANDOM.nextInt(31));
             generated = generated.plusHours(RANDOM.nextInt(10));
             generated = generated.plusMinutes(RANDOM.nextInt(60));
-        } while (generated.isAfter(LocalDateTime.now(ZoneId.systemDefault())));
+        } while (generated.isAfter(endDate));
         System.out.println(generated);
         return Date.from(generated.atZone(ZoneId.systemDefault()).toInstant());
     }

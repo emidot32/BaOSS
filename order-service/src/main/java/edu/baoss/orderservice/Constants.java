@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 public final class Constants {
     public final static SimpleDateFormat ONLY_DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
     public final static SimpleDateFormat DATE_AND_TIME_FORMAT = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    public final static SimpleDateFormat DATE_HOUR_FORMAT = new SimpleDateFormat("dd/MM/yyyy HH");
+    public final static SimpleDateFormat ONLY_HOUR_FORMAT = new SimpleDateFormat("HH");
 
     // Names of products
     public final static String DTV_PRODUCT_STR = "DTV Product";

@@ -13,7 +13,10 @@ import edu.baoss.orderservice.model.enums.OrderStatus;
 import edu.baoss.orderservice.model.enums.Position;
 import edu.baoss.orderservice.repositories.DeliveryRepository;
 import edu.baoss.orderservice.repositories.EmployeeRepository;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -29,23 +32,23 @@ import java.util.stream.IntStream;
 import static edu.baoss.orderservice.Constants.ONLY_DATE_FORMAT;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class DeliveryService {
-    private final DeliveryRepository deliveryRepository;
-    private final EmployeeRepository employeeRepository;
-    private final InstanceService instanceService;
-    private final RabbitTemplate template;
-    private final FulfilmentService fulfilmentService;
-    private final FlowComposer flowComposer;
+    private DeliveryRepository deliveryRepository;
+    @Setter
+    private  EmployeeRepository employeeRepository;
+    private InstanceService instanceService;
+    private RabbitTemplate template;
+    private FulfilmentService fulfilmentService;
+    private FlowComposer flowComposer;
 
-    private static final int[] HOURS =  IntStream.rangeClosed(10, 21).toArray();
-    private final SimpleDateFormat dateHourFormat = new SimpleDateFormat("dd/MM/yyyy HH");
-    private final SimpleDateFormat onlyHourFormat = new SimpleDateFormat("HH");
+    private static final int[] HOURS =  IntStream.rangeClosed(10, 18).toArray();
 
     public Delivery createDelivery(OrderValue orderValue, Order order) throws ParseException {
         Pair<Integer, Integer> durationAndNumberOfEmployees = getDurationAndNumberOfEmployees(orderValue.getSelectedProducts());
         int hour = Integer.parseInt(orderValue.getDeliveryTime().substring(0, 2));
-        Date deliveryDate = dateHourFormat.parse(orderValue.getDeliveryDateStr() + " " + hour);
+        Date deliveryDate = Constants.DATE_HOUR_FORMAT.parse(orderValue.getDeliveryDateStr() + " " + hour);
         List<Employee> allEmployees = employeeRepository.findAllByPosition(Position.FITTER.getName());
         Set<Employee> workers = getFreeEmployees(deliveryDate, allEmployees, durationAndNumberOfEmployees.getLeft(), hour)
                 .stream()
@@ -66,13 +69,10 @@ public class DeliveryService {
 
     public List<DeliveryDto> getTodayDeliveriesForEmployeeAndUpdateIfStarted(long userId) {
         Employee employee = employeeRepository.getEmployeeByUserId(userId).orElseThrow(NoEmployeeFoundException::new);
-
-        System.out.println(employee);
         Date now = new Date();
         List<DeliveryDto> deliveriesForEmployee = new ArrayList<>();
         List<Delivery> employeeDeliveries = employee.getDeliveries().stream()
                 .sorted(Comparator.comparing(Delivery::getDeliveryDate).reversed()).toList();
-        System.out.println(employeeDeliveries);
         for (Delivery delivery : employeeDeliveries) {
             if (sameDay(delivery.getDeliveryDate(), now)) {
                 boolean responsible = employee.equals(delivery.getResponsible());
@@ -80,13 +80,11 @@ public class DeliveryService {
                 if (deliveryStarted) {
                     updateDelivery(delivery, DeliveryStatus.IN_PROGRESS, OrderStatus.IN_DELIVERY);
                 }
-                System.out.println(delivery);
                 deliveriesForEmployee.add(
                         new DeliveryDto(delivery, getAdditionalInfo(delivery), responsible, deliveryStarted));
             }
         }
         return deliveriesForEmployee;
-
     }
 
     public List<String> getAvailableHours(Date deliveryDate, String[] products) {
@@ -131,11 +129,11 @@ public class DeliveryService {
 
     private boolean isDeliveriesConflicted(int possibleHour, Date plannedDate, int duration) {
         int endOfPossibleDelivery = possibleHour + duration;
-        return endOfPossibleDelivery > Integer.parseInt(onlyHourFormat.format(plannedDate));
+        return endOfPossibleDelivery > Integer.parseInt(Constants.ONLY_HOUR_FORMAT.format(plannedDate));
     }
 
     private boolean isDeliveriesConflicted(int possibleHour, Delivery delivery) {
-        int endOfPlannedDelivery = Integer.parseInt(onlyHourFormat.format(delivery.getDeliveryDate())) + delivery.getDuration();
+        int endOfPlannedDelivery = Integer.parseInt(Constants.ONLY_HOUR_FORMAT.format(delivery.getDeliveryDate())) + delivery.getDuration();
         return endOfPlannedDelivery > possibleHour;
     }
 

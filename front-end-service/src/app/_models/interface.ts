@@ -325,4 +325,5 @@ export interface ProfitForecast {
     profitForecast: ChartData[];
     forecastWithTest: ChartData[];
     mapeEvaluation: number[];
+    regressors: string[];
 }

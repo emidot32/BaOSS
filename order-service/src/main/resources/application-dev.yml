@@ -26,7 +26,7 @@ spring:
     password: "guest"
 
 server:
-  port: 8081
+  port: 8091
   error:
     include-message: always
 
@@ -46,7 +46,8 @@ tb-api:
 baoss:
   orders:
     clean-install: ${CLEAN_INSTALL:false}
-    number-of-users-for-generation: ${USER_NUMBER_GENERATION:500}
+    number-of-users-for-generation: ${USER_NUMBER_GENERATION:0}
+    end-date: "2023-01-01T10:00:01"
 #security:
 #  oauth2:
 #    resource:

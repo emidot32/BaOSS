@@ -36,8 +36,9 @@ eureka:
 
 baoss:
   users:
-    clean-install: ${CLEAN_INSTALL:false}
     number-of-users-for-generation: ${USER_NUMBER_GENERATION:20}
+    start-date: "2018-01-01T10:00:01"
+    end-date: "2023-01-01T10:00:01"
 
 tb-api:
   url: "http://localhost:5555"

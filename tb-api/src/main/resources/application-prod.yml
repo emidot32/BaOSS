@@ -4,6 +4,9 @@ spring:
 
 server:
   port: 5555
+  error:
+    include-message: always
+
 
 eureka:
   instance:

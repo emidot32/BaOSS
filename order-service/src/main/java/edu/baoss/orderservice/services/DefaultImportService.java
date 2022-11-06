@@ -33,6 +33,9 @@ public class DefaultImportService implements ApplicationRunner {
 
     @Value("${baoss.orders.number-of-users-for-generation}")
     private int numberOfUsersForGeneration;
+    @Value("${baoss.orders.end-date}")
+    private String endDateStr;
+
     private final ResourceServiceFeignProxy resourceServiceFeignProxy;
     private final OfferServiceFeignProxy offerServiceFeignProxy;
     private final FlowComposer flowComposer;
@@ -258,6 +261,7 @@ public class DefaultImportService implements ApplicationRunner {
                 .toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDateTime();
+        LocalDateTime endDate = LocalDateTime.parse(endDateStr);
         LocalDateTime generated;
         do {
             generated = regDate;
@@ -265,7 +269,7 @@ public class DefaultImportService implements ApplicationRunner {
             generated = generated.plusDays(RANDOM.nextInt(maxDays));
             generated = RANDOM.nextDouble() < 0.5 ? generated.plusHours(RANDOM.nextInt(3)) : generated.minusHours(RANDOM.nextInt(3));
             generated = generated.plusMinutes(RANDOM.nextInt(60));
-        } while (generated.isAfter(LocalDateTime.now(ZoneId.systemDefault())));
+        } while (generated.isAfter(endDate));
         System.out.println(generated);
         return Date.from(generated.atZone(ZoneId.systemDefault()).toInstant());
     }

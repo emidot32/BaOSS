@@ -1,11 +1,12 @@
 from datetime import datetime
+from datetime import timedelta
 from dateutil.relativedelta import relativedelta
 import numpy as np
 import pandas as pd
 from flask import current_app as app, Response
 from flask import request, jsonify, json
 from sqlalchemy import func
-from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import Lasso
 from sklearn.linear_model import LinearRegression
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import GradientBoostingRegressor
@@ -31,6 +32,7 @@ year = "year"
 x = 'x'
 y = 'y'
 step_to_pattern = {day: "%d-%m-%Y", week: "%d-%m-%Y", month: "%m-%Y", quarter: "%m-%Y", year: "%Y"}
+step_to_period = {day: 1, week: 7, month: 30, quarter: 90, year: 365}
 end_date_condition_to_result = {
     "010": lambda end_date_param: datetime.now() + relativedelta(months=+2),
     "000": lambda end_date_param: datetime.now(),
@@ -40,13 +42,14 @@ end_date_condition_to_result = {
     "111": lambda end_date_param: end_date_param
 }
 
+
 @app.route('/cohort-analysis', methods=['GET'])
 def cohort_analysis():
     return jsonify({
         "userNumber": get_user_number(),
         "userNumberByProducts": get_user_number_by_product(),
         "usersByDate": get_users_by_date(),
-        "productsByDate": get_products_by_date()
+        "productsByDate": get_products_by_date(),
     })
 
 
@@ -80,7 +83,8 @@ def profit_forecast():
     return jsonify({
         "profitForecast": forecast[0],
         "forecastWithTest": forecast[1],
-        "mapeEvaluation": forecast[2]
+        "mapeEvaluation": forecast[2],
+        "regressors": ["Prophet", "Lasso", "Decision Tree", "Gradient Boosting"]
     })
 
 
@@ -226,15 +230,18 @@ def get_clv_by_date():
 
 
 def get_profit_forecast():
-    start_date, end_date = get_date_range(lambda: db.session.query(func.min(Payment.payment_date)).first()[0], True)
+    start_date, forecast_end_date = get_date_range(lambda: db.session.query(func.min(Payment.payment_date)).first()[0], True)
     step = request.args.get('step') if request.args.get('step') is not None else day
     start_date = get_start_date_by_step(step)
+    payment_end_date = get_payments_end_date(step)
     payments = Payment.query.filter(Payment.payment_date >= start_date) \
-        .filter(Payment.payment_date <= end_date).all()
+        .filter(Payment.payment_date < payment_end_date).order_by(Payment.payment_date).all()
     if len(payments) == 0:
         return {x: [], y: []}
-    forecast_with_test, mape_results = get_sktime_forecast(payments, end_date, step, True)
-    return get_sktime_forecast(payments, end_date, step, False)[0], forecast_with_test, mape_results
+    df = pd.DataFrame.from_records([v.__dict__ for v in payments])[['payment_date', 'value']]
+    date_to_profit = df.groupby(pd.Grouper(key='payment_date', axis=0, freq=step[0].upper())).sum()
+    forecast_with_test, mape_results = get_sktime_forecast(date_to_profit, payment_end_date, forecast_end_date, step, True)
+    return get_sktime_forecast(date_to_profit, payment_end_date, forecast_end_date, step, False)[0], forecast_with_test, mape_results
 
 
 def get_date_range(func_for_start_date, for_forecast=False):
@@ -244,10 +251,8 @@ def get_date_range(func_for_start_date, for_forecast=False):
                                    date_pattern) if start_date_str is not None and start_date_str != '' else None
     end_date = datetime.strptime(end_date_str,
                                  date_pattern) if end_date_str is not None and end_date_str != '' else None
-    print(end_date)
     start_date = start_date if start_date is not None else func_for_start_date()
     condition = str(int(end_date is not None)) + str(int(for_forecast)) + str(int(end_date > datetime.now() if end_date is not None else False))
-    print(condition)
     return start_date if start_date is not None else func_for_start_date(), end_date_condition_to_result[condition](end_date)
 
 
@@ -313,15 +318,12 @@ def calculate_arppu_by_date(list_of_grouped_users, sums, i):
     return round(sum / unique_users, 2)
 
 
-def get_sktime_forecast(values, end_date, step, with_test):
-    df = pd.DataFrame.from_records([v.__dict__ for v in values])[['payment_date', 'value']]
-    date_to_profit = df.groupby(pd.Grouper(key='payment_date', axis=0, freq=step[0].upper())).sum()
+def get_sktime_forecast(date_to_profit, payment_end_date, forecast_end_date, step, with_test):
     if len(date_to_profit) < 15:
         raise NotEnoughDataForPrediction()
     y_train, y_test = temporal_train_test_split(date_to_profit, test_size=int(0.2*len(date_to_profit)) if with_test else 1)
-    fh = ForecastingHorizon(pd.date_range(start=datetime.now(), end=end_date, freq=step[0].upper()), is_relative=False) \
+    fh = ForecastingHorizon(pd.date_range(start=payment_end_date, end=forecast_end_date, freq=step[0].upper()), is_relative=False) \
         if not with_test else ForecastingHorizon(y_test.index, is_relative=False)
-    # prophet_forecaster = Prophet()
     result_data = []
     dates = [grouped_date.strftime(step_to_pattern[step])
              for grouped_date in date_to_profit.index.get_level_values('payment_date').tolist()]
@@ -330,8 +332,8 @@ def get_sktime_forecast(values, end_date, step, with_test):
     result_data.append({x: dates, y: [round(float(v), 2) for v in grouped_values]})
 
     mape_results = []
-    regressors = [NaiveForecaster(sp=12, strategy='last'), make_reduction(LinearRegression())]
-
+    # NaiveForecaster(sp=12, strategy='last'),
+    regressors = [Prophet(), make_reduction(Lasso()), make_reduction(DecisionTreeRegressor()), make_reduction(GradientBoostingRegressor())]
     for regressor in regressors:
         if not with_test:
             result_data.append(fit_predict(regressor, y_train, fh, step)[0])
@@ -363,3 +365,17 @@ def get_start_date_by_step(step):
         return datetime.now() + relativedelta(years=-3)
     else:
         return db.session.query(func.min(Payment.payment_date)).first()[0]
+
+
+def get_payments_end_date(step):
+    now = datetime.now()
+    if step == day:
+        return now.replace(hour=23, minute=59, second=59) - timedelta(days=1)
+    elif step == week:
+        return (now - timedelta(days=now.weekday())) - timedelta(days=1)
+    elif step == month:
+        return now.replace(day=1, hour=23, minute=59, second=59) - timedelta(days=1)
+    elif step == quarter:
+        return datetime(now.year, 3 * ((now.month - 1) // 3) + 1, 1) - timedelta(days=1)
+    else:
+        return now.replace(month=1, day=1, hour=23, minute=59, second=59) - timedelta(days=1)

@@ -32,6 +32,7 @@ eureka:
 baoss:
   billing:
     number-of-users-for-generation: ${USER_NUMBER_GENERATION:500}
+    end-date: "2023-01-01T10:00:01"
 
 tb-api:
   url: "http://localhost:5555"

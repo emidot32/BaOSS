@@ -44,6 +44,7 @@ baoss:
   orders:
     clean-install: ${CLEAN_INSTALL:false}
     number-of-users-for-generation: ${USER_NUMBER_GENERATION:500}
+    end-date: ${END_DATE}
 
 tb-api:
   url: "http://tb-api:5555"
