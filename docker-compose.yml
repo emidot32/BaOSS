@@ -164,19 +164,19 @@ services:
     depends_on:
       - postgres-db
   
-  #analytics-service:
-    #container_name: analytics-service
-    #build:
-    #  context: ./analytics-service
-    #ports:
-   #   - 8086:8086
-   # expose:
-    #  - 8086
-    #restart: always
-    #networks:
-    #  - common-network
-    #depends_on:
-    #  - postgres-db
+  analytics-service:
+    container_name: analytics-service
+    build:
+      context: ./analytics-service
+    ports:
+      - 8086:8086
+    expose:
+      - 8086
+    restart: always
+    networks:
+      - common-network
+    depends_on:
+      - postgres-db
 
   #front-end-service:
     #container_name: front-end-service

@@ -13,8 +13,6 @@ from sklearn.ensemble import GradientBoostingRegressor
 from sktime.forecasting.base import ForecastingHorizon
 from sktime.forecasting.fbprophet import Prophet
 from sktime.forecasting.naive import NaiveForecaster
-from sktime.forecasting.arima import ARIMA
-from sktime.forecasting.bats import BATS
 from sktime.forecasting.compose import make_reduction
 from sktime.forecasting.model_selection import temporal_train_test_split
 from sktime.performance_metrics.forecasting import mean_absolute_percentage_error
